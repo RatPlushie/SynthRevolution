@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">SynthRevolution</string>
+    <string name="tab_text_1">Control</string>
+    <string name="tab_text_2">HUD</string>
+    <string name="tab_text_3">Synth Lab</string>
+
+    <string name="brightness">Brightness:</string>
+    <string name="red">Red:</string>
+    <string name="blue">Blue:</string>
+    <string name="green">Green:</string>
+</resources>
