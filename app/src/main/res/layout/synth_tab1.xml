@@ -44,7 +44,8 @@
                 <TextView
                     android:id="@+id/LEDBrightnessTotal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:ems="3" />
             </TableRow>
 
             <TableRow
@@ -69,7 +70,8 @@
                 <TextView
                     android:id="@+id/LEDRedTotal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:ems="3" />
             </TableRow>
 
             <TableRow
@@ -94,7 +96,8 @@
                 <TextView
                     android:id="@+id/LEDBlueTotal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:ems="3" />
             </TableRow>
 
             <TableRow
@@ -119,21 +122,25 @@
                 <TextView
                     android:id="@+id/LEDGreenTotal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:ems="3" />
             </TableRow>
         </TableLayout>
 
         <LinearLayout
             android:id="@+id/colourWindowLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:gravity="center"
+            android:paddingTop="50dp">
 
             <View
                 android:id="@+id/colourView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_gravity="center"
                 android:background="#000000" />
+
         </LinearLayout>
 
     </LinearLayout>
