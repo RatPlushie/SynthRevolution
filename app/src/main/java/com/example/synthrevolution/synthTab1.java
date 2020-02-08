@@ -1,157 +1,72 @@
 package com.example.synthrevolution;
 
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SeekBar;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class synthTab1 extends Fragment {
 
-    SeekBar seekbarBrightness;
-    SeekBar seekbarRed;
-    SeekBar seekbarBlue;
-    SeekBar seekbarGreen;
+    ImageView   colourPickerWheel;
+    TextView    colourPickerResults;
+    View        colourPickerSelected;
 
-    TextView totalLED_Brightness;
-    TextView totalLED_Red;
-    TextView totalLED_Green;
-    TextView totalLED_Blue;
+    Bitmap      bitmap;
 
-    View colourView;
-
+    @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.synth_tab1, container, false);
 
-        seekbarBrightness   = view.findViewById(R.id.LEDBrightnessSeekbar);
-        seekbarRed          = view.findViewById(R.id.LEDRedSeekbar);
-        seekbarBlue         = view.findViewById(R.id.LEDBlueSeekbar);
-        seekbarGreen        = view.findViewById(R.id.LEDGreenSeekbar);
-
-        totalLED_Brightness = view.findViewById(R.id.LEDBrightnessTotal);
-        totalLED_Red        = view.findViewById(R.id.LEDRedTotal);
-        totalLED_Green      = view.findViewById(R.id.LEDGreenTotal);
-        totalLED_Blue       = view.findViewById(R.id.LEDBlueTotal);
-
-        colourView          = view.findViewById(R.id.colourView);
+        colourPickerWheel       = view.findViewById(R.id.colourPickerImageView);
+        colourPickerResults     = view.findViewById(R.id.colourPickerTextView);
+        colourPickerSelected    = view.findViewById(R.id.colourView);
 
 
-        // Initialisation of the visor info object
-        final VisorState mVisor = new VisorState();
 
-        // Populating TextViews onCreate
-        totalLED_Brightness.setText(Integer.toString(mVisor.brightness));
-        totalLED_Red.setText(Integer.toString(mVisor.RGB_Red));
-        totalLED_Blue.setText(Integer.toString(mVisor.RGB_Blue));
-        totalLED_Green.setText(Integer.toString(mVisor.RGB_Green));
+        // Set initial display of selected colour and hex/RGB string
+        colourPickerSelected.setBackgroundColor(Color.rgb(255, 255, 255));
+        colourPickerResults.setText("RGB: 255, 255, 255 \nHEX: #ffffff");
 
+        colourPickerWheel.setDrawingCacheEnabled(true);
+        colourPickerWheel.buildDrawingCache(true);
 
-        seekbarBrightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        // Image view on touch listener
+        colourPickerWheel.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            public boolean onTouch(View v, MotionEvent event) {
 
-                // Storing the current value of the seekBar
-                mVisor.setBrightness(progress);
+                if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE){
+                    bitmap = colourPickerWheel.getDrawingCache();
 
-                // Displaying the progress bar numerically in the textView
-                totalLED_Brightness.setText(Integer.toString(progress));
-            }
+                    int pixel = bitmap.getPixel((int)event.getX(), (int)event.getY());
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
+                    // Getting the RGB values
+                    int r = Color.red(pixel);
+                    int g = Color.green(pixel);
+                    int b = Color.blue(pixel);
 
-            }
+                    // Getting the Hex values
+                    String hex = "#" + Integer.toHexString(pixel);
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+                    // Setting background colour of the selected colour view window according to picked colour
+                    colourPickerSelected.setBackgroundColor(Color.rgb(r,g,b));
 
-            }
-        });
-
-
-
-        seekbarRed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-                // Storing the current value of the seekBar
-                mVisor.setRGB_Red(progress);
-
-                // Displaying the progress bar numerically in the textView
-                totalLED_Red.setText(Integer.toString(progress));
-
-                colourView.setBackgroundColor();
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-
-
-        seekbarGreen.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-                // Storing the current value of the seekBar
-                mVisor.setRGB_Green(progress);
-
-                // Displaying the progress bar numerically in the textView
-                totalLED_Green.setText(Integer.toString(progress));
-
-                colourView.setBackgroundColor();
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-
-
-        seekbarBlue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-                // Storing the current value of the seekBar
-                mVisor.setRGB_Blue(progress);
-
-                // Displaying the progress bar numerically in the textView
-                totalLED_Blue.setText(Integer.toString(progress));
-
-                colourView.setBackgroundColor();
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
+                    // Setting the textview with the RGB and HEX values
+                    colourPickerResults.setText("RGB: " + r + ", " + g + ", " + b + "\nHEX: " + hex);
+                }
+                return true;
             }
         });
 
@@ -163,7 +78,7 @@ public class synthTab1 extends Fragment {
 
 
 
-
+/*
     class VisorState {
         int brightness;
         int RGB_Red;
@@ -209,4 +124,6 @@ public class synthTab1 extends Fragment {
 
 
     }
+
+ */
 }
