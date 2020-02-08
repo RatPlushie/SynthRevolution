@@ -18,14 +18,13 @@ import androidx.fragment.app.Fragment;
 
 public class synthTab1 extends Fragment {
 
-    ImageView   colourPickerWheel;
-    TextView    colourPickerResults;
-    TextView    LEDBrightnessTotal;
-    View        colourPickerSelected;
-    SeekBar     seekbarLEDBrightness;
+    private ImageView   colourPickerWheel;
+    private TextView    colourPickerResults;
+    private TextView    LEDBrightnessTotal;
+    private View        colourPickerSelected;
+    private SeekBar     seekbarLEDBrightness;
 
-
-    Bitmap      colourBitmap;
+    private Bitmap      colourBitmap;
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
@@ -40,15 +39,22 @@ public class synthTab1 extends Fragment {
         LEDBrightnessTotal      = view.findViewById(R.id.totalLEDBrightnessTextView);
 
 
-        // Set initial display of selected colour and hex/RGB string
-        colourPickerSelected.setBackgroundColor(Color.rgb(255, 255, 255));
-        colourPickerResults.setText("RGB: 255, 255, 255 \nHEX: #ffffff");
-        LEDBrightnessTotal.setText(Integer.toString(0));
+        // Creating SynthVisor object
+        final SynthVisor synthVisor = new SynthVisor();
 
+
+        // Set initial display of required views
+        colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
+        colourPickerResults.setText(synthVisor.getResults());
+        LEDBrightnessTotal.setText(Integer.toString(synthVisor.LED_Brightness));
+        seekbarLEDBrightness.setProgress(synthVisor.LED_Brightness);
+
+
+        // Caches required for using the colour picker
         colourPickerWheel.setDrawingCacheEnabled(true);
         colourPickerWheel.buildDrawingCache(true);
 
-        // Image view on touch listener
+        // Image view on touch listener to select colours for the visor LEDs
         colourPickerWheel.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -59,30 +65,31 @@ public class synthTab1 extends Fragment {
                     int pixel = colourBitmap.getPixel((int)event.getX(), (int)event.getY());
 
                     // Getting the RGB values
-                    int r = Color.red(pixel);
-                    int g = Color.green(pixel);
-                    int b = Color.blue(pixel);
+                    synthVisor.setRGB_Red(Color.red(pixel));
+                    synthVisor.setRGB_Green(Color.green(pixel));
+                    synthVisor.setRGB_Blue(Color.blue(pixel));
 
                     // Getting the Hex values
-                    String hex = "#" + Integer.toHexString(pixel);
+                    synthVisor.setHex("#" + Integer.toHexString(pixel));
 
                     // Setting background colour of the selected colour view window according to picked colour
-                    colourPickerSelected.setBackgroundColor(Color.rgb(r,g,b));
+                    colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
 
-                    // Setting the textview with the RGB and HEX values
-                    colourPickerResults.setText("RGB: " + r + ", " + g + ", " + b + "\nHEX: " + hex);
+                    // Setting the textView with the RGB and HEX values
+                    colourPickerResults.setText(synthVisor.getResults());
                 }
                 return true;
             }
         });
 
-
+        // Seekbar onChange listener to update the synthVisor's brightness level
         seekbarLEDBrightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
                 LEDBrightnessTotal.setText(Integer.toString(progress));
 
+                synthVisor.setLED_Brightness(progress);
             }
 
             @Override
@@ -101,4 +108,50 @@ public class synthTab1 extends Fragment {
         // Returns the view to the layout inflater
         return view;
     }
+}
+
+
+class SynthVisor{
+
+    int RGB_Red;
+    int RGB_Green;
+    int RGB_Blue;
+    int LED_Brightness;
+    String hex;
+
+    // SynthVisor constructor method
+    SynthVisor(){
+        RGB_Red         = 255;
+        RGB_Green       = 255;
+        RGB_Blue        = 255;
+        LED_Brightness  = 100;
+        hex             = "#ffffff";
+    }
+
+    // RGB/HEX Value string
+    String getResults(){
+        String results = "RGB: " + RGB_Red + ", " + RGB_Green + ", " + RGB_Blue + "\nHEX: " + hex;
+        return results;
+    }
+
+    void setRGB_Red(int red){
+        RGB_Red = red;
+    }
+
+    void setRGB_Green(int green){
+        RGB_Green = green;
+    }
+
+    void setRGB_Blue(int blue){
+        RGB_Blue = blue;
+    }
+
+    void setHex(String hexValue){
+        hex = hexValue;
+    }
+
+    void setLED_Brightness(int brightness){
+        LED_Brightness = brightness;
+    }
+
 }
