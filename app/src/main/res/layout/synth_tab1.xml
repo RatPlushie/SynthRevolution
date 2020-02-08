@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,7 +18,9 @@
         <TableLayout
             android:id="@+id/HUDControlTableLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
 
             <TableRow
                 android:id="@+id/BrightnessTableRow"
@@ -35,7 +38,13 @@
                     android:id="@+id/LEDBrightnessSeekbar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:max="100" />
+
+                <TextView
+                    android:id="@+id/LEDBrightnessTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </TableRow>
 
             <TableRow
@@ -54,7 +63,13 @@
                     android:id="@+id/LEDRedSeekbar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:max="255" />
+
+                <TextView
+                    android:id="@+id/LEDRedTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </TableRow>
 
             <TableRow
@@ -73,7 +88,13 @@
                     android:id="@+id/LEDBlueSeekbar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:max="255" />
+
+                <TextView
+                    android:id="@+id/LEDBlueTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </TableRow>
 
             <TableRow
@@ -92,9 +113,28 @@
                     android:id="@+id/LEDGreenSeekbar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:max="255" />
+
+                <TextView
+                    android:id="@+id/LEDGreenTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </TableRow>
         </TableLayout>
+
+        <LinearLayout
+            android:id="@+id/colourWindowLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <View
+                android:id="@+id/colourView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="#000000" />
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

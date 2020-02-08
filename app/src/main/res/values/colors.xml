@@ -3,4 +3,8 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="slider_red">#FF0000</color>
+    <color name="slider_blue">#00FF00</color>
+    <color name="slider_green">#0000FF</color>
 </resources>
