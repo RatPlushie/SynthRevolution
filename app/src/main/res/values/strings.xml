@@ -5,4 +5,5 @@
     <string name="tab_text_3">Synth Lab</string>
 
     <string name="brightness">LED Brightness:</string>
+    <string name="blinkrate">Blink Rate:</string>
 </resources>
