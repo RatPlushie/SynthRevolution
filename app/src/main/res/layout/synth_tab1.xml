@@ -13,59 +13,130 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/colourPickerTextView"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/colourSwatchLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/colourpicker" />
+
+    <LinearLayout
+        android:id="@+id/colourSwatchLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="7dp"
+        android:layout_marginRight="7dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/colourPickerImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/colourPickerImageView">
+
+        <ImageButton
+            android:id="@+id/colourSwatch1Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic_colour_swatch" />
+
+        <ImageButton
+            android:id="@+id/colourSwatch2Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic_colour_swatch" />
+
+        <ImageButton
+            android:id="@+id/colourSwatch3Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic_colour_swatch" />
+
+        <ImageButton
+            android:id="@+id/colourSwatch4Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic_colour_swatch" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/colourPickerTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:ems="18"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/LEDBrightnessLayout"
+        app:layout_constraintBottom_toTopOf="@+id/sliderTableLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/LEDBrightnessLayout"
+    <TableLayout
+        android:id="@+id/sliderTableLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginRight="3dp"
         android:layout_marginBottom="8dp"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/colourView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/LEDBrightnessTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:text="@string/brightness" />
+        <TableRow
+            android:id="@+id/LEDBrightness"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <SeekBar
-            android:id="@+id/LEDBrightnessSeekBar"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:max="100" />
+            <TextView
+                android:id="@+id/LEDBrightnessTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/brightness" />
 
-        <TextView
-            android:id="@+id/totalLEDBrightnessTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="3"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp" />
-    </LinearLayout>
+            <SeekBar
+                android:id="@+id/LEDBrightnessSeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:max="100" />
+
+            <TextView
+                android:id="@+id/totalLEDBrightnessTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="3"
+                android:gravity="center" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/BlinkRate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/blinkRateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/blinkrate" />
+
+            <SeekBar
+                android:id="@+id/blinkRateSeekbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:max="100" />
+
+            <TextView
+                android:id="@+id/blinkRateTotalTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="3"
+                android:gravity="center" />
+        </TableRow>
+
+    </TableLayout>
 
     <View
         android:id="@+id/colourView"
