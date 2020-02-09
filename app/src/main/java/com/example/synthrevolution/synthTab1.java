@@ -71,7 +71,6 @@ public class synthTab1 extends Fragment {
         colourSwatchButton3     = view.findViewById(R.id.colourSwatch3Button);
         colourSwatchButton4     = view.findViewById(R.id.colourSwatch4Button);
 
-        
 
         // Set initial display of required views
         colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
@@ -86,7 +85,6 @@ public class synthTab1 extends Fragment {
         colourSwatchButton2.setColorFilter(Color.rgb(synthVisor.swatch2[0], synthVisor.swatch2[1], synthVisor.swatch2[2]));
         colourSwatchButton3.setColorFilter(Color.rgb(synthVisor.swatch3[0], synthVisor.swatch3[1], synthVisor.swatch3[2]));
         colourSwatchButton4.setColorFilter(Color.rgb(synthVisor.swatch4[0], synthVisor.swatch4[1], synthVisor.swatch4[2]));
-
 
 
         // Caches required for using the colour picker
@@ -121,6 +119,7 @@ public class synthTab1 extends Fragment {
             }
         });
 
+
         // Seekbar onChange listener to update the synthVisor's brightness level
         seekbarLEDBrightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -141,6 +140,7 @@ public class synthTab1 extends Fragment {
 
             }
         });
+
 
         // Seekbar onChange listener to update the synthVisor's blink rate
         seekbarBlinkRate.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -165,6 +165,7 @@ public class synthTab1 extends Fragment {
             }
         });
 
+
         // onClickListener for swatch1 listener
         colourSwatchButton1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,6 +185,7 @@ public class synthTab1 extends Fragment {
             }
         });
 
+
         // onLongClickListener for swatch1
         colourSwatchButton1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -201,6 +203,7 @@ public class synthTab1 extends Fragment {
                 return false;
             }
         });
+
 
         // onClickListener for swatch2 listener
         colourSwatchButton2.setOnClickListener(new View.OnClickListener() {
@@ -221,6 +224,7 @@ public class synthTab1 extends Fragment {
             }
         });
 
+
         // onLongClickListener for swatch2
         colourSwatchButton2.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -238,6 +242,7 @@ public class synthTab1 extends Fragment {
                 return false;
             }
         });
+
 
         // onClickListener for swatch3 listener
         colourSwatchButton3.setOnClickListener(new View.OnClickListener() {
@@ -258,6 +263,7 @@ public class synthTab1 extends Fragment {
             }
         });
 
+
         // onLongClickListener for swatch3
         colourSwatchButton3.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -275,6 +281,7 @@ public class synthTab1 extends Fragment {
                 return false;
             }
         });
+
 
         // onClickListener for swatch4 listener
         colourSwatchButton4.setOnClickListener(new View.OnClickListener() {
@@ -295,6 +302,7 @@ public class synthTab1 extends Fragment {
             }
         });
 
+
         // onLongClickListener for swatch4
         colourSwatchButton4.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -313,8 +321,7 @@ public class synthTab1 extends Fragment {
             }
         });
 
-
-
+        
         // Returns the view to the layout inflater
         return view;
     }
