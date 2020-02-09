@@ -19,10 +19,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 public class synthTab1 extends Fragment {
@@ -68,6 +71,8 @@ public class synthTab1 extends Fragment {
         colourSwatchButton3     = view.findViewById(R.id.colourSwatch3Button);
         colourSwatchButton4     = view.findViewById(R.id.colourSwatch4Button);
 
+        
+
         // Set initial display of required views
         colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
         colourPickerResults.setText(synthVisor.getResults());
@@ -81,6 +86,8 @@ public class synthTab1 extends Fragment {
         colourSwatchButton2.setColorFilter(Color.rgb(synthVisor.swatch2[0], synthVisor.swatch2[1], synthVisor.swatch2[2]));
         colourSwatchButton3.setColorFilter(Color.rgb(synthVisor.swatch3[0], synthVisor.swatch3[1], synthVisor.swatch3[2]));
         colourSwatchButton4.setColorFilter(Color.rgb(synthVisor.swatch4[0], synthVisor.swatch4[1], synthVisor.swatch4[2]));
+
+
 
         // Caches required for using the colour picker
         colourPickerWheel.setDrawingCacheEnabled(true);
@@ -318,7 +325,168 @@ public class synthTab1 extends Fragment {
     public void onResume() {
         super.onResume();
 
-        
+        BufferedReader reader = null;
+
+        try {
+            FileInputStream fileInputStream = getContext().openFileInput(FILENAME);
+            reader = new BufferedReader(new InputStreamReader(fileInputStream));
+
+            int i = 0; // Counter to know which line of the txt file the program is on
+            String tempString;
+            while ((tempString = reader.readLine()) != null){ // EoF check
+
+                   switch (i){
+
+                       case 0: // RGB Red
+
+                           String[] splitRed = tempString.split("=");
+                           tempString = splitRed[splitRed.length - 1];
+
+                           synthVisor.setRGB_Red(Integer.parseInt(tempString));
+
+                           i++;
+
+                           break;
+
+                       case 1: // RGB Green
+
+                           String[] splitGreen = tempString.split("=");
+                           tempString = splitGreen[splitGreen.length - 1];
+
+                           synthVisor.setRGB_Green(Integer.parseInt(tempString));
+
+                           i++;
+
+                           break;
+
+                       case 2: // RGB Blue
+
+                           String[] splitBlue = tempString.split("=");
+                           tempString = splitBlue[splitBlue.length - 1];
+
+                           synthVisor.setRGB_Blue(Integer.parseInt(tempString));
+
+                           i++;
+
+                           break;
+
+                       case 3: // LED Brightness
+
+                           String[] splitBrightness = tempString.split("=");
+                           tempString = splitBrightness[splitBrightness.length - 1];
+
+                           synthVisor.setLED_Brightness(Integer.parseInt(tempString));
+
+                           i++;
+
+                           break;
+
+                       case 4: // Blink Rate
+
+                           String[] splitBlinkRate = tempString.split("=");
+                           tempString = splitBlinkRate[splitBlinkRate.length - 1];
+
+                           synthVisor.setBlinkRate(Integer.parseInt(tempString));
+
+                           i++;
+
+                           break;
+
+                       case 5: // HEX
+
+                           String[] splitHEX = tempString.split("=");
+                           tempString = splitHEX[splitHEX.length - 1];
+
+                           synthVisor.setHex(tempString);
+
+                           i++;
+
+                           break;
+
+                       case 6: // Swatch1
+
+                           String[] splitSwatch1 = tempString.split("=");
+                           tempString = splitSwatch1[splitSwatch1.length - 1];
+
+                           String swatch1RGB[] = tempString.split(",");
+
+                           synthVisor.swatch1 = new int[]{Integer.parseInt(swatch1RGB[0]), Integer.parseInt(swatch1RGB[1]), Integer.parseInt(swatch1RGB[2])};
+
+                           i++;
+
+                           break;
+
+                       case 7: // Swatch2
+
+                           String[] splitSwatch2 = tempString.split("=");
+                           tempString = splitSwatch2[splitSwatch2.length - 1];
+
+                           String swatch2RGB[] = tempString.split(",");
+
+                           synthVisor.swatch2 = new int[]{Integer.parseInt(swatch2RGB[0]), Integer.parseInt(swatch2RGB[1]), Integer.parseInt(swatch2RGB[2])};
+
+                           i++;
+
+                           break;
+
+                       case 8:
+
+                           String[] splitSwatch3 = tempString.split("=");
+                           tempString = splitSwatch3[splitSwatch3.length - 1];
+
+                           String swatch3RGB[] = tempString.split(",");
+
+                           synthVisor.swatch3 = new int[]{Integer.parseInt(swatch3RGB[0]), Integer.parseInt(swatch3RGB[1]), Integer.parseInt(swatch3RGB[2])};
+
+                           i++;
+
+                           break;
+
+                       case 9:
+
+                           String[] splitSwatch4 = tempString.split("=");
+                           tempString = splitSwatch4[splitSwatch4.length - 1];
+
+                           String swatch4RGB[] = tempString.split(",");
+
+                           synthVisor.swatch4 = new int[]{Integer.parseInt(swatch4RGB[0]), Integer.parseInt(swatch4RGB[1]), Integer.parseInt(swatch4RGB[2])};
+
+                           i++;
+
+                           break;
+                   }
+            }
+
+            // Displaying the synthVisors config
+            colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
+            colourPickerResults.setText(synthVisor.getResults());
+            LEDBrightnessTotal.setText(Integer.toString(synthVisor.LED_Brightness));
+            seekbarLEDBrightness.setProgress(synthVisor.LED_Brightness);
+            seekbarBlinkRate.setProgress(synthVisor.blinkRate);
+            blinkRateTotal.setText(Integer.toString(synthVisor.blinkRate));
+
+            // Setting the saved colours of the user saved swatches
+            colourSwatchButton1.setColorFilter(Color.rgb(synthVisor.swatch1[0], synthVisor.swatch1[1], synthVisor.swatch1[2]));
+            colourSwatchButton2.setColorFilter(Color.rgb(synthVisor.swatch2[0], synthVisor.swatch2[1], synthVisor.swatch2[2]));
+            colourSwatchButton3.setColorFilter(Color.rgb(synthVisor.swatch3[0], synthVisor.swatch3[1], synthVisor.swatch3[2]));
+            colourSwatchButton4.setColorFilter(Color.rgb(synthVisor.swatch4[0], synthVisor.swatch4[1], synthVisor.swatch4[2]));
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } finally {
+            if (reader != null){
+                try {
+                    reader.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 
@@ -410,10 +578,10 @@ class SynthVisor{
         hex             = "#ffffff";
 
         // TODO - at onCreate import saved colour swatches
-        swatch1         = new int[]{200, 54, 145};
-        swatch2         = new int[]{255, 0, 0};
-        swatch3         = new int[]{0, 255, 0};
-        swatch4         = new int[]{0, 0, 255};
+        swatch1         = new int[]{0, 0, 0};
+        swatch2         = new int[]{0, 0, 0};
+        swatch3         = new int[]{0, 0, 0};
+        swatch4         = new int[]{0, 0, 0};
     }
 
     // RGB/HEX Value string
