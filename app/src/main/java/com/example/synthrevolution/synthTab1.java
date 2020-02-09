@@ -175,7 +175,7 @@ public class synthTab1 extends Fragment {
                 synthVisor.setRGB_Red(synthVisor.swatch1[0]);
                 synthVisor.setRGB_Green(synthVisor.swatch1[1]);
                 synthVisor.setRGB_Blue(synthVisor.swatch1[2]);
-                synthVisor.setHex("#" + Integer.toHexString(synthVisor.RGB_Red) + Integer.toHexString(synthVisor.RGB_Green) + Integer.toHexString(synthVisor.RGB_Blue));
+                synthVisor.setHex("#ff" + Integer.toHexString(synthVisor.RGB_Red) + Integer.toHexString(synthVisor.RGB_Green) + Integer.toHexString(synthVisor.RGB_Blue));
 
                 // Setting the textView with the RGB and HEX values
                 colourPickerResults.setText(synthVisor.getResults());
@@ -214,7 +214,7 @@ public class synthTab1 extends Fragment {
                 synthVisor.setRGB_Red(synthVisor.swatch2[0]);
                 synthVisor.setRGB_Green(synthVisor.swatch2[1]);
                 synthVisor.setRGB_Blue(synthVisor.swatch2[2]);
-                synthVisor.setHex("#" + Integer.toHexString(synthVisor.RGB_Red) + Integer.toHexString(synthVisor.RGB_Green) + Integer.toHexString(synthVisor.RGB_Blue));
+                synthVisor.setHex("#ff" + Integer.toHexString(synthVisor.RGB_Red) + Integer.toHexString(synthVisor.RGB_Green) + Integer.toHexString(synthVisor.RGB_Blue));
 
                 // Setting the textView with the RGB and HEX values
                 colourPickerResults.setText(synthVisor.getResults());
@@ -253,7 +253,7 @@ public class synthTab1 extends Fragment {
                 synthVisor.setRGB_Red(synthVisor.swatch3[0]);
                 synthVisor.setRGB_Green(synthVisor.swatch3[1]);
                 synthVisor.setRGB_Blue(synthVisor.swatch3[2]);
-                synthVisor.setHex("#" + Integer.toHexString(synthVisor.RGB_Red) + Integer.toHexString(synthVisor.RGB_Green) + Integer.toHexString(synthVisor.RGB_Blue));
+                synthVisor.setHex("#ff" + Integer.toHexString(synthVisor.RGB_Red) + Integer.toHexString(synthVisor.RGB_Green) + Integer.toHexString(synthVisor.RGB_Blue));
 
                 // Setting the textView with the RGB and HEX values
                 colourPickerResults.setText(synthVisor.getResults());
@@ -292,7 +292,7 @@ public class synthTab1 extends Fragment {
                 synthVisor.setRGB_Red(synthVisor.swatch4[0]);
                 synthVisor.setRGB_Green(synthVisor.swatch4[1]);
                 synthVisor.setRGB_Blue(synthVisor.swatch4[2]);
-                synthVisor.setHex("#" + Integer.toHexString(synthVisor.RGB_Red) + Integer.toHexString(synthVisor.RGB_Green) + Integer.toHexString(synthVisor.RGB_Blue));
+                synthVisor.setHex("#ff" + Integer.toHexString(synthVisor.RGB_Red) + Integer.toHexString(synthVisor.RGB_Green) + Integer.toHexString(synthVisor.RGB_Blue));
 
                 // Setting the textView with the RGB and HEX values
                 colourPickerResults.setText(synthVisor.getResults());
@@ -582,7 +582,7 @@ class SynthVisor{
         RGB_Blue        = 255;
         LED_Brightness  = 100;
         blinkRate       = 100;
-        hex             = "#ffffff";
+        hex             = "#ffffffff"; // AARRGGBB
 
         // TODO - at onCreate import saved colour swatches
         swatch1         = new int[]{0, 0, 0};
@@ -610,17 +610,7 @@ class SynthVisor{
     }
 
     void setHex(String hexValue){
-
-        String i = hexValue;
-
-        if (i.split("").length > 7){
-
-            String[] hexArray = i.split("");
-
-            i = hexArray[0] + hexArray[3] + hexArray[4] + hexArray[5] + hexArray[6] + hexArray[7] + hexArray[8];
-        }
-
-        hex = i;
+        hex = hexValue;
     }
 
     void setLED_Brightness(int brightness){
