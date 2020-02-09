@@ -1,6 +1,7 @@
 package com.example.synthrevolution;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,7 +19,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
 public class synthTab1 extends Fragment {
+
+    private static final String FILENAME = "SynthVisorConfig.txt";
 
     private ImageView   colourPickerWheel;
 
@@ -40,7 +49,6 @@ public class synthTab1 extends Fragment {
 
     public  SynthVisor  synthVisor = new SynthVisor();
 
-    public  String      SHARED_PREFS = "sharedPrefs";
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
@@ -305,23 +313,74 @@ public class synthTab1 extends Fragment {
     }
 
 
+    // Loading synthVisorConfig
     @Override
     public void onResume() {
         super.onResume();
+
+        
     }
 
+
+    // Saving synthVisorConfig
     @Override
     public void onPause() {
         super.onPause();
 
-        
+        BufferedWriter writer = null;
 
+        try {
+            FileOutputStream fileOutputStream = getContext().openFileOutput(FILENAME, Context.MODE_PRIVATE);
 
+            writer = new BufferedWriter((new OutputStreamWriter(fileOutputStream)));
 
+            writer.write("RGB_Red =" + synthVisor.RGB_Red);
+            writer.newLine();
 
+            writer.write("RGB_Green =" + synthVisor.RGB_Green);
+            writer.newLine();
+
+            writer.write("RGB_Blue =" + synthVisor.RGB_Blue);
+            writer.newLine();
+
+            writer.write("LED_Brightness =" + synthVisor.LED_Brightness);
+            writer.newLine();
+
+            writer.write("Blink Rate =" + synthVisor.blinkRate);
+            writer.newLine();
+
+            writer.write("HEX =" + synthVisor.hex);
+            writer.newLine();
+
+            writer.write("Swatch1 =" + synthVisor.swatch1[0] + "," + synthVisor.swatch1[1] + "," + synthVisor.swatch1[2]);
+            writer.newLine();
+
+            writer.write("Swatch2 =" + synthVisor.swatch2[0] + "," + synthVisor.swatch2[1] + "," + synthVisor.swatch2[2]);
+            writer.newLine();
+
+            writer.write("Swatch3 =" + synthVisor.swatch3[0] + "," + synthVisor.swatch3[1] + "," + synthVisor.swatch3[2]);
+            writer.newLine();
+
+            writer.write("Swatch4 =" + synthVisor.swatch4[0] + "," + synthVisor.swatch4[1] + "," + synthVisor.swatch4[2]);
+            writer.newLine();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } finally {
+            if (writer != null){
+                try {
+                    writer.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
-
-
 }
 
 
