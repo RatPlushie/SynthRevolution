@@ -27,6 +27,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Array;
 
 public class synthTab1 extends Fragment {
 
@@ -91,7 +92,7 @@ public class synthTab1 extends Fragment {
         colourPickerWheel.setDrawingCacheEnabled(true);
         colourPickerWheel.buildDrawingCache(true);
 
-        // Image view on touch listener to select colours for the visor LEDs
+        // Image view on touch listener to select colours for the visor LEDs from user touch
         colourPickerWheel.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -99,21 +100,29 @@ public class synthTab1 extends Fragment {
                 if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE){
                     colourBitmap = colourPickerWheel.getDrawingCache();
 
+                    // Getting the colourBitmap of the touch-selected colour
                     int pixel = colourBitmap.getPixel((int)event.getX(), (int)event.getY());
 
-                    // Getting the RGB values
-                    synthVisor.setRGB_Red(Color.red(pixel));
-                    synthVisor.setRGB_Green(Color.green(pixel));
-                    synthVisor.setRGB_Blue(Color.blue(pixel));
+                    // Testing if colour was picked is out of bounds
+                    if (!Integer.toHexString(pixel).equals("0")){
 
-                    // Getting the Hex values
-                    synthVisor.setHex("#" + Integer.toHexString(pixel));
+                        // Getting the RGB values
+                        synthVisor.setRGB_Red(Color.red(pixel));
+                        synthVisor.setRGB_Green(Color.green(pixel));
+                        synthVisor.setRGB_Blue(Color.blue(pixel));
 
-                    // Setting background colour of the selected colour view window according to picked colour
-                    colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
+                        // Getting the Hex values
+                        String pixelString = Integer.toHexString(pixel);
+                        String[] pixelSplit = pixelString.split("");
+                        pixelString = "#" + pixelSplit[2] + pixelSplit[3] + pixelSplit[4] + pixelSplit[5] + pixelSplit[6] + pixelSplit[7];
+                        synthVisor.setHex(pixelString);
 
-                    // Setting the textView with the RGB and HEX values
-                    colourPickerResults.setText(synthVisor.getResults());
+                        // Setting background colour of the selected colour view window according to picked colour
+                        colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
+
+                        // Setting the textView with the RGB and HEX values
+                        colourPickerResults.setText(synthVisor.getResults());
+                    }
                 }
                 return true;
             }
@@ -171,17 +180,16 @@ public class synthTab1 extends Fragment {
             @Override
             public void onClick(View v) {
 
-                // Updating values in the synthVisor object
-                synthVisor.setRGB_Red(synthVisor.swatch1[0]);
-                synthVisor.setRGB_Green(synthVisor.swatch1[1]);
-                synthVisor.setRGB_Blue(synthVisor.swatch1[2]);
-                synthVisor.setHex("#ff" + Integer.toHexString(synthVisor.RGB_Red) + Integer.toHexString(synthVisor.RGB_Green) + Integer.toHexString(synthVisor.RGB_Blue));
+                // Updating the synthVisor's RGB/Hex values to this specific swatch
+                synthVisor.clickSwatch(0);
 
                 // Setting the textView with the RGB and HEX values
                 colourPickerResults.setText(synthVisor.getResults());
 
                 // Setting the displayed colour in the selected colour view
                 colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
+
+
             }
         });
 
@@ -210,11 +218,8 @@ public class synthTab1 extends Fragment {
             @Override
             public void onClick(View v) {
 
-                // Updating values in the synthVisor object
-                synthVisor.setRGB_Red(synthVisor.swatch2[0]);
-                synthVisor.setRGB_Green(synthVisor.swatch2[1]);
-                synthVisor.setRGB_Blue(synthVisor.swatch2[2]);
-                synthVisor.setHex("#ff" + Integer.toHexString(synthVisor.RGB_Red) + Integer.toHexString(synthVisor.RGB_Green) + Integer.toHexString(synthVisor.RGB_Blue));
+                // Updating the synthVisor's RGB/Hex values to this specific swatch
+                synthVisor.clickSwatch(1);
 
                 // Setting the textView with the RGB and HEX values
                 colourPickerResults.setText(synthVisor.getResults());
@@ -249,11 +254,8 @@ public class synthTab1 extends Fragment {
             @Override
             public void onClick(View v) {
 
-                // Updating values in the synthVisor object
-                synthVisor.setRGB_Red(synthVisor.swatch3[0]);
-                synthVisor.setRGB_Green(synthVisor.swatch3[1]);
-                synthVisor.setRGB_Blue(synthVisor.swatch3[2]);
-                synthVisor.setHex("#ff" + Integer.toHexString(synthVisor.RGB_Red) + Integer.toHexString(synthVisor.RGB_Green) + Integer.toHexString(synthVisor.RGB_Blue));
+                // Updating the synthVisor's RGB/Hex values to this specific swatch
+                synthVisor.clickSwatch(2);
 
                 // Setting the textView with the RGB and HEX values
                 colourPickerResults.setText(synthVisor.getResults());
@@ -288,11 +290,8 @@ public class synthTab1 extends Fragment {
             @Override
             public void onClick(View v) {
 
-                // Updating values in the synthVisor object
-                synthVisor.setRGB_Red(synthVisor.swatch4[0]);
-                synthVisor.setRGB_Green(synthVisor.swatch4[1]);
-                synthVisor.setRGB_Blue(synthVisor.swatch4[2]);
-                synthVisor.setHex("#ff" + Integer.toHexString(synthVisor.RGB_Red) + Integer.toHexString(synthVisor.RGB_Green) + Integer.toHexString(synthVisor.RGB_Blue));
+                // Updating the synthVisor's RGB/Hex values to this specific swatch
+                synthVisor.clickSwatch(3);
 
                 // Setting the textView with the RGB and HEX values
                 colourPickerResults.setText(synthVisor.getResults());
@@ -576,15 +575,13 @@ class SynthVisor{
     // SynthVisor constructor method
     SynthVisor(){
 
-        // TODO - at onCreate import last selected colour
         RGB_Red         = 255;
         RGB_Green       = 255;
         RGB_Blue        = 255;
         LED_Brightness  = 100;
         blinkRate       = 100;
-        hex             = "#ffffffff"; // AARRGGBB
+        hex             = "#ffffff"; // RRGGBB
 
-        // TODO - at onCreate import saved colour swatches
         swatch1         = new int[]{0, 0, 0};
         swatch2         = new int[]{0, 0, 0};
         swatch3         = new int[]{0, 0, 0};
@@ -648,5 +645,31 @@ class SynthVisor{
         }
 
 
+    }
+
+    void clickSwatch(int swatchNo){
+
+        int[][] swatch = new int[][]{swatch1, swatch2, swatch3, swatch4};
+
+        setRGB_Red(swatch[swatchNo][0]);
+        setRGB_Green(swatch[swatchNo][1]);
+        setRGB_Blue(swatch[swatchNo][2]);
+
+        // TODO - Parse hexs better, so single "0" is wrote "00"
+        // setHex("#" + Integer.toHexString(RGB_Red) + Integer.toHexString(RGB_Green) + Integer.toHexString(RGB_Blue));
+
+        // Building the hex string
+        String[] hexArray = new String[]{Integer.toHexString(RGB_Red), Integer.toHexString(RGB_Green), Integer.toHexString(RGB_Blue)};
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("#");
+        for (String i : hexArray){
+            if (i.equals("0")){
+                stringBuilder.append("00");
+            } else {
+                stringBuilder.append(i);
+            }
+        }
+
+        setHex(stringBuilder.toString());
     }
 }
