@@ -1,4 +1,4 @@
-package com.example.synthrevolution;
+package com.ratbox.synthrevolution;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -1,4 +1,4 @@
-#Sun Feb 09 20:12:59 CET 2020
+#Mon Feb 10 18:14:48 CET 2020
 base.0=/home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

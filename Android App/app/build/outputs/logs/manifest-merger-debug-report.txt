@@ -38,7 +38,7 @@ INJECTED from /home/aki/Documents/Projects/Android Studio/SynthRevolution/Androi
 INJECTED from /home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml:2:1-29:12
 INJECTED from /home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml:2:1-29:12
 	package
-		ADDED from /home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml:3:5-42
+		ADDED from /home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml:3:5-41
 		INJECTED from /home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml
 		INJECTED from /home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml
 	android:versionName
@@ -87,14 +87,14 @@ MERGED from [androidx.lifecycle:lifecycle-process:2.0.0] /home/aki/.gradle/cache
 		ADDED from /home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml:11:9-35
 	android:theme
 		ADDED from /home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml:16:9-40
-activity#com.example.synthrevolution.MainActivity
+activity#com.ratbox.synthrevolution.MainActivity
 ADDED from /home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml:17:9-26:20
 	android:label
 		ADDED from /home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml:19:13-45
 	android:theme
 		ADDED from /home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml:20:13-56
 	android:name
-		ADDED from /home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml:18:13-41
+		ADDED from /home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml:18:13-67
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
 ADDED from /home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml:21:13-25:29
 action#android.intent.action.MAIN

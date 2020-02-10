@@ -38,8 +38,8 @@
 24-->/home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml:16:9-40
 25        <activity
 25-->/home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml:17:9-26:20
-26            android:name="com.example.synthrevolution.MainActivity"
-26-->/home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml:18:13-41
+26            android:name="com.ratbox.synthrevolution.MainActivity"
+26-->/home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml:18:13-67
 27            android:label="@string/app_name"
 27-->/home/aki/Documents/Projects/Android Studio/SynthRevolution/Android App/app/src/main/AndroidManifest.xml:19:13-45
 28            android:theme="@style/AppTheme.NoActionBar" >

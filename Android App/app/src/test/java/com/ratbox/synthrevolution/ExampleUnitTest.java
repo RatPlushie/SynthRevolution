@@ -1,4 +1,4 @@
-package com.example.synthrevolution;
+package com.ratbox.synthrevolution;
 
 import org.junit.Test;
 
