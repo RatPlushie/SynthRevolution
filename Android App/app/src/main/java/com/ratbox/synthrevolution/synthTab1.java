@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,7 +28,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Array;
 
 public class synthTab1 extends Fragment {
 
@@ -41,8 +41,8 @@ public class synthTab1 extends Fragment {
 
     private View        colourPickerSelected;
 
-    private SeekBar     seekbarLEDBrightness;
-    private SeekBar     seekbarBlinkRate;
+    private SeekBar     seekBarLEDBrightness;
+    private SeekBar     seekBarBlinkRate;
 
     private ImageButton colourSwatchButton1;
     private ImageButton colourSwatchButton2;
@@ -63,8 +63,8 @@ public class synthTab1 extends Fragment {
         colourPickerWheel       = view.findViewById(R.id.colourPickerImageView);
         colourPickerResults     = view.findViewById(R.id.colourPickerTextView);
         colourPickerSelected    = view.findViewById(R.id.colourView);
-        seekbarLEDBrightness    = view.findViewById(R.id.LEDBrightnessSeekBar);
-        seekbarBlinkRate        = view.findViewById(R.id.blinkRateSeekbar);
+        seekBarLEDBrightness = view.findViewById(R.id.LEDBrightnessSeekBar);
+        seekBarBlinkRate = view.findViewById(R.id.blinkRateSeekbar);
         LEDBrightnessTotal      = view.findViewById(R.id.totalLEDBrightnessTextView);
         blinkRateTotal          = view.findViewById(R.id.blinkRateTotalTextView);
         colourSwatchButton1     = view.findViewById(R.id.colourSwatch1Button);
@@ -77,8 +77,8 @@ public class synthTab1 extends Fragment {
         colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
         colourPickerResults.setText(synthVisor.getResults());
         LEDBrightnessTotal.setText(Integer.toString(synthVisor.LED_Brightness));
-        seekbarLEDBrightness.setProgress(synthVisor.LED_Brightness);
-        seekbarBlinkRate.setProgress(synthVisor.blinkRate);
+        seekBarLEDBrightness.setProgress(synthVisor.LED_Brightness);
+        seekBarBlinkRate.setProgress(synthVisor.blinkRate);
         blinkRateTotal.setText(Integer.toString(synthVisor.blinkRate));
 
         // Setting the saved colours of the user saved swatches
@@ -100,28 +100,33 @@ public class synthTab1 extends Fragment {
                 if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE){
                     colourBitmap = colourPickerWheel.getDrawingCache();
 
-                    // Getting the colourBitmap of the touch-selected colour
-                    int pixel = colourBitmap.getPixel((int)event.getX(), (int)event.getY());
+                    try {
+                        // Getting the colourBitmap of the touch-selected colour
+                        int pixel = colourBitmap.getPixel((int)event.getX(), (int)event.getY());
 
-                    // Testing if colour was picked is out of bounds
-                    if (!Integer.toHexString(pixel).equals("0")){
+                        // Testing if colour was picked is out of bounds
+                        if (!Integer.toHexString(pixel).equals("0")){
 
-                        // Getting the RGB values
-                        synthVisor.setRGB_Red(Color.red(pixel));
-                        synthVisor.setRGB_Green(Color.green(pixel));
-                        synthVisor.setRGB_Blue(Color.blue(pixel));
+                            // Getting the RGB values
+                            synthVisor.setRGB_Red(Color.red(pixel));
+                            synthVisor.setRGB_Green(Color.green(pixel));
+                            synthVisor.setRGB_Blue(Color.blue(pixel));
 
-                        // Getting the Hex values
-                        String pixelString = Integer.toHexString(pixel);
-                        String[] pixelSplit = pixelString.split("");
-                        pixelString = "#" + pixelSplit[2] + pixelSplit[3] + pixelSplit[4] + pixelSplit[5] + pixelSplit[6] + pixelSplit[7];
-                        synthVisor.setHex(pixelString);
+                            // Getting the Hex values
+                            String pixelString = Integer.toHexString(pixel);
+                            String[] pixelSplit = pixelString.split("");
+                            pixelString = "#" + pixelSplit[2] + pixelSplit[3] + pixelSplit[4] + pixelSplit[5] + pixelSplit[6] + pixelSplit[7];
+                            synthVisor.setHex(pixelString);
 
-                        // Setting background colour of the selected colour view window according to picked colour
-                        colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
+                            // Setting background colour of the selected colour view window according to picked colour
+                            colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
 
-                        // Setting the textView with the RGB and HEX values
-                        colourPickerResults.setText(synthVisor.getResults());
+                            // Setting the textView with the RGB and HEX values
+                            colourPickerResults.setText(synthVisor.getResults());
+                        }
+
+                    } catch (Exception colourPickerOutOfBounds){
+                        Log.e("ColourPicker", "ColourBitmap out of bounds");
                     }
                 }
                 return true;
@@ -129,8 +134,8 @@ public class synthTab1 extends Fragment {
         });
 
 
-        // Seekbar onChange listener to update the synthVisor's brightness level
-        seekbarLEDBrightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        // SeekBar onChange listener to update the synthVisor's brightness level
+        seekBarLEDBrightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
@@ -152,7 +157,7 @@ public class synthTab1 extends Fragment {
 
 
         // Seekbar onChange listener to update the synthVisor's blink rate
-        seekbarBlinkRate.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBarBlinkRate.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
@@ -467,8 +472,8 @@ public class synthTab1 extends Fragment {
             colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
             colourPickerResults.setText(synthVisor.getResults());
             LEDBrightnessTotal.setText(Integer.toString(synthVisor.LED_Brightness));
-            seekbarLEDBrightness.setProgress(synthVisor.LED_Brightness);
-            seekbarBlinkRate.setProgress(synthVisor.blinkRate);
+            seekBarLEDBrightness.setProgress(synthVisor.LED_Brightness);
+            seekBarBlinkRate.setProgress(synthVisor.blinkRate);
             blinkRateTotal.setText(Integer.toString(synthVisor.blinkRate));
 
             // Setting the saved colours of the user saved swatches

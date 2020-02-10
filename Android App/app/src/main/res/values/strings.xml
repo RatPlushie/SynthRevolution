@@ -6,4 +6,6 @@
 
     <string name="brightness">LED Brightness:</string>
     <string name="blinkrate">Blink Rate:</string>
+
+
 </resources>
