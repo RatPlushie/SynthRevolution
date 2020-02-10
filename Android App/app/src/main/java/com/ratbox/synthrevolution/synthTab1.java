@@ -156,7 +156,7 @@ public class synthTab1 extends Fragment {
         });
 
 
-        // Seekbar onChange listener to update the synthVisor's blink rate
+        // SeekBar onChange listener to update the synthVisor's blink rate
         seekBarBlinkRate.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -659,9 +659,6 @@ class SynthVisor{
         setRGB_Red(swatch[swatchNo][0]);
         setRGB_Green(swatch[swatchNo][1]);
         setRGB_Blue(swatch[swatchNo][2]);
-
-        // TODO - Parse hexs better, so single "0" is wrote "00"
-        // setHex("#" + Integer.toHexString(RGB_Red) + Integer.toHexString(RGB_Green) + Integer.toHexString(RGB_Blue));
 
         // Building the hex string
         String[] hexArray = new String[]{Integer.toHexString(RGB_Red), Integer.toHexString(RGB_Green), Integer.toHexString(RGB_Blue)};
