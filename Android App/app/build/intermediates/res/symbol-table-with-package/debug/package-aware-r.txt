@@ -911,6 +911,7 @@ color switch_thumb_normal_material_dark
 color switch_thumb_normal_material_light
 color test_mtrl_calendar_day
 color test_mtrl_calendar_day_selected
+color textColourPrimary
 color tooltip_background_dark
 color tooltip_background_light
 dimen abc_action_bar_content_inset_material
@@ -1347,7 +1348,8 @@ drawable design_ic_visibility
 drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
-drawable ic_bluetooth
+drawable ic_bluetooth_connected
+drawable ic_bluetooth_disconnected
 drawable ic_calendar_black_24dp
 drawable ic_clear_black_24dp
 drawable ic_colour_swatch
@@ -1467,6 +1469,7 @@ id blinkRateSeekbar
 id blinkRateTextView
 id blinkRateTotalTextView
 id blocking
+id bluetoothButton
 id bottom
 id buttonPanel
 id cancel_button
@@ -1633,7 +1636,6 @@ id search_voice_btn
 id section_label
 id select_dialog_listview
 id selected
-id sendToSuitButton
 id shortcut
 id showCustom
 id showHome

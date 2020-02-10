@@ -1,7 +1,6 @@
-package com.example.synthrevolution.ui.main;
+package com.ratbox.synthrevolution.ui.main;
 
 import android.content.Context;
-import android.view.MotionEvent;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -9,10 +8,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.synthrevolution.R;
-import com.example.synthrevolution.synthTab1;
-import com.example.synthrevolution.synthTab2;
-import com.example.synthrevolution.synthTab3;
+import com.ratbox.synthrevolution.R;
+import com.ratbox.synthrevolution.synthTab1;
+import com.ratbox.synthrevolution.synthTab2;
+import com.ratbox.synthrevolution.synthTab3;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

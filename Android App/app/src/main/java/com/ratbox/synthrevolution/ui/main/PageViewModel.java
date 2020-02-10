@@ -1,4 +1,4 @@
-package com.example.synthrevolution.ui.main;
+package com.ratbox.synthrevolution.ui.main;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
