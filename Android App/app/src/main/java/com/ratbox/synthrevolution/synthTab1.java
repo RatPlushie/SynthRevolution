@@ -112,11 +112,19 @@ public class synthTab1 extends Fragment {
                             synthVisor.setRGB_Green(Color.green(pixel));
                             synthVisor.setRGB_Blue(Color.blue(pixel));
 
-                            // Getting the Hex values
-                            String pixelString = Integer.toHexString(pixel);
-                            String[] pixelSplit = pixelString.split("");
-                            pixelString = "#" + pixelSplit[2] + pixelSplit[3] + pixelSplit[4] + pixelSplit[5] + pixelSplit[6] + pixelSplit[7];
-                            synthVisor.setHex(pixelString);
+                            // Building the hex string
+                            String[] RGBArray = new String[]{Integer.toHexString(synthVisor.RGB_Red), Integer.toHexString(synthVisor.RGB_Green), Integer.toHexString(synthVisor.RGB_Blue)};
+                            StringBuilder stringBuilder = new StringBuilder();
+                            stringBuilder.append("#");
+                            for (String i : RGBArray){
+                                if (i.equals("0")){
+                                    stringBuilder.append("00");
+                                } else {
+                                    stringBuilder.append(i);
+                                }
+                            }
+
+                            synthVisor.setHex(stringBuilder.toString());
 
                             // Setting background colour of the selected colour view window according to picked colour
                             colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
@@ -156,7 +164,7 @@ public class synthTab1 extends Fragment {
         });
 
 
-        // Seekbar onChange listener to update the synthVisor's blink rate
+        // SeekBar onChange listener to update the synthVisor's blink rate
         seekBarBlinkRate.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -660,14 +668,11 @@ class SynthVisor{
         setRGB_Green(swatch[swatchNo][1]);
         setRGB_Blue(swatch[swatchNo][2]);
 
-        // TODO - Parse hexs better, so single "0" is wrote "00"
-        // setHex("#" + Integer.toHexString(RGB_Red) + Integer.toHexString(RGB_Green) + Integer.toHexString(RGB_Blue));
-
         // Building the hex string
-        String[] hexArray = new String[]{Integer.toHexString(RGB_Red), Integer.toHexString(RGB_Green), Integer.toHexString(RGB_Blue)};
+        String[] RGBArray = new String[]{Integer.toHexString(RGB_Red), Integer.toHexString(RGB_Green), Integer.toHexString(RGB_Blue)};
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("#");
-        for (String i : hexArray){
+        for (String i : RGBArray){
             if (i.equals("0")){
                 stringBuilder.append("00");
             } else {
