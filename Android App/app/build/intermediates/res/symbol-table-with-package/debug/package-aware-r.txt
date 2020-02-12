@@ -1470,6 +1470,10 @@ id blinkRateTextView
 id blinkRateTotalTextView
 id blocking
 id bluetoothButton
+id bluetoothDeviceMAC
+id bluetoothDeviceName
+id bluetoothParentLayout
+id bluetoothRecyclerView
 id bottom
 id buttonPanel
 id cancel_button
@@ -1670,6 +1674,7 @@ id tag_screen_reader_focusable
 id tag_transition_group
 id tag_unhandled_key_event_manager
 id tag_unhandled_key_listeners
+id testText
 id test_checkbox_android_button_tint
 id test_checkbox_app_button_tint
 id text
@@ -1769,6 +1774,8 @@ layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_main
+layout bluetooth_listitem
+layout bluetooth_popout
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
