@@ -8,7 +8,9 @@
 /Android App/.idea/navEditor.xml
 /Android App/.idea/assetWizardSettings.xml
 .DS_Store
-/Android App/build
+/Android App/app/build
 /Android App/captures
 .externalNativeBuild
 .cxx
+
+Android App/.idea/
