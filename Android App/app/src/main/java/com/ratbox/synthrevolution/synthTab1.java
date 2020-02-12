@@ -94,42 +94,6 @@ public class synthTab1 extends Fragment {
         colourSwatchButton4.setColorFilter(Color.rgb(synthVisor.swatch4[0], synthVisor.swatch4[1], synthVisor.swatch4[2]));
 
 
-        /*
-        // Initialising Bluetooth Adapter
-        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        // Creating a set list of all the paired devices the phone has connected to
-        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
-
-
-        if (pairedDevices.size() > 0){
-
-            for (BluetoothDevice bluetoothDevice : pairedDevices){
-
-
-                deviceName   = bluetoothDevice.getName();
-                deviceMAC    = bluetoothDevice.getAddress();
-
-
-
-                Log.d("Bluetooth device found", deviceName + " - " + deviceMAC);
-
-
-
-
-
-
-            }
-        }
-
-         */
-
-
-
-
-
-
-
         // Caches required for using the colour picker
         colourPickerWheel.setDrawingCacheEnabled(true);
         colourPickerWheel.buildDrawingCache(true);
