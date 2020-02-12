@@ -48,7 +48,8 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
             public void onClick(View v) {
 
                 // TODO - select bluetooth device and pass device info to other methods
-                Toast.makeText(mContext, bluetoothNames.get(position) + " pressed", Toast.LENGTH_SHORT);
+                Toast.makeText(mContext, bluetoothNames.get(position) + " pressed", Toast.LENGTH_SHORT).show();
+
 
 
             }
@@ -70,7 +71,7 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
 
             bluetoothDeviceName = itemView.findViewById(R.id.bluetoothDeviceName);
             bluetoothDeviceMAC  = itemView.findViewById(R.id.bluetoothDeviceMAC);
-            parentLayout = itemView.findViewById(R.id.bluetoothParentLayout);
+            parentLayout        = itemView.findViewById(R.id.bluetoothParentLayout);
         }
     }
 }
