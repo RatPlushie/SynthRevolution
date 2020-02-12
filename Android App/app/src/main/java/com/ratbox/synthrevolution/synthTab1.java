@@ -1,6 +1,8 @@
 package com.ratbox.synthrevolution;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -28,6 +30,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Set;
 
 public class synthTab1 extends Fragment {
 
@@ -50,6 +53,9 @@ public class synthTab1 extends Fragment {
     private ImageButton colourSwatchButton4;
 
     private Bitmap      colourBitmap;
+
+    String deviceName;
+    String deviceMAC;
 
     public  SynthVisor  synthVisor = new SynthVisor();
 
@@ -86,6 +92,42 @@ public class synthTab1 extends Fragment {
         colourSwatchButton2.setColorFilter(Color.rgb(synthVisor.swatch2[0], synthVisor.swatch2[1], synthVisor.swatch2[2]));
         colourSwatchButton3.setColorFilter(Color.rgb(synthVisor.swatch3[0], synthVisor.swatch3[1], synthVisor.swatch3[2]));
         colourSwatchButton4.setColorFilter(Color.rgb(synthVisor.swatch4[0], synthVisor.swatch4[1], synthVisor.swatch4[2]));
+
+
+        /*
+        // Initialising Bluetooth Adapter
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        // Creating a set list of all the paired devices the phone has connected to
+        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+
+
+        if (pairedDevices.size() > 0){
+
+            for (BluetoothDevice bluetoothDevice : pairedDevices){
+
+
+                deviceName   = bluetoothDevice.getName();
+                deviceMAC    = bluetoothDevice.getAddress();
+
+
+
+                Log.d("Bluetooth device found", deviceName + " - " + deviceMAC);
+
+
+
+
+
+
+            }
+        }
+
+         */
+
+
+
+
+
 
 
         // Caches required for using the colour picker
