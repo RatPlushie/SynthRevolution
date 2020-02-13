@@ -30,6 +30,8 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
     private ArrayList<String>   bluetoothMACs;
     private Context             mContext;
 
+    public static final String SHARED_PREFS = "sharedPrefs";
+
 
     // Default constructor
     public BluetoothRecyclerViewAdapter(Context mContext, ArrayList<String> bluetoothNames, ArrayList<String> bluetoothMACs) {
@@ -52,19 +54,12 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
         holder.bluetoothDeviceName.setText(bluetoothNames.get(position));
         holder.bluetoothDeviceMAC.setText(bluetoothMACs.get(position));
 
-
-
-
         // Creating onClick listener to each bluetooth device
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                // TODO - Send to other activities which bluetooth device got selected
-
-                /* THIS CODE NEEDS MOVED TO MAINACTIVITY (AND MAYBE EVERY ACTIVITY THAT REQUIRES BLUETOOTH CONNECTIVITY
-
-
+                // Getting the relevant UUID
                 // Initialising Bluetooth Adapter
                 BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -76,27 +71,22 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
                 UUID mUUID = parcelUuid[0].getUuid();
                 Log.d("UUID Discovered", mUUID.toString());
 
-                // Initialising Bluetooth Socket
-                BluetoothSocket bluetoothSocket = null;
+                // Moving the selected bluetooth device to shared preferences for persistent discovery
+                // Initialisation of the shared preferences object
+                SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
 
-                // do-while counter to try to connect up to three times
-                int counter = 0;
-                do {
-                    try {
-                        bluetoothSocket = bluetoothDevice.createRfcommSocketToServiceRecord(mUUID);
-                        bluetoothSocket.connect();
-                        Log.d("Bluetooth connection", bluetoothSocket.isConnected() + "");
-                        Toast.makeText(mContext, bluetoothNames.get(position) + " is connected", Toast.LENGTH_SHORT).show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } while (!bluetoothSocket.isConnected() && counter < 3);
+                // Initialisation of the shared preferences editor
+                SharedPreferences.Editor editor = sharedPreferences.edit();
 
+                // Adding Name, MAC, and UUID to sharedPrefs
+                editor.putString("bluetoothName", bluetoothNames.get(position));
+                editor.putString("bluetoothMAC", bluetoothMACs.get(position));
+                editor.putString("bluetoothUUID", mUUID.toString());
 
-                 */
+                // Applying changes to the sharedPrefs file
+                editor.apply();
 
-
-
+                Toast.makeText(mContext,"Bluetooth Device Selected",Toast.LENGTH_SHORT).show();
             }
         });
     }
