@@ -94,6 +94,8 @@ public class synthTab1 extends Fragment {
         colourSwatchButton4.setColorFilter(Color.rgb(synthVisor.swatch4[0], synthVisor.swatch4[1], synthVisor.swatch4[2]));
 
 
+
+
         // Caches required for using the colour picker
         colourPickerWheel.setDrawingCacheEnabled(true);
         colourPickerWheel.buildDrawingCache(true);

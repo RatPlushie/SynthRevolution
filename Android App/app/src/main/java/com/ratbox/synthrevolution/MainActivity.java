@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
                 mDialog.show();
                 Log.d("Dialog box", "Displayed");
 
+
+
             } else {
                 Toast.makeText(this, "Please pair your SynthVisor in your device's bluetooth settings", Toast.LENGTH_LONG).show();
             }
