@@ -47,25 +47,25 @@ public class synthTab1 extends Fragment {
 
     private ImageView   colourPickerWheel;
 
-    private TextView    colourPickerResults;
-    private TextView    LEDBrightnessTotal;
-    private TextView    blinkRateTotal;
+    private TextView            colourPickerResults;
+    private TextView            LEDBrightnessTotal;
+    private TextView            blinkRateTotal;
 
-    private View        colourPickerSelected;
+    private View                colourPickerSelected;
 
-    private SeekBar     seekBarLEDBrightness;
-    private SeekBar     seekBarBlinkRate;
+    private SeekBar             seekBarLEDBrightness;
+    private SeekBar             seekBarBlinkRate;
 
-    private ImageButton colourSwatchButton1;
-    private ImageButton colourSwatchButton2;
-    private ImageButton colourSwatchButton3;
-    private ImageButton colourSwatchButton4;
-    private ImageButton bluetoothButton;
+    private ImageButton         colourSwatchButton1;
+    private ImageButton         colourSwatchButton2;
+    private ImageButton         colourSwatchButton3;
+    private ImageButton         colourSwatchButton4;
+    private ImageButton         bluetoothButton;
 
-    private Bitmap      colourBitmap;
+    private Bitmap              colourBitmap;
 
-    public  SynthVisor  synthVisor = new SynthVisor();
-    public  BluetoothManager bluetoothManager = new BluetoothManager();
+    public  SynthVisor          synthVisor = new SynthVisor();
+    public  BluetoothManager    bluetoothManager = new BluetoothManager();
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -145,6 +145,11 @@ public class synthTab1 extends Fragment {
 
                             // Setting the textView with the RGB and HEX values
                             colourPickerResults.setText(synthVisor.getResults());
+
+                            // Ensuring the bluetooth device is connected before sending
+                            if (bluetoothManager.bluetoothSocket.isConnected()){
+                                bluetoothManager.sendSynthVisor(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue, synthVisor.LED_Brightness, synthVisor.blinkRate);
+                            }
                         }
 
                     } catch (Exception colourPickerOutOfBounds){
