@@ -1,13 +1,6 @@
 package com.ratbox.synthrevolution.ui.main;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.ParcelUuid;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ratbox.synthrevolution.R;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<BluetoothRecyclerViewAdapter.ViewHolder> {
 
@@ -32,12 +23,19 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
 
     public static final String SHARED_PREFS = "sharedPrefs";
 
+    BluetoothManager bluetoothManager = new BluetoothManager();
+
 
     // Default constructor
     public BluetoothRecyclerViewAdapter(Context mContext, ArrayList<String> bluetoothNames, ArrayList<String> bluetoothMACs) {
         this.bluetoothNames = bluetoothNames;
         this.bluetoothMACs = bluetoothMACs;
         this.mContext = mContext;
+
+        // Passing the ArrayLists into the bluetoothManager class
+        bluetoothManager.listBluetoothNames = bluetoothNames;
+        bluetoothManager.listBluetoothMACs = bluetoothMACs;
+
     }
 
     @NonNull
@@ -54,39 +52,25 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
         holder.bluetoothDeviceName.setText(bluetoothNames.get(position));
         holder.bluetoothDeviceMAC.setText(bluetoothMACs.get(position));
 
+        // Populating bluetoothManager with the selected Name & MAC address
+        bluetoothManager.deviceName = bluetoothNames.get(position);
+        bluetoothManager.deviceMAC = bluetoothMACs.get(position);
+
         // Creating onClick listener to each bluetooth device
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                // Getting the relevant UUID
-                // Initialising Bluetooth Adapter
-                BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
                 // Initialising Bluetooth Device
-                BluetoothDevice bluetoothDevice = bluetoothAdapter.getRemoteDevice(bluetoothMACs.get(position));
+                bluetoothManager.getUUID();
 
-                // Finding the array of all UUIDs the connected device has
-                ParcelUuid[] parcelUuid = bluetoothDevice.getUuids();
-                UUID mUUID = parcelUuid[0].getUuid();
-                Log.d("UUID Discovered", mUUID.toString());
+                // Saving the selected device to android local memory
+                bluetoothManager.saveConfig(mContext);
 
-                // Moving the selected bluetooth device to shared preferences for persistent discovery
-                // Initialisation of the shared preferences object
-                SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+                /* MAY NOT NEED ONCE FURTHER DEVELOPED */
+                bluetoothManager.connect();
 
-                // Initialisation of the shared preferences editor
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                // Adding Name, MAC, and UUID to sharedPrefs
-                editor.putString("bluetoothName", bluetoothNames.get(position));
-                editor.putString("bluetoothMAC", bluetoothMACs.get(position));
-                editor.putString("bluetoothUUID", mUUID.toString());
-
-                // Applying changes to the sharedPrefs file
-                editor.apply();
-
-                Toast.makeText(mContext,"Bluetooth Device Selected",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext,bluetoothManager.deviceName + " device Selected",Toast.LENGTH_SHORT).show();
             }
         });
     }

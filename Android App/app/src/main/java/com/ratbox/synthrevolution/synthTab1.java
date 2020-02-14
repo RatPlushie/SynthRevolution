@@ -26,6 +26,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.ratbox.synthrevolution.ui.main.BluetoothManager;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -63,6 +65,7 @@ public class synthTab1 extends Fragment {
     private Bitmap      colourBitmap;
 
     public  SynthVisor  synthVisor = new SynthVisor();
+    public  BluetoothManager bluetoothManager = new BluetoothManager();
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -229,7 +232,7 @@ public class synthTab1 extends Fragment {
                 // Setting the new colour of the swatch button
                 colourSwatchButton1.setColorFilter(Color.rgb(synthVisor.swatch1[0], synthVisor.swatch1[1], synthVisor.swatch1[2]));
 
-                // Making a save toast message
+                // Making a saveConfig toast message
                 Toast.makeText(getActivity(), "Colour saved", Toast.LENGTH_SHORT).show();
 
                 return false;
@@ -265,7 +268,7 @@ public class synthTab1 extends Fragment {
                 // Setting the new colour of the swatch button
                 colourSwatchButton2.setColorFilter(Color.rgb(synthVisor.swatch2[0], synthVisor.swatch2[1], synthVisor.swatch2[2]));
 
-                // Making a save toast message
+                // Making a saveConfig toast message
                 Toast.makeText(getActivity(), "Colour saved", Toast.LENGTH_SHORT).show();
 
                 return false;
@@ -301,7 +304,7 @@ public class synthTab1 extends Fragment {
                 // Setting the new colour of the swatch button
                 colourSwatchButton3.setColorFilter(Color.rgb(synthVisor.swatch3[0], synthVisor.swatch3[1], synthVisor.swatch3[2]));
 
-                // Making a save toast message
+                // Making a saveConfig toast message
                 Toast.makeText(getActivity(), "Colour saved", Toast.LENGTH_SHORT).show();
 
                 return false;
@@ -337,12 +340,14 @@ public class synthTab1 extends Fragment {
                 // Setting the new colour of the swatch button
                 colourSwatchButton4.setColorFilter(Color.rgb(synthVisor.swatch4[0], synthVisor.swatch4[1], synthVisor.swatch4[2]));
 
-                // Making a save toast message
+                // Making a saveConfig toast message
                 Toast.makeText(getActivity(), "Colour saved", Toast.LENGTH_SHORT).show();
 
                 return false;
             }
         });
+
+        bluetoothManager.loadConfig(getContext());
 
         // Returns the view to the layout inflater
         return view;
@@ -517,10 +522,7 @@ public class synthTab1 extends Fragment {
             }
         }
 
-
-        // Resuming bluetooth connection if possible with known information
-        synthVisor.setBluetooth(getContext());
-        synthVisor.connectBluetooth();
+        // TODO - resume a bluetooth connection
     }
 
 
@@ -534,7 +536,7 @@ public class synthTab1 extends Fragment {
         try {
             FileOutputStream fileOutputStream = getContext().openFileOutput(FILENAME, Context.MODE_PRIVATE);
 
-            writer = new BufferedWriter((new OutputStreamWriter(fileOutputStream)));
+            writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
 
             writer.write("RGB_Red =" + synthVisor.RGB_Red);
             writer.newLine();
@@ -630,6 +632,8 @@ class SynthVisor {
         return results;
     }
 
+    // TODO - instead of all these basic set functions convert them all to just "obj.variable = x" instead of calling methods, Clean your damn code!
+
     void setRGB_Red(int red){
         RGB_Red = red;
     }
@@ -704,60 +708,5 @@ class SynthVisor {
         }
 
         setHex(stringBuilder.toString());
-    }
-
-    void setBluetooth(Context context){
-
-        // Initialisation of the shared preference object to load character data onResume
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-
-        if (!sharedPreferences.getString("bluetoothName", "").isEmpty()){
-            bluetoothName   = sharedPreferences.getString("bluetoothName", "");
-        }
-
-        if (!sharedPreferences.getString("bluetoothMAC", "").isEmpty()){
-            bluetoothMAC    = sharedPreferences.getString("bluetoothMAC", "");
-        }
-
-        if (!sharedPreferences.getString("bluetoothUUID", "").isEmpty()){
-            bluetoothUUID   = sharedPreferences.getString("bluetoothUUID", "");
-        }
-    }
-
-    void connectBluetooth(){
-
-        // Checking to see if the device has the required info to actually connect. Potentially throwable if there is no information in shared preferences about the bluetooth device
-        try{
-
-            // Initialising Bluetooth Adapter
-            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-            // Initialising Bluetooth Device
-            BluetoothDevice bluetoothDevice = bluetoothAdapter.getRemoteDevice(bluetoothMAC);
-
-            // Initialising Bluetooth Socket
-            BluetoothSocket bluetoothSocket = null;
-
-            // do-while counter to try to connect up to three times
-            int counter = 0;
-            do {
-                try {
-                    bluetoothSocket = bluetoothDevice.createRfcommSocketToServiceRecord(UUID.fromString(bluetoothUUID));
-                    bluetoothSocket.connect();
-                    Log.d("Bluetooth connection", bluetoothSocket.isConnected() + " in tab1");
-                    //Toast.makeText(mContext, bluetoothNames.get(position) + " is connected", Toast.LENGTH_SHORT).show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } while (!bluetoothSocket.isConnected() && counter < 3);
-
-            // TODO - Change bluetooth icon when bluetooth connected
-
-
-        } catch (Exception nonValidBluetoothAddress){
-            Log.e("Valid Bluetooth Address", "False");
-
-            // TODO - Change bluetooth icon when bluetooth disconnected
-        }
     }
 }
