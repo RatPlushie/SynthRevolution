@@ -21,11 +21,21 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
     private ArrayList<String>   bluetoothMACs;
     private Context             mContext;
 
+    public static final String SHARED_PREFS = "sharedPrefs";
+
+    BluetoothManager bluetoothManager = new BluetoothManager();
+
+
     // Default constructor
     public BluetoothRecyclerViewAdapter(Context mContext, ArrayList<String> bluetoothNames, ArrayList<String> bluetoothMACs) {
         this.bluetoothNames = bluetoothNames;
         this.bluetoothMACs = bluetoothMACs;
         this.mContext = mContext;
+
+        // Passing the ArrayLists into the bluetoothManager class
+        bluetoothManager.listBluetoothNames = bluetoothNames;
+        bluetoothManager.listBluetoothMACs = bluetoothMACs;
+
     }
 
     @NonNull
@@ -37,21 +47,30 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         // Binding each list item to the recyclerView
         holder.bluetoothDeviceName.setText(bluetoothNames.get(position));
         holder.bluetoothDeviceMAC.setText(bluetoothMACs.get(position));
+
+        // Populating bluetoothManager with the selected Name & MAC address
+        bluetoothManager.deviceName = bluetoothNames.get(position);
+        bluetoothManager.deviceMAC = bluetoothMACs.get(position);
 
         // Creating onClick listener to each bluetooth device
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                // TODO - select bluetooth device and pass device info to other methods
-                Toast.makeText(mContext, bluetoothNames.get(position) + " pressed", Toast.LENGTH_SHORT).show();
+                // Initialising Bluetooth Device
+                bluetoothManager.getUUID();
 
+                // Saving the selected device to android local memory
+                bluetoothManager.saveConfig(mContext);
 
+                /* MAY NOT NEED ONCE FURTHER DEVELOPED */
+                bluetoothManager.connect();
 
+                Toast.makeText(mContext,bluetoothManager.deviceName + " device Selected",Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -15,5 +15,9 @@ public class synthTab3 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate((R.layout.synth_tab3), container, false);
+
+        // TODO - Create synth eye pattern maker
+
+        // TODO - Add ability to animate the eyes (3 animation frames)
     }
 }

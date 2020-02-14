@@ -3,10 +3,14 @@ package com.ratbox.synthrevolution;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.sip.SipSession;
 import android.os.Bundle;
+import android.os.ParcelUuid;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,6 +26,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.ratbox.synthrevolution.ui.main.BluetoothManager;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -30,7 +36,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Set;
+import java.util.EventListener;
+import java.util.UUID;
+
+import static com.ratbox.synthrevolution.ui.main.BluetoothRecyclerViewAdapter.SHARED_PREFS;
 
 public class synthTab1 extends Fragment {
 
@@ -51,13 +60,12 @@ public class synthTab1 extends Fragment {
     private ImageButton colourSwatchButton2;
     private ImageButton colourSwatchButton3;
     private ImageButton colourSwatchButton4;
+    private ImageButton bluetoothButton;
 
     private Bitmap      colourBitmap;
 
-    String deviceName;
-    String deviceMAC;
-
     public  SynthVisor  synthVisor = new SynthVisor();
+    public  BluetoothManager bluetoothManager = new BluetoothManager();
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -69,14 +77,15 @@ public class synthTab1 extends Fragment {
         colourPickerWheel       = view.findViewById(R.id.colourPickerImageView);
         colourPickerResults     = view.findViewById(R.id.colourPickerTextView);
         colourPickerSelected    = view.findViewById(R.id.colourView);
-        seekBarLEDBrightness = view.findViewById(R.id.LEDBrightnessSeekBar);
-        seekBarBlinkRate = view.findViewById(R.id.blinkRateSeekbar);
+        seekBarLEDBrightness    = view.findViewById(R.id.LEDBrightnessSeekBar);
+        seekBarBlinkRate        = view.findViewById(R.id.blinkRateSeekbar);
         LEDBrightnessTotal      = view.findViewById(R.id.totalLEDBrightnessTextView);
         blinkRateTotal          = view.findViewById(R.id.blinkRateTotalTextView);
         colourSwatchButton1     = view.findViewById(R.id.colourSwatch1Button);
         colourSwatchButton2     = view.findViewById(R.id.colourSwatch2Button);
         colourSwatchButton3     = view.findViewById(R.id.colourSwatch3Button);
         colourSwatchButton4     = view.findViewById(R.id.colourSwatch4Button);
+        bluetoothButton         = view.findViewById(R.id.bluetoothButton);
 
 
         // Set initial display of required views
@@ -92,7 +101,6 @@ public class synthTab1 extends Fragment {
         colourSwatchButton2.setColorFilter(Color.rgb(synthVisor.swatch2[0], synthVisor.swatch2[1], synthVisor.swatch2[2]));
         colourSwatchButton3.setColorFilter(Color.rgb(synthVisor.swatch3[0], synthVisor.swatch3[1], synthVisor.swatch3[2]));
         colourSwatchButton4.setColorFilter(Color.rgb(synthVisor.swatch4[0], synthVisor.swatch4[1], synthVisor.swatch4[2]));
-
 
         // Caches required for using the colour picker
         colourPickerWheel.setDrawingCacheEnabled(true);
@@ -224,7 +232,7 @@ public class synthTab1 extends Fragment {
                 // Setting the new colour of the swatch button
                 colourSwatchButton1.setColorFilter(Color.rgb(synthVisor.swatch1[0], synthVisor.swatch1[1], synthVisor.swatch1[2]));
 
-                // Making a save toast message
+                // Making a saveConfig toast message
                 Toast.makeText(getActivity(), "Colour saved", Toast.LENGTH_SHORT).show();
 
                 return false;
@@ -260,7 +268,7 @@ public class synthTab1 extends Fragment {
                 // Setting the new colour of the swatch button
                 colourSwatchButton2.setColorFilter(Color.rgb(synthVisor.swatch2[0], synthVisor.swatch2[1], synthVisor.swatch2[2]));
 
-                // Making a save toast message
+                // Making a saveConfig toast message
                 Toast.makeText(getActivity(), "Colour saved", Toast.LENGTH_SHORT).show();
 
                 return false;
@@ -296,7 +304,7 @@ public class synthTab1 extends Fragment {
                 // Setting the new colour of the swatch button
                 colourSwatchButton3.setColorFilter(Color.rgb(synthVisor.swatch3[0], synthVisor.swatch3[1], synthVisor.swatch3[2]));
 
-                // Making a save toast message
+                // Making a saveConfig toast message
                 Toast.makeText(getActivity(), "Colour saved", Toast.LENGTH_SHORT).show();
 
                 return false;
@@ -332,14 +340,15 @@ public class synthTab1 extends Fragment {
                 // Setting the new colour of the swatch button
                 colourSwatchButton4.setColorFilter(Color.rgb(synthVisor.swatch4[0], synthVisor.swatch4[1], synthVisor.swatch4[2]));
 
-                // Making a save toast message
+                // Making a saveConfig toast message
                 Toast.makeText(getActivity(), "Colour saved", Toast.LENGTH_SHORT).show();
 
                 return false;
             }
         });
 
-        
+        bluetoothManager.loadConfig(getContext());
+
         // Returns the view to the layout inflater
         return view;
     }
@@ -512,6 +521,8 @@ public class synthTab1 extends Fragment {
                 }
             }
         }
+
+        // TODO - resume a bluetooth connection
     }
 
 
@@ -525,7 +536,7 @@ public class synthTab1 extends Fragment {
         try {
             FileOutputStream fileOutputStream = getContext().openFileOutput(FILENAME, Context.MODE_PRIVATE);
 
-            writer = new BufferedWriter((new OutputStreamWriter(fileOutputStream)));
+            writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
 
             writer.write("RGB_Red =" + synthVisor.RGB_Red);
             writer.newLine();
@@ -577,7 +588,7 @@ public class synthTab1 extends Fragment {
 }
 
 
-class SynthVisor{
+class SynthVisor {
 
     int RGB_Red;
     int RGB_Green;
@@ -590,6 +601,10 @@ class SynthVisor{
     int[] swatch2;
     int[] swatch3;
     int[] swatch4;
+
+    String bluetoothName;
+    String bluetoothMAC;
+    String bluetoothUUID;
 
     // SynthVisor constructor method
     SynthVisor(){
@@ -605,6 +620,10 @@ class SynthVisor{
         swatch2         = new int[]{0, 0, 0};
         swatch3         = new int[]{0, 0, 0};
         swatch4         = new int[]{0, 0, 0};
+
+        bluetoothName   = "";
+        bluetoothMAC    = "";
+        bluetoothUUID   = "";
     }
 
     // RGB/HEX Value string
@@ -612,6 +631,8 @@ class SynthVisor{
         String results = "RGB: " + RGB_Red + ", " + RGB_Green + ", " + RGB_Blue + "\nHEX: " + hex;
         return results;
     }
+
+    // TODO - instead of all these basic set functions convert them all to just "obj.variable = x" instead of calling methods, Clean your damn code!
 
     void setRGB_Red(int red){
         RGB_Red = red;

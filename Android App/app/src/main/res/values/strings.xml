@@ -7,7 +7,8 @@
     <string name="brightness">LED Brightness:</string>
     <string name="blinkrate">Blink Rate:</string>
 
-    <string name="bluetooth_devices">Bluetooth Devices:</string>
+    <string name="bluetooth_devices">Bluetooth Devices</string>
+    <string name="bluetooth_prompt">Please select your device:</string>
 
 
 </resources>

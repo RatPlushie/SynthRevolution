@@ -3,7 +3,9 @@ package com.ratbox.synthrevolution;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.ratbox.synthrevolution.ui.main.BluetoothManager;
 import com.ratbox.synthrevolution.ui.main.BluetoothRecyclerViewAdapter;
 import com.ratbox.synthrevolution.ui.main.SectionsPagerAdapter;
 
@@ -28,8 +31,10 @@ public class MainActivity extends AppCompatActivity {
 
     Dialog mDialog;
 
-    ArrayList<String> bluetoothNameList;
-    ArrayList<String> bluetoothMACList;
+    //ArrayList<String> bluetoothNameList;
+    //ArrayList<String> bluetoothMACList;
+
+    BluetoothManager bluetoothManager = new BluetoothManager();
 
 
     @Override
@@ -56,32 +61,19 @@ public class MainActivity extends AppCompatActivity {
 
             bluetoothRecyclerView = mDialog.findViewById(R.id.bluetoothRecyclerView);
 
-            // Initialising Bluetooth Adapter
-            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-            // Creating a set list of all the paired devices the phone has connected to
-            Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
-
             // Creating the bluetoothDevice array
-            if (pairedDevices.size() > 0){
-
-                bluetoothNameList = new ArrayList<>();
-                bluetoothMACList = new ArrayList<>();
-
-                // Adding all the bonded devices to their respective list
-                for (BluetoothDevice bluetoothDevice : pairedDevices){
-                    bluetoothNameList.add(bluetoothDevice.getName());
-                    bluetoothMACList.add(bluetoothDevice.getAddress());
-                }
+            if (bluetoothManager.pairedDevices.size() > 0){
 
                 // Initialising the recyclerView
-                BluetoothRecyclerViewAdapter adapter = new BluetoothRecyclerViewAdapter(v.getContext(), bluetoothNameList, bluetoothMACList);
+                BluetoothRecyclerViewAdapter adapter = new BluetoothRecyclerViewAdapter(v.getContext(), bluetoothManager.listBluetoothNames, bluetoothManager.listBluetoothMACs);
                 bluetoothRecyclerView.setAdapter(adapter);
                 bluetoothRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
                 // Displaying the popup dialog box
                 mDialog.show();
                 Log.d("Dialog box", "Displayed");
+
+                // TODO - May need to make a onDismissListener here to call a bluetooth connection
 
             } else {
                 Toast.makeText(this, "Please pair your SynthVisor in your device's bluetooth settings", Toast.LENGTH_LONG).show();
