@@ -187,11 +187,17 @@ public class BluetoothManager {
             OutputStream outputStream = null;
             outputStream = bluetoothSocket.getOutputStream();
 
+            /*
             int[] sendArray = new int[]{red, green, blue, brightness, blink};
             for (int i : sendArray){
                 byte b = (byte)i;
                 outputStream.write((b));
             }
+
+            */
+
+            /* ARDUINO DEBUG       */
+            outputStream.write(Integer.toString(1).getBytes());
 
         } catch (IOException e) {
             e.printStackTrace();
