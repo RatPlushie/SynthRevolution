@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -26,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView        bluetoothRecyclerView;
     private Dialog              mDialog;
-
     private ImageButton         btnBluetooth;
 
 
@@ -71,9 +69,17 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
 
-                    if (bluetoothManager.bluetoothSocket.isConnected()){
+                    boolean connectionEstablished;
+
+                    try {
+                        connectionEstablished = bluetoothManager.bluetoothSocket.isConnected();
+                    } catch (Exception BluetoothSocketNotInitialised){
+                        connectionEstablished = false;
+                    }
+
+                    if (connectionEstablished){
                         btnBluetooth.setImageResource(R.drawable.ic_bluetooth_connected);
-                    } else if (!bluetoothManager.bluetoothSocket.isConnected()){
+                    } else {
                         btnBluetooth.setImageResource(R.drawable.ic_bluetooth_disconnected);
                     }
                 }

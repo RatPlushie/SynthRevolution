@@ -29,7 +29,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:padding="8dp"
+        android:paddingLeft="8dp"
+        android:paddingTop="8dp"
+        android:paddingRight="8dp"
         android:text="@string/bluetooth_prompt" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -39,5 +41,16 @@
         android:layout_gravity="center"
         android:hapticFeedbackEnabled="true"
         android:padding="8dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="8dp"
+        android:text="@string/bluetooth_instructions"
+        android:textSize="12sp" />
 
 </LinearLayout>
