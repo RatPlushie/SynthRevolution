@@ -1,9 +1,6 @@
 package com.ratbox.synthrevolution.ui.main;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +10,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.ratbox.synthrevolution.R;
-
 import java.util.ArrayList;
+
+import static com.ratbox.synthrevolution.MainActivity.bluetoothManager;
 
 public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<BluetoothRecyclerViewAdapter.ViewHolder> {
 
@@ -24,9 +21,6 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
     private ArrayList<String>   bluetoothMACs;
     private Context             mContext;
 
-    public static final String SHARED_PREFS = "sharedPrefs";
-
-    public static BluetoothManager bluetoothManager = new BluetoothManager();
 
     // Default constructor
     public BluetoothRecyclerViewAdapter(Context mContext, ArrayList<String> bluetoothNames, ArrayList<String> bluetoothMACs) {
@@ -39,6 +33,7 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
         bluetoothManager.listBluetoothMACs = bluetoothMACs;
     }
 
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -46,6 +41,7 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
@@ -62,28 +58,31 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
             @Override
             public void onClick(View v) {
 
-                // Initialising Bluetooth Device
+                // Discovering UUID of the bluetooth device
                 bluetoothManager.getUUID();
 
                 // Saving the selected device to android local memory
-                bluetoothManager.saveConfig(mContext);
-
-                Toast.makeText(mContext,"Connecting...",Toast.LENGTH_SHORT).show();
+                //bluetoothManager.saveConfig(mContext);
 
                 // Initial connection of bluetooth
                 bluetoothManager.connect();
 
-                Toast.makeText(mContext,"Connected to " + bluetoothManager.deviceName,Toast.LENGTH_SHORT).show();
-
-                // TODO - pass bluetooth connection from this point
+                // Testing to see if the connection is established
+                if (bluetoothManager.bluetoothSocket.isConnected()){
+                    Toast.makeText(mContext,"Connected to " + bluetoothManager.deviceName,Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(mContext,"Device unreachable, please try again...",Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
         return bluetoothNames.size();
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView        bluetoothDeviceName;

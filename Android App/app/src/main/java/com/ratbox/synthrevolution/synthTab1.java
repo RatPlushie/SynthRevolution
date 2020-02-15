@@ -1,16 +1,10 @@
 package com.ratbox.synthrevolution;
 
 import android.annotation.SuppressLint;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.sip.SipSession;
 import android.os.Bundle;
-import android.os.ParcelUuid;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -26,7 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.ratbox.synthrevolution.ui.main.BluetoothManager;
+import com.ratbox.synthrevolution.ui.main.SynthVisor;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -36,17 +30,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.EventListener;
-import java.util.UUID;
 
-import static com.ratbox.synthrevolution.ui.main.BluetoothRecyclerViewAdapter.SHARED_PREFS;
-import static com.ratbox.synthrevolution.ui.main.BluetoothRecyclerViewAdapter.bluetoothManager;
+import static com.ratbox.synthrevolution.MainActivity.bluetoothManager;
 
 public class synthTab1 extends Fragment {
 
     private static final String FILENAME = "SynthVisorConfig.txt";
 
-    private ImageView   colourPickerWheel;
+    private ImageView           colourPickerWheel;
 
     private TextView            colourPickerResults;
     private TextView            LEDBrightnessTotal;
@@ -64,7 +55,7 @@ public class synthTab1 extends Fragment {
 
     private Bitmap              colourBitmap;
 
-    public  SynthVisor          synthVisor = new SynthVisor();
+    private SynthVisor          synthVisor = new SynthVisor();
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
@@ -83,7 +74,6 @@ public class synthTab1 extends Fragment {
         colourSwatchButton2     = view.findViewById(R.id.colourSwatch2Button);
         colourSwatchButton3     = view.findViewById(R.id.colourSwatch3Button);
         colourSwatchButton4     = view.findViewById(R.id.colourSwatch4Button);
-
 
 
         // Set initial display of required views
@@ -587,125 +577,4 @@ public class synthTab1 extends Fragment {
 }
 
 
-class SynthVisor {
 
-    int RGB_Red;
-    int RGB_Green;
-    int RGB_Blue;
-    int LED_Brightness;
-    int blinkRate;
-    String hex;
-
-    int[] swatch1;
-    int[] swatch2;
-    int[] swatch3;
-    int[] swatch4;
-
-    String bluetoothName;
-    String bluetoothMAC;
-    String bluetoothUUID;
-
-    // SynthVisor constructor method
-    SynthVisor(){
-
-        RGB_Red         = 255;
-        RGB_Green       = 255;
-        RGB_Blue        = 255;
-        LED_Brightness  = 100;
-        blinkRate       = 100;
-        hex             = "#ffffff"; // RRGGBB
-
-        swatch1         = new int[]{0, 0, 0};
-        swatch2         = new int[]{0, 0, 0};
-        swatch3         = new int[]{0, 0, 0};
-        swatch4         = new int[]{0, 0, 0};
-
-        bluetoothName   = "";
-        bluetoothMAC    = "";
-        bluetoothUUID   = "";
-    }
-
-    // RGB/HEX Value string
-    String getResults(){
-        String results = "RGB: " + RGB_Red + ", " + RGB_Green + ", " + RGB_Blue + "\nHEX: " + hex;
-        return results;
-    }
-
-    // TODO - instead of all these basic set functions convert them all to just "obj.variable = x" instead of calling methods, Clean your damn code!
-
-    void setRGB_Red(int red){
-        RGB_Red = red;
-    }
-
-    void setRGB_Green(int green){
-        RGB_Green = green;
-    }
-
-    void setRGB_Blue(int blue){
-        RGB_Blue = blue;
-    }
-
-    void setHex(String hexValue){
-        hex = hexValue;
-    }
-
-    void setLED_Brightness(int brightness){
-        LED_Brightness = brightness;
-    }
-
-    void setBlinkRate(int rate){
-        blinkRate = rate;
-    }
-
-    void setSwatch(int swatch){
-
-        switch (swatch){
-
-            case 1:
-
-                swatch1 = new int[]{RGB_Red, RGB_Green, RGB_Blue};
-                break;
-
-            case 2:
-
-                swatch2 = new int[]{RGB_Red, RGB_Green, RGB_Blue};
-                break;
-
-            case 3:
-
-                swatch3 = new int[]{RGB_Red, RGB_Green, RGB_Blue};
-                break;
-
-            case 4:
-
-                swatch4 = new int[]{RGB_Red, RGB_Green, RGB_Blue};
-                break;
-
-        }
-
-
-    }
-
-    void clickSwatch(int swatchNo){
-
-        int[][] swatch = new int[][]{swatch1, swatch2, swatch3, swatch4};
-
-        setRGB_Red(swatch[swatchNo][0]);
-        setRGB_Green(swatch[swatchNo][1]);
-        setRGB_Blue(swatch[swatchNo][2]);
-
-        // Building the hex string
-        String[] RGBArray = new String[]{Integer.toHexString(RGB_Red), Integer.toHexString(RGB_Green), Integer.toHexString(RGB_Blue)};
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("#");
-        for (String i : RGBArray){
-            if (i.equals("0")){
-                stringBuilder.append("00");
-            } else {
-                stringBuilder.append(i);
-            }
-        }
-
-        setHex(stringBuilder.toString());
-    }
-}

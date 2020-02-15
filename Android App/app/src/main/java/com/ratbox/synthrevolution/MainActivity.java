@@ -1,12 +1,7 @@
 package com.ratbox.synthrevolution;
 
 import android.app.Dialog;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -22,20 +17,12 @@ import com.ratbox.synthrevolution.ui.main.BluetoothManager;
 import com.ratbox.synthrevolution.ui.main.BluetoothRecyclerViewAdapter;
 import com.ratbox.synthrevolution.ui.main.SectionsPagerAdapter;
 
-import java.util.ArrayList;
-
-import java.util.Set;
-
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView bluetoothRecyclerView;
+    public static BluetoothManager bluetoothManager = new BluetoothManager();
 
-    Dialog mDialog;
-
-    //ArrayList<String> bluetoothNameList;
-    //ArrayList<String> bluetoothMACList;
-
-    BluetoothManager bluetoothManager = new BluetoothManager();
+    RecyclerView    bluetoothRecyclerView;
+    Dialog          mDialog;
 
 
     @Override
@@ -56,8 +43,7 @@ public class MainActivity extends AppCompatActivity {
     // Bluetooth device selector dialog box
     public void ShowPopup(View v){
 
-        // Trying to call this method will fail if there is no bluetooth hardware on the android device itself
-        try{
+        try{ // Trying to call this method will fail if there is no bluetooth hardware on the android device itself
             mDialog.setContentView(R.layout.bluetooth_popout);
 
             bluetoothRecyclerView = mDialog.findViewById(R.id.bluetoothRecyclerView);
@@ -72,15 +58,15 @@ public class MainActivity extends AppCompatActivity {
 
                 // Displaying the popup dialog box
                 mDialog.show();
-                Log.d("Dialog box", "Displayed");
+                Log.d("Bluetooth pop-up box", "Displayed");
 
             } else {
                 Toast.makeText(this, "Please pair your SynthVisor in your device's bluetooth settings", Toast.LENGTH_LONG).show();
             }
 
         } catch (Exception noBluetoothDevice){
-            Log.e("Bluetooth Hardware", "No Bluetooth hardware detected on this device");
-            Toast.makeText(this, "Bluetooth not supported on this device", Toast.LENGTH_SHORT).show();
+            Log.e("Bluetooth Hardware", "Bluetooth disabled or not supported on this device");
+            Toast.makeText(this, "Bluetooth disabled or not supported on this device", Toast.LENGTH_LONG).show();
         }
     }
 }
