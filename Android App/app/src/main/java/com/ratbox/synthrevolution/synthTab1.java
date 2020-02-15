@@ -40,6 +40,7 @@ import java.util.EventListener;
 import java.util.UUID;
 
 import static com.ratbox.synthrevolution.ui.main.BluetoothRecyclerViewAdapter.SHARED_PREFS;
+import static com.ratbox.synthrevolution.ui.main.BluetoothRecyclerViewAdapter.bluetoothManager;
 
 public class synthTab1 extends Fragment {
 
@@ -64,8 +65,6 @@ public class synthTab1 extends Fragment {
     private Bitmap              colourBitmap;
 
     public  SynthVisor          synthVisor = new SynthVisor();
-    public  BluetoothManager    bluetoothManager = new BluetoothManager();
-
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
@@ -145,7 +144,8 @@ public class synthTab1 extends Fragment {
                             // Setting the textView with the RGB and HEX values
                             colourPickerResults.setText(synthVisor.getResults());
 
-                            // TODO - retrieve parceled bluetoothmanager
+                            // TODO
+                            bluetoothManager.sendSynthVisor(1,1,1,1,1);
                         }
 
                     } catch (Exception colourPickerOutOfBounds){

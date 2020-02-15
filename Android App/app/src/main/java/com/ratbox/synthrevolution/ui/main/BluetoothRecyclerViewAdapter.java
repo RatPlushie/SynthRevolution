@@ -26,8 +26,7 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
 
     public static final String SHARED_PREFS = "sharedPrefs";
 
-    BluetoothManager bluetoothManager = new BluetoothManager();
-
+    public static BluetoothManager bluetoothManager = new BluetoothManager();
 
     // Default constructor
     public BluetoothRecyclerViewAdapter(Context mContext, ArrayList<String> bluetoothNames, ArrayList<String> bluetoothMACs) {
@@ -38,7 +37,6 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
         // Passing the ArrayLists into the bluetoothManager class
         bluetoothManager.listBluetoothNames = bluetoothNames;
         bluetoothManager.listBluetoothMACs = bluetoothMACs;
-
     }
 
     @NonNull

@@ -32,8 +32,8 @@ public class BluetoothManager {
     public String deviceMAC;
     public String deviceUUID;
 
-    public BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    public BluetoothSocket bluetoothSocket;
+    public static BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    public static BluetoothSocket bluetoothSocket;
 
     public BluetoothManager(){
 
