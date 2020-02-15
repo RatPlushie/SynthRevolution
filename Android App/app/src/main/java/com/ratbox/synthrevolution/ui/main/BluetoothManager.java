@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
-import android.content.Intent;
 import android.os.ParcelUuid;
 import android.util.Log;
 
@@ -22,10 +21,6 @@ import java.util.Set;
 import java.util.UUID;
 
 public class BluetoothManager {
-
-    // TODO - Move all bluetooth functionality to here
-
-    // TODO - After first creation of object on MainActivity/pop-up, Make object global across all activities
 
     private static final String FILENAME = "bluetoothConfig.txt";
 
@@ -196,7 +191,8 @@ public class BluetoothManager {
 
             */
 
-            /* ARDUINO DEBUG       */
+            /* ARDUINO DEBUG      THIS DOES WORK SENDING THE COMMAND! */
+            //String command = "1";
             outputStream.write(Integer.toString(1).getBytes());
 
         } catch (IOException e) {

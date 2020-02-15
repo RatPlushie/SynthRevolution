@@ -60,7 +60,6 @@ public class synthTab1 extends Fragment {
     private ImageButton         colourSwatchButton2;
     private ImageButton         colourSwatchButton3;
     private ImageButton         colourSwatchButton4;
-    private ImageButton         bluetoothButton;
 
     private Bitmap              colourBitmap;
 
@@ -85,7 +84,7 @@ public class synthTab1 extends Fragment {
         colourSwatchButton2     = view.findViewById(R.id.colourSwatch2Button);
         colourSwatchButton3     = view.findViewById(R.id.colourSwatch3Button);
         colourSwatchButton4     = view.findViewById(R.id.colourSwatch4Button);
-        bluetoothButton         = view.findViewById(R.id.bluetoothButton);
+
 
 
         // Set initial display of required views
@@ -146,10 +145,7 @@ public class synthTab1 extends Fragment {
                             // Setting the textView with the RGB and HEX values
                             colourPickerResults.setText(synthVisor.getResults());
 
-                            // Ensuring the bluetooth device is connected before sending
-                            if (bluetoothManager.bluetoothSocket.isConnected()){
-                                bluetoothManager.sendSynthVisor(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue, synthVisor.LED_Brightness, synthVisor.blinkRate);
-                            }
+                            // TODO - retrieve parceled bluetoothmanager
                         }
 
                     } catch (Exception colourPickerOutOfBounds){
@@ -351,8 +347,6 @@ public class synthTab1 extends Fragment {
                 return false;
             }
         });
-
-        bluetoothManager.loadConfig(getContext());
 
         // Returns the view to the layout inflater
         return view;

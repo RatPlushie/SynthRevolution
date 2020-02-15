@@ -74,16 +74,6 @@ public class MainActivity extends AppCompatActivity {
                 mDialog.show();
                 Log.d("Dialog box", "Displayed");
 
-                // OnDismissListener connect to bluetooth device
-                mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-
-                        bluetoothManager.connect();
-
-                    }
-                });
-
             } else {
                 Toast.makeText(this, "Please pair your SynthVisor in your device's bluetooth settings", Toast.LENGTH_LONG).show();
             }

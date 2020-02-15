@@ -1,6 +1,9 @@
 package com.ratbox.synthrevolution.ui.main;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,8 +70,12 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
                 // Saving the selected device to android local memory
                 bluetoothManager.saveConfig(mContext);
 
-                /* MAY NOT NEED ONCE FURTHER DEVELOPED */
+                // Initial connection of bluetooth
                 bluetoothManager.connect();
+
+                // TODO - pass bluetooth connection from this point
+
+
 
                 Toast.makeText(mContext,bluetoothManager.deviceName + " device Selected",Toast.LENGTH_SHORT).show();
             }
