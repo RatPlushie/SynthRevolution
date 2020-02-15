@@ -4,9 +4,11 @@ SoftwareSerial Bluetooth(2,3); // RX|TX (Arduino side)
 char data_in; // This will be used to store the incoming stream from the SynthVisor App
 
 // Using three lEDs to test extrapolation untill I have access to an 8x8 led matrix
-const int redLED    = 9;    // Red LED
-const int greenLED  = 10;   // Green LED
-const int blueLED   = 11;   // Blue LED
+const int redLED        = 9;    // Red LED
+const int greenLED      = 10;   // Green LED
+const int blueLED       = 11;   // Blue LED
+const int brigtnessLED  = 5;    // Brightness indicator LED
+const int blinkLED      = 6;    // Blink rate indicator LED
 
 void setup() {
   // put your setup code here, to run once:
@@ -17,10 +19,14 @@ void setup() {
   pinMode(redLED, OUTPUT);   
   pinMode(greenLED, OUTPUT);
   pinMode(blueLED, OUTPUT);
+  pinMode(brightnessLED, OUTPUT);
+  pinMode(blinkLED, OUTPUT);
 
   digitalWrite(redLED, LOW);
   digitalWrite(greenLED, LOW);
   digitalWrite(blueLED, LOW);
+  digitalWrite(brightnessLED, LOW);
+  digitalWrite(blinkLED, LOW);
 }
 
 void loop() {
@@ -29,7 +35,7 @@ void loop() {
   while(Bluetooth.available() == 0);
   if (Bluetooth.available() > 0){
     data_in = Bluetooth.read();
-    Serial.println(data_in);      // Debug printOut to see what is recieved
+    Serial.print(data_in);      // Debug printOut to see what is recieved
     
     
     
