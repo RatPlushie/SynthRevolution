@@ -511,8 +511,6 @@ public class synthTab1 extends Fragment {
                 }
             }
         }
-
-        // TODO - resume a bluetooth connection
     }
 
 

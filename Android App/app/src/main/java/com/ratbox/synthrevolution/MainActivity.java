@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView        bluetoothRecyclerView;
     private Dialog              mDialog;
     private ImageButton         btnBluetooth;
+    private boolean             connectionEstablished;
 
 
     @Override
@@ -42,6 +43,42 @@ public class MainActivity extends AppCompatActivity {
         // Creating the bluetooth pop up dialog box
         mDialog = new Dialog(this);
     }
+
+    /* TODO - Resume Bluetooth Connection onResume()
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Checking if the onResume of the app the bluetooth socket is still connected
+        try {
+            connectionEstablished = bluetoothManager.bluetoothSocket.isConnected();
+            connectionEstablished = true;
+
+        } catch (Exception BluetoothSocketNotInitialised){
+            Log.e("ConnectBluetooth", "Could not connect to device");
+            connectionEstablished = false;
+        }
+
+        if (connectionEstablished){ // If it is still connected, continue to display the connected icon
+            btnBluetooth.setImageResource(R.drawable.ic_bluetooth_connected);
+
+        } else { // if it is not connected, try to connect. if not possible, display the disconnected icon
+            try {
+                bluetoothManager.connect();
+                connectionEstablished = true;
+            } catch (Exception EstablishConnectionFailure){
+                Log.e("ConnectBluetooth", "Could not connect to device");
+                connectionEstablished = false;
+            }
+
+            if (connectionEstablished){
+                btnBluetooth.setImageResource(R.drawable.ic_bluetooth_connected);
+            } else {
+                btnBluetooth.setImageResource(R.drawable.ic_bluetooth_disconnected);
+            }
+        }
+    }
+    */
 
 
     // Bluetooth device selector dialog box
@@ -68,8 +105,6 @@ public class MainActivity extends AppCompatActivity {
             mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
-
-                    boolean connectionEstablished;
 
                     try {
                         connectionEstablished = bluetoothManager.bluetoothSocket.isConnected();
