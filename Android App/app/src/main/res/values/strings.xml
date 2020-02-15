@@ -1,14 +1,18 @@
 <resources>
+    <!-- App resources -->
     <string name="app_name">SynthRevolution</string>
     <string name="tab_text_1">Control</string>
     <string name="tab_text_2">HUD</string>
     <string name="tab_text_3">Synth Lab</string>
 
+    <!-- User input resources -->
     <string name="brightness">LED Brightness:</string>
     <string name="blinkrate">Blink Rate:</string>
 
+    <!-- Prompts resources -->
     <string name="bluetooth_devices">Bluetooth Devices</string>
     <string name="bluetooth_prompt">Please select your device:</string>
+    <string name="bluetooth_instructions">If you cannot find your device, first pair it in your Android\'s Bluetooth settings</string>
 
 
 </resources>

@@ -1,14 +1,11 @@
 package com.ratbox.synthrevolution;
 
 import android.app.Dialog;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -22,20 +19,13 @@ import com.ratbox.synthrevolution.ui.main.BluetoothManager;
 import com.ratbox.synthrevolution.ui.main.BluetoothRecyclerViewAdapter;
 import com.ratbox.synthrevolution.ui.main.SectionsPagerAdapter;
 
-import java.util.ArrayList;
-
-import java.util.Set;
-
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView bluetoothRecyclerView;
+    public static BluetoothManager bluetoothManager = new BluetoothManager();
 
-    Dialog mDialog;
-
-    //ArrayList<String> bluetoothNameList;
-    //ArrayList<String> bluetoothMACList;
-
-    BluetoothManager bluetoothManager = new BluetoothManager();
+    private RecyclerView        bluetoothRecyclerView;
+    private Dialog              mDialog;
+    private ImageButton         btnBluetooth;
 
 
     @Override
@@ -48,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
+
         // Creating the bluetooth pop up dialog box
         mDialog = new Dialog(this);
     }
@@ -56,31 +47,46 @@ public class MainActivity extends AppCompatActivity {
     // Bluetooth device selector dialog box
     public void ShowPopup(View v){
 
-        // Trying to call this method will fail if there is no bluetooth hardware on the android device itself
-        try{
-            mDialog.setContentView(R.layout.bluetooth_popout);
+        // Attaching to views
+        btnBluetooth = v.findViewById(R.id.bluetoothButton);
+        mDialog.setContentView(R.layout.bluetooth_popout);
+        bluetoothRecyclerView = mDialog.findViewById(R.id.bluetoothRecyclerView);
 
-            bluetoothRecyclerView = mDialog.findViewById(R.id.bluetoothRecyclerView);
+        // Creating the bluetoothDevice array
+        if (bluetoothManager.pairedDevices.size() > 0){
 
-            // Creating the bluetoothDevice array
-            if (bluetoothManager.pairedDevices.size() > 0){
+            // Initialising the recyclerView
+            BluetoothRecyclerViewAdapter adapter = new BluetoothRecyclerViewAdapter(v.getContext(), bluetoothManager.listBluetoothNames, bluetoothManager.listBluetoothMACs);
+            bluetoothRecyclerView.setAdapter(adapter);
+            bluetoothRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-                // Initialising the recyclerView
-                BluetoothRecyclerViewAdapter adapter = new BluetoothRecyclerViewAdapter(v.getContext(), bluetoothManager.listBluetoothNames, bluetoothManager.listBluetoothMACs);
-                bluetoothRecyclerView.setAdapter(adapter);
-                bluetoothRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            // Displaying the popup dialog box
+            mDialog.show();
+            Log.d("Bluetooth pop-up box", "Displayed");
 
-                // Displaying the popup dialog box
-                mDialog.show();
-                Log.d("Dialog box", "Displayed");
+            // onDismissListener for the bluetoothPopUp to change the bluetooth button icon if bluetooth is connected
+            mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
 
-            } else {
-                Toast.makeText(this, "Please pair your SynthVisor in your device's bluetooth settings", Toast.LENGTH_LONG).show();
-            }
+                    boolean connectionEstablished;
 
-        } catch (Exception noBluetoothDevice){
-            Log.e("Bluetooth Hardware", "No Bluetooth hardware detected on this device");
-            Toast.makeText(this, "Bluetooth not supported on this device", Toast.LENGTH_SHORT).show();
+                    try {
+                        connectionEstablished = bluetoothManager.bluetoothSocket.isConnected();
+                    } catch (Exception BluetoothSocketNotInitialised){
+                        connectionEstablished = false;
+                    }
+
+                    if (connectionEstablished){
+                        btnBluetooth.setImageResource(R.drawable.ic_bluetooth_connected);
+                    } else {
+                        btnBluetooth.setImageResource(R.drawable.ic_bluetooth_disconnected);
+                    }
+                }
+            });
+
+        } else {
+            Toast.makeText(this, "Please pair your SynthVisor in your device's bluetooth settings", Toast.LENGTH_LONG).show();
         }
     }
 }
