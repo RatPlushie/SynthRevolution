@@ -84,6 +84,7 @@ public class synthTab1 extends Fragment {
         seekBarBlinkRate.setProgress(synthVisor.blinkRate);
         blinkRateTotal.setText(Integer.toString(synthVisor.blinkRate));
 
+
         // Setting the saved colours of the user saved swatches
         colourSwatchButton1.setColorFilter(Color.rgb(synthVisor.swatch1[0], synthVisor.swatch1[1], synthVisor.swatch1[2]));
         colourSwatchButton2.setColorFilter(Color.rgb(synthVisor.swatch2[0], synthVisor.swatch2[1], synthVisor.swatch2[2]));
