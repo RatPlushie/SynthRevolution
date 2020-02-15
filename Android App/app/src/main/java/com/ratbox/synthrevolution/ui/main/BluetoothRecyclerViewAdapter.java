@@ -70,14 +70,14 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
                 // Saving the selected device to android local memory
                 bluetoothManager.saveConfig(mContext);
 
+                Toast.makeText(mContext,"Connecting...",Toast.LENGTH_SHORT).show();
+
                 // Initial connection of bluetooth
                 bluetoothManager.connect();
 
+                Toast.makeText(mContext,"Connected to " + bluetoothManager.deviceName,Toast.LENGTH_SHORT).show();
+
                 // TODO - pass bluetooth connection from this point
-
-
-
-                Toast.makeText(mContext,bluetoothManager.deviceName + " device Selected",Toast.LENGTH_SHORT).show();
             }
         });
     }
