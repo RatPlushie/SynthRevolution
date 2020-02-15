@@ -40,6 +40,7 @@ import java.util.EventListener;
 import java.util.UUID;
 
 import static com.ratbox.synthrevolution.ui.main.BluetoothRecyclerViewAdapter.SHARED_PREFS;
+import static com.ratbox.synthrevolution.ui.main.BluetoothRecyclerViewAdapter.bluetoothManager;
 
 public class synthTab1 extends Fragment {
 
@@ -47,26 +48,23 @@ public class synthTab1 extends Fragment {
 
     private ImageView   colourPickerWheel;
 
-    private TextView    colourPickerResults;
-    private TextView    LEDBrightnessTotal;
-    private TextView    blinkRateTotal;
+    private TextView            colourPickerResults;
+    private TextView            LEDBrightnessTotal;
+    private TextView            blinkRateTotal;
 
-    private View        colourPickerSelected;
+    private View                colourPickerSelected;
 
-    private SeekBar     seekBarLEDBrightness;
-    private SeekBar     seekBarBlinkRate;
+    private SeekBar             seekBarLEDBrightness;
+    private SeekBar             seekBarBlinkRate;
 
-    private ImageButton colourSwatchButton1;
-    private ImageButton colourSwatchButton2;
-    private ImageButton colourSwatchButton3;
-    private ImageButton colourSwatchButton4;
-    private ImageButton bluetoothButton;
+    private ImageButton         colourSwatchButton1;
+    private ImageButton         colourSwatchButton2;
+    private ImageButton         colourSwatchButton3;
+    private ImageButton         colourSwatchButton4;
 
-    private Bitmap      colourBitmap;
+    private Bitmap              colourBitmap;
 
-    public  SynthVisor  synthVisor = new SynthVisor();
-    public  BluetoothManager bluetoothManager = new BluetoothManager();
-
+    public  SynthVisor          synthVisor = new SynthVisor();
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
@@ -85,7 +83,7 @@ public class synthTab1 extends Fragment {
         colourSwatchButton2     = view.findViewById(R.id.colourSwatch2Button);
         colourSwatchButton3     = view.findViewById(R.id.colourSwatch3Button);
         colourSwatchButton4     = view.findViewById(R.id.colourSwatch4Button);
-        bluetoothButton         = view.findViewById(R.id.bluetoothButton);
+
 
 
         // Set initial display of required views
@@ -145,6 +143,9 @@ public class synthTab1 extends Fragment {
 
                             // Setting the textView with the RGB and HEX values
                             colourPickerResults.setText(synthVisor.getResults());
+
+                            // TODO
+                            bluetoothManager.sendSynthVisor(1,1,1,1,1);
                         }
 
                     } catch (Exception colourPickerOutOfBounds){
@@ -346,8 +347,6 @@ public class synthTab1 extends Fragment {
                 return false;
             }
         });
-
-        bluetoothManager.loadConfig(getContext());
 
         // Returns the view to the layout inflater
         return view;

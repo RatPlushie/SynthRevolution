@@ -14,16 +14,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
 public class BluetoothManager {
-
-    // TODO - Move all bluetooth functionality to here
-
-    // TODO - After first creation of object on MainActivity/pop-up, Make object global across all activities
 
     private static final String FILENAME = "bluetoothConfig.txt";
 
@@ -35,8 +32,8 @@ public class BluetoothManager {
     public String deviceMAC;
     public String deviceUUID;
 
-    public BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
+    public static BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    public static BluetoothSocket bluetoothSocket;
 
     public BluetoothManager(){
 
@@ -158,7 +155,7 @@ public class BluetoothManager {
 
         try { // Potentially throwable if invalid bluetooth config is given
             BluetoothDevice bluetoothDevice = bluetoothAdapter.getRemoteDevice(deviceMAC);
-            BluetoothSocket bluetoothSocket = null;
+            bluetoothSocket = null;
 
             // Trying to connect to the device upto 3 times
             int counter = 0;
@@ -177,5 +174,30 @@ public class BluetoothManager {
         } catch (Exception nonValidBluetoothAddress){
             Log.e("Valid Bluetooth Address", "false");
         }
+    }
+
+    public void sendSynthVisor(int red, int green, int blue, int brightness, int blink){
+
+        try {
+            OutputStream outputStream = null;
+            outputStream = bluetoothSocket.getOutputStream();
+
+            /*
+            int[] sendArray = new int[]{red, green, blue, brightness, blink};
+            for (int i : sendArray){
+                byte b = (byte)i;
+                outputStream.write((b));
+            }
+
+            */
+
+            /* ARDUINO DEBUG      THIS DOES WORK SENDING THE COMMAND! */
+            //String command = "1";
+            outputStream.write(Integer.toString(1).getBytes());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

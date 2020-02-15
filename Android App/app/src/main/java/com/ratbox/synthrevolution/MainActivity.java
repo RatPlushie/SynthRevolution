@@ -3,6 +3,7 @@ package com.ratbox.synthrevolution;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -72,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
                 // Displaying the popup dialog box
                 mDialog.show();
                 Log.d("Dialog box", "Displayed");
-
-                // TODO - May need to make a onDismissListener here to call a bluetooth connection
 
             } else {
                 Toast.makeText(this, "Please pair your SynthVisor in your device's bluetooth settings", Toast.LENGTH_LONG).show();

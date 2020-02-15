@@ -1,6 +1,9 @@
 package com.ratbox.synthrevolution.ui.main;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +26,7 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
 
     public static final String SHARED_PREFS = "sharedPrefs";
 
-    BluetoothManager bluetoothManager = new BluetoothManager();
-
+    public static BluetoothManager bluetoothManager = new BluetoothManager();
 
     // Default constructor
     public BluetoothRecyclerViewAdapter(Context mContext, ArrayList<String> bluetoothNames, ArrayList<String> bluetoothMACs) {
@@ -35,7 +37,6 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
         // Passing the ArrayLists into the bluetoothManager class
         bluetoothManager.listBluetoothNames = bluetoothNames;
         bluetoothManager.listBluetoothMACs = bluetoothMACs;
-
     }
 
     @NonNull
@@ -67,10 +68,14 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
                 // Saving the selected device to android local memory
                 bluetoothManager.saveConfig(mContext);
 
-                /* MAY NOT NEED ONCE FURTHER DEVELOPED */
+                Toast.makeText(mContext,"Connecting...",Toast.LENGTH_SHORT).show();
+
+                // Initial connection of bluetooth
                 bluetoothManager.connect();
 
-                Toast.makeText(mContext,bluetoothManager.deviceName + " device Selected",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext,"Connected to " + bluetoothManager.deviceName,Toast.LENGTH_SHORT).show();
+
+                // TODO - pass bluetooth connection from this point
             }
         });
     }
