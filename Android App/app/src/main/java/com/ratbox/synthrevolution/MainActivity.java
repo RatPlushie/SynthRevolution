@@ -105,32 +105,53 @@ public class MainActivity extends AppCompatActivity {
     // Upload dialog box
     public void ShowUploadPopup(View view){
 
-        // Attaching to views
-        uploadDialog.setContentView(R.layout.upload_popout);
+        // Checking to see if the bluetooth synth visor has been connected - if not, toast user to first connect
+        try {
+            connectionEstablished = bluetoothManager.bluetoothSocket.isConnected();
+        } catch (Exception BluetoothSocketNotInitialised){
+            connectionEstablished = false;
+        }
 
-        // Displaying the popout dialog box for uploading
-        uploadDialog.show();
+        if (connectionEstablished){ // Already connected - Open dialog
+
+            // Attaching to views
+            uploadDialog.setContentView(R.layout.upload_popout);
+
+            // Displaying the popout dialog box for uploading
+            uploadDialog.show();
+
+        } else { // Not connected - prevent further action and toast user
+            Toast.makeText(this, "Please connect to SynthVisor First", Toast.LENGTH_LONG).show();
+        }
     }
 
 
     // Send to synthVisor button behaviour
     public void SendToSynthVisor(View view){
 
+        // TODO - add upload status text view for user feedback
+
         // Attaching to views
         btnSendtoVisor  = view.findViewById(R.id.uploadToVisorButton);
-        uploadStatus    = view.findViewById(R.id.uploadStatusTextView);
-        
+        //uploadStatus    = view.findViewById(R.id.uploadStatusTextView);
+
+        // Hiding textView till required
+        //uploadStatus.setVisibility(View.INVISIBLE);
+
         btnSendtoVisor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 try {
+
+                    // Text View upload status
+                    //uploadStatus.setVisibility(View.VISIBLE);
+                    //uploadStatus.setText(getText(R.string.sending));
+
                     // Sending the updated values to the synthVisor
                     bluetoothManager.sendSynthVisor(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue, synthVisor.LED_Brightness, synthVisor.blinkRate);
-                    Log.d("Write Synth Visor", "Sent");
 
-
-                    // TODO - add upload status text view for user feedback
+                    //uploadStatus.setText(getText(R.string.sent));
 
                 } catch (Exception noVisorPresent){
                     Log.e("Bluetooth Connected", "False");

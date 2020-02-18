@@ -58,6 +58,9 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
             @Override
             public void onClick(View v) {
 
+                // User feedback that device is connecting
+                Toast.makeText(mContext, "Connecting...", Toast.LENGTH_SHORT);
+
                 // Discovering UUID of the bluetooth device
                 bluetoothManager.getUUID();
 
