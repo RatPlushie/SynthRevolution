@@ -20,8 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.ratbox.synthrevolution.ui.main.SynthVisor;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -31,7 +29,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-import static com.ratbox.synthrevolution.MainActivity.bluetoothManager;
+import static com.ratbox.synthrevolution.MainActivity.synthVisor;
 
 public class synthTab1 extends Fragment {
 
@@ -55,7 +53,6 @@ public class synthTab1 extends Fragment {
 
     private Bitmap              colourBitmap;
 
-    private SynthVisor          synthVisor = new SynthVisor();
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
@@ -134,14 +131,6 @@ public class synthTab1 extends Fragment {
 
                             // Setting the textView with the RGB and HEX values
                             colourPickerResults.setText(synthVisor.getResults());
-
-                            try {
-                                // Sending the updated values to the synthVisor
-                                bluetoothManager.sendSynthVisor(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue, synthVisor.LED_Brightness, synthVisor.blinkRate);
-                                Log.d("Write Synth Visor", "Sent");
-                            } catch (Exception noVisorPresent){
-                                Log.e("Bluetooth Connected", "False");
-                            }
                         }
 
                     } catch (Exception colourPickerOutOfBounds){
@@ -161,14 +150,6 @@ public class synthTab1 extends Fragment {
                 LEDBrightnessTotal.setText(Integer.toString(progress));
 
                 synthVisor.setLED_Brightness(progress);
-
-                try {
-                    // Sending the updated values to the synthVisor
-                    bluetoothManager.sendSynthVisor(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue, synthVisor.LED_Brightness, synthVisor.blinkRate);
-                    Log.d("Write Synth Visor", "Sent");
-                } catch (Exception noVisorPresent){
-                    Log.e("Bluetooth Connected", "False");
-                }
             }
 
             @Override
@@ -191,14 +172,6 @@ public class synthTab1 extends Fragment {
                 blinkRateTotal.setText(Integer.toString(progress));
 
                 synthVisor.setBlinkRate(progress);
-
-                try {
-                    // Sending the updated values to the synthVisor
-                    bluetoothManager.sendSynthVisor(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue, synthVisor.LED_Brightness, synthVisor.blinkRate);
-                    Log.d("Write Synth Visor", "Sent");
-                } catch (Exception noVisorPresent){
-                    Log.e("Bluetooth Connected", "False");
-                }
             }
 
             @Override
@@ -226,14 +199,6 @@ public class synthTab1 extends Fragment {
 
                 // Setting the displayed colour in the selected colour view
                 colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
-
-                try {
-                    // Sending the updated values to the synthVisor
-                    bluetoothManager.sendSynthVisor(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue, synthVisor.LED_Brightness, synthVisor.blinkRate);
-                    Log.d("Write Synth Visor", "Sent");
-                } catch (Exception noVisorPresent){
-                    Log.e("Bluetooth Connected", "False");
-                }
             }
         });
 
@@ -270,14 +235,6 @@ public class synthTab1 extends Fragment {
 
                 // Setting the displayed colour in the selected colour view
                 colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
-
-                try {
-                    // Sending the updated values to the synthVisor
-                    bluetoothManager.sendSynthVisor(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue, synthVisor.LED_Brightness, synthVisor.blinkRate);
-                    Log.d("Write Synth Visor", "Sent");
-                } catch (Exception noVisorPresent){
-                    Log.e("Bluetooth Connected", "False");
-                }
             }
         });
 
@@ -314,14 +271,6 @@ public class synthTab1 extends Fragment {
 
                 // Setting the displayed colour in the selected colour view
                 colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
-
-                try {
-                    // Sending the updated values to the synthVisor
-                    bluetoothManager.sendSynthVisor(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue, synthVisor.LED_Brightness, synthVisor.blinkRate);
-                    Log.d("Write Synth Visor", "Sent");
-                } catch (Exception noVisorPresent){
-                    Log.e("Bluetooth Connected", "False");
-                }
             }
         });
 
@@ -358,14 +307,6 @@ public class synthTab1 extends Fragment {
 
                 // Setting the displayed colour in the selected colour view
                 colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
-
-                try {
-                    // Sending the updated values to the synthVisor
-                    bluetoothManager.sendSynthVisor(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue, synthVisor.LED_Brightness, synthVisor.blinkRate);
-                    Log.d("Write Synth Visor", "Sent");
-                } catch (Exception noVisorPresent){
-                    Log.e("Bluetooth Connected", "False");
-                }
             }
         });
 

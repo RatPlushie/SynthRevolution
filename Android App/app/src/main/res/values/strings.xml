@@ -13,6 +13,7 @@
     <string name="bluetooth_devices">Bluetooth Devices</string>
     <string name="bluetooth_prompt">Please select your device:</string>
     <string name="bluetooth_instructions">If you cannot find your device, first pair it in your Android\'s Bluetooth settings</string>
+    <string name="upload_title">Upload</string>
 
 
 </resources>

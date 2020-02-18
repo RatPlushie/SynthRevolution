@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/uploadDialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="ShowUploadPopup"
+        android:padding="8dp"
+        android:text="@string/upload_title"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/uploadDivider"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/uploadStatusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:paddingLeft="8dp"
+        android:paddingTop="16dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="16dp" />
+
+    <Button
+        android:id="@+id/uploadToVisorButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="SendToSynthVisor"
+        android:padding="8dp"
+        android:text="@string/upload_title" />
+
+</LinearLayout>
