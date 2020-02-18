@@ -20,8 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.ratbox.synthrevolution.ui.main.SynthVisor;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -31,7 +29,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-import static com.ratbox.synthrevolution.MainActivity.bluetoothManager;
+import static com.ratbox.synthrevolution.MainActivity.synthVisor;
 
 public class synthTab1 extends Fragment {
 
@@ -55,7 +53,6 @@ public class synthTab1 extends Fragment {
 
     private Bitmap              colourBitmap;
 
-    private SynthVisor          synthVisor = new SynthVisor();
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
@@ -134,9 +131,6 @@ public class synthTab1 extends Fragment {
 
                             // Setting the textView with the RGB and HEX values
                             colourPickerResults.setText(synthVisor.getResults());
-
-                            // TODO
-                            bluetoothManager.sendSynthVisor(1,1,1,1,1);
                         }
 
                     } catch (Exception colourPickerOutOfBounds){
@@ -178,8 +172,6 @@ public class synthTab1 extends Fragment {
                 blinkRateTotal.setText(Integer.toString(progress));
 
                 synthVisor.setBlinkRate(progress);
-
-
             }
 
             @Override
@@ -207,8 +199,6 @@ public class synthTab1 extends Fragment {
 
                 // Setting the displayed colour in the selected colour view
                 colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
-
-
             }
         });
 
@@ -511,8 +501,6 @@ public class synthTab1 extends Fragment {
                 }
             }
         }
-
-        // TODO - resume a bluetooth connection
     }
 
 

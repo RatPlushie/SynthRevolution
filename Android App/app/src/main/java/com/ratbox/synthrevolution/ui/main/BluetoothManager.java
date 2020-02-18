@@ -179,25 +179,15 @@ public class BluetoothManager {
     public void sendSynthVisor(int red, int green, int blue, int brightness, int blink){
 
         try {
-            OutputStream outputStream = null;
+            OutputStream outputStream;
             outputStream = bluetoothSocket.getOutputStream();
 
-            /*
-            int[] sendArray = new int[]{red, green, blue, brightness, blink};
-            for (int i : sendArray){
-                byte b = (byte)i;
-                outputStream.write((b));
-            }
-
-            */
-
-            /* ARDUINO DEBUG      THIS DOES WORK SENDING THE COMMAND! */
-            //String command = "1";
-            outputStream.write(Integer.toString(1).getBytes());
+            // Creates and sends out all the values for the synthVisor over bluetooth
+            String outputString = red + ":" + green + ":" + blue + ":" + brightness + ":" + blink;
+            outputStream.write(outputString.getBytes());
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

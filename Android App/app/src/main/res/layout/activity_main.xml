@@ -35,11 +35,24 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:background="@android:color/transparent"
-                android:onClick="ShowPopup"
+                android:onClick="ShowBluetoothPopup"
                 android:src="@drawable/ic_bluetooth_disconnected"
                 app:layout_constraintBottom_toBottomOf="@+id/title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/title" />
+
+            <ImageButton
+                android:id="@+id/uploadButton"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/transparent"
+                android:onClick="ShowUploadPopup"
+                app:layout_constraintBottom_toBottomOf="@+id/bluetoothButton"
+                app:layout_constraintEnd_toStartOf="@+id/bluetoothButton"
+                app:layout_constraintTop_toTopOf="@+id/bluetoothButton"
+                app:srcCompat="@drawable/ic_upload" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
