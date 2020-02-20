@@ -35,60 +35,32 @@ void setup() {                                          // put your setup code h
 
 void loop() {                                            // put your main code here, to run repeatedly
   
-  String inString = "";                                  // Temporary string to hold the retrieved info
   if (Bluetooth.available() > 0){                        // Retreiveing the bluetooth serial input
+    
     while(Bluetooth.available() > 0){
-      inString += char(Bluetooth.read());
+      char receivedChar = char(Bluetooth.read());
+      Serial.println(receivedChar);
+      digitalWrite(redLED, HIGH);
+      delay(5);
+      digitalWrite(redLED, LOW);
       delay(250);
     }
-    Serial.println(inString);
 
-    // WORKS UP TO HERE
 
-    String valueBuff = "";
-    int intBuff = 0;
-    int currentWrite = 0;
-    int stringLength = inString.length() + 1;
-    char stringBuff[stringLength];
-    inString.toCharArray(stringBuff, stringLength);
 
-    // Parsing out the synthVisor config
-    for (int i = 0; i <= stringLength; i++){              // iterating through the received data
-      if (!stringBuff[i] == ':'){                         // Check to see if there is more value to parse through
-        Serial.println(stringBuff[i]);
-        valueBuff += stringBuff[i];                       // Filling the temporary string with the length of the value  
-      } else {                                            // Reached a ":", convert string to int
 
-        char intConBuff[valueBuff.length() + 1];
-        valueBuff.toCharArray(intConBuff, valueBuff.length() + 1);
-        intBuff = atoi(intConBuff);                       // Converting the created string to a working int - CURRENTLY NOT WORKING
-        
-        switch (currentWrite){                            // Determining which value to write to
-          case 0:
-            red = intBuff;
-            Serial.println("Red: " + red);
-            break;
-          case 1:
-            green = intBuff;
-            Serial.println("Green: " + green);
-            break;
-          case 2:
-            blue = intBuff;
-            Serial.println("Blue: " + blue);
-            break;
-          case 3:
-            brightness = intBuff;
-            Serial.println("Brightness: " + brightness);
-            break;
-          case 4:
-            blinkRate = intBuff;
-            Serial.println("Blink Rate: " + blinkRate);
-            break;
-        }
-        
-        valueBuff = "";                                   // Resetting the valueBuffer
-        currentWrite++;                                   // Incremeneting to the next switch for next value entry 
-   }
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
  }
 }

@@ -182,8 +182,32 @@ public class BluetoothManager {
             OutputStream outputStream;
             outputStream = bluetoothSocket.getOutputStream();
 
-            // Creates and sends out all the values for the synthVisor over bluetooth
-            String outputString = red + ":" + green + ":" + blue + ":" + brightness + ":" + blink;
+            String[][] tempArray = new String[][]{{Integer.toString(red), ""},
+                                                  {Integer.toString(green), ""},
+                                                  {Integer.toString(blue), ""},
+                                                  {Integer.toString(brightness), ""},
+                                                  {Integer.toString(blink), ""}};
+
+
+            for (String[] idvArray : tempArray){
+
+                if (idvArray[0].toCharArray().length == 3){
+
+                    idvArray[1] = idvArray[0];
+
+                } else if (idvArray[0].toCharArray().length == 2){
+
+                    idvArray[1] = "0" + idvArray[0];
+
+                } else if (idvArray[0].toCharArray().length == 1){
+
+                    idvArray[1] = "00" + idvArray[0];
+
+                }
+            }
+
+            String outputString = tempArray[0][1] + "," + tempArray[1][1] + "," + tempArray[2][1] + "," + tempArray[3][1] + "," + tempArray[4][1];
+            
             outputStream.write(outputString.getBytes());
 
         } catch (IOException e) {
