@@ -206,7 +206,7 @@ public class BluetoothManager {
                 }
             }
 
-            String outputString = tempArray[0][1] + "," + tempArray[1][1] + "," + tempArray[2][1] + "," + tempArray[3][1] + "," + tempArray[4][1];
+            String outputString = tempArray[0][1] + "," + tempArray[1][1] + "," + tempArray[2][1] + "," + tempArray[3][1] + "," + tempArray[4][1] + ",";
             
             outputStream.write(outputString.getBytes());
 
