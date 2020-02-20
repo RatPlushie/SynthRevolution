@@ -14,8 +14,7 @@ int blue = 0;
 int brightness = 0;
 int blinkRate = 0;
 
-
-void setup() {                                          // put your setup code here, to run once:
+void setup() {                                          // Put your setup code here, to run once:
   Serial.begin(9600);                                   // Baudrate for the PC serial monitor
   Bluetooth.begin(9600);                                // Baudrate for the Bluetooth serial
 
@@ -33,33 +32,32 @@ void setup() {                                          // put your setup code h
 }
 
 
-void loop() {                                            // put your main code here, to run repeatedly
+void loop() {                                                 // Put your main code here, to run repeatedly
   
-  if (Bluetooth.available() > 0){                        // Retreiveing the bluetooth serial input
+  if (Bluetooth.available() > 0){                             // Retreiveing the bluetooth serial input
+
+    char receivedArray[19];
+    int  blueCounter = 0;
     
     while(Bluetooth.available() > 0){
-      char receivedChar = char(Bluetooth.read());
-      Serial.println(receivedChar);
-      digitalWrite(redLED, HIGH);
+      receivedArray[blueCounter] = char(Bluetooth.read());    // Storing received byte into array
+      //Serial.write(receivedArray[blueCounter]);               
+      blueCounter++;
+
+      digitalWrite(redLED, HIGH);                             // Blink LED to show something being receieved
       delay(5);
       digitalWrite(redLED, LOW);
-      delay(250);
+      
+      delay(250);                                             // Delay to allow the bluetooth to catch up
     }
 
+    for (char c : receivedArray){
+      Serial.println(c);
+    }
 
+   
 
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
  }
