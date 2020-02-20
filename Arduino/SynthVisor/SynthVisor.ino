@@ -14,8 +14,7 @@ int blue = 0;
 int brightness = 0;
 int blinkRate = 0;
 
-
-void setup() {                                          // put your setup code here, to run once:
+void setup() {                                          // Put your setup code here, to run once:
   Serial.begin(9600);                                   // Baudrate for the PC serial monitor
   Bluetooth.begin(9600);                                // Baudrate for the Bluetooth serial
 
@@ -33,62 +32,33 @@ void setup() {                                          // put your setup code h
 }
 
 
-void loop() {                                            // put your main code here, to run repeatedly
+void loop() {                                                 // Put your main code here, to run repeatedly
   
-  String inString = "";                                  // Temporary string to hold the retrieved info
-  if (Bluetooth.available() > 0){                        // Retreiveing the bluetooth serial input
+  if (Bluetooth.available() > 0){                             // Retreiveing the bluetooth serial input
+
+    char receivedArray[19];
+    int  blueCounter = 0;
+    
     while(Bluetooth.available() > 0){
-      inString += char(Bluetooth.read());
-      delay(250);
+      receivedArray[blueCounter] = char(Bluetooth.read());    // Storing received byte into array
+      //Serial.write(receivedArray[blueCounter]);               
+      blueCounter++;
+
+      digitalWrite(redLED, HIGH);                             // Blink LED to show something being receieved
+      delay(5);
+      digitalWrite(redLED, LOW);
+      
+      delay(250);                                             // Delay to allow the bluetooth to catch up
     }
-    Serial.println(inString);
 
-    // WORKS UP TO HERE
+    for (char c : receivedArray){
+      Serial.println(c);
+    }
 
-    String valueBuff = "";
-    int intBuff = 0;
-    int currentWrite = 0;
-    int stringLength = inString.length() + 1;
-    char stringBuff[stringLength];
-    inString.toCharArray(stringBuff, stringLength);
+   
 
-    // Parsing out the synthVisor config
-    for (int i = 0; i <= stringLength; i++){              // iterating through the received data
-      if (!stringBuff[i] == ':'){                         // Check to see if there is more value to parse through
-        Serial.println(stringBuff[i]);
-        valueBuff += stringBuff[i];                       // Filling the temporary string with the length of the value  
-      } else {                                            // Reached a ":", convert string to int
+    
 
-        char intConBuff[valueBuff.length() + 1];
-        valueBuff.toCharArray(intConBuff, valueBuff.length() + 1);
-        intBuff = atoi(intConBuff);                       // Converting the created string to a working int - CURRENTLY NOT WORKING
-        
-        switch (currentWrite){                            // Determining which value to write to
-          case 0:
-            red = intBuff;
-            Serial.println("Red: " + red);
-            break;
-          case 1:
-            green = intBuff;
-            Serial.println("Green: " + green);
-            break;
-          case 2:
-            blue = intBuff;
-            Serial.println("Blue: " + blue);
-            break;
-          case 3:
-            brightness = intBuff;
-            Serial.println("Brightness: " + brightness);
-            break;
-          case 4:
-            blinkRate = intBuff;
-            Serial.println("Blink Rate: " + blinkRate);
-            break;
-        }
-        
-        valueBuff = "";                                   // Resetting the valueBuffer
-        currentWrite++;                                   // Incremeneting to the next switch for next value entry 
-   }
-  }
+
  }
 }
