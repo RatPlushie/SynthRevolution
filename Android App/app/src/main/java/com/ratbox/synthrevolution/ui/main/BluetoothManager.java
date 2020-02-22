@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -180,19 +181,21 @@ public class BluetoothManager {
     public void sendSynthVisor(ProgressBar progressBar, int red, int green, int blue, int brightness, int blink){
 
         try {
-            // Initialising the output stream and retrieving the bluetooth socket
+            // Initialising the inputStream & OutputStream
             OutputStream outputStream;
             outputStream = bluetoothSocket.getOutputStream();
+            InputStream inputStream;
+            inputStream = bluetoothSocket.getInputStream();
 
             // Creating an array of arrays to more modify and temporarily store the values to send to the Arduino
-            String[][] tempArray = new String[][]{{Integer.toString(red), ""},
+            String[][] fillArray = new String[][]{{Integer.toString(red), ""},
                                                   {Integer.toString(green), ""},
                                                   {Integer.toString(blue), ""},
                                                   {Integer.toString(brightness), ""},
                                                   {Integer.toString(blink), ""}};
 
-
-            for (String[] idvArray : tempArray){
+            // Filling the string values to be a 3 digit number
+            for (String[] idvArray : fillArray){
 
                 if (idvArray[0].toCharArray().length == 3){
 
@@ -209,22 +212,27 @@ public class BluetoothManager {
                 }
             }
 
-            // Stringing up all the values to be sent to the arduino, using a "," to break each respective value which the Arduino can parse out on its side
-            String outputString = tempArray[0][1] + "," + tempArray[1][1] + "," + tempArray[2][1] + "," + tempArray[3][1] + "," + tempArray[4][1] + ",";
+            // Building an array to store each string to be sent via the outputStream
+            String rgbOutput[] = new String[]{"R" + fillArray[0][1],
+                                              "G" + fillArray[1][1],
+                                              "B" + fillArray[2][1],
+                                              "I" + fillArray[3][1],
+                                              "L" + fillArray[4][1]};
 
-            // Sending the string to the Arduino
-            outputStream.write(outputString.getBytes());
+            // Sending each string consecutively
+            for (String byteString : rgbOutput){
+                // Sending byte String
+                outputStream.write(byteString.getBytes());
+                Log.d("ByteStringWrite", byteString);
 
+                // Arduino handshake
+                byte b = (byte) inputStream.read();
+                if (b == '1'){
+                    Log.d("ArduinoHandshake", "Return prompt received");
 
-            // Determining the length of the string to send
-            int outputLength = outputString.toCharArray().length;
-
-            
-
-
-
-
-
+                    // TODO - handshake comparison for parity check
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
