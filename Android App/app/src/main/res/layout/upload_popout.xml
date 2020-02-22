@@ -22,16 +22,12 @@
         android:layout_height="8dp"
         android:background="@color/colorPrimary" />
 
-    <TextView
-        android:id="@+id/uploadStatusTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="center_horizontal"
-        android:paddingLeft="8dp"
-        android:paddingTop="16dp"
-        android:paddingRight="8dp"
-        android:paddingBottom="16dp" />
+    <ProgressBar
+        android:id="@+id/uploadProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
+        android:max="100" />
 
     <Button
         android:id="@+id/uploadToVisorButton"

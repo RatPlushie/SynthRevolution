@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.os.ParcelUuid;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -176,12 +177,14 @@ public class BluetoothManager {
         }
     }
 
-    public void sendSynthVisor(int red, int green, int blue, int brightness, int blink){
+    public void sendSynthVisor(ProgressBar progressBar, int red, int green, int blue, int brightness, int blink){
 
         try {
+            // Initialising the output stream and retrieving the bluetooth socket
             OutputStream outputStream;
             outputStream = bluetoothSocket.getOutputStream();
 
+            // Creating an array of arrays to more modify and temporarily store the values to send to the Arduino
             String[][] tempArray = new String[][]{{Integer.toString(red), ""},
                                                   {Integer.toString(green), ""},
                                                   {Integer.toString(blue), ""},
@@ -206,9 +209,21 @@ public class BluetoothManager {
                 }
             }
 
+            // Stringing up all the values to be sent to the arduino, using a "," to break each respective value which the Arduino can parse out on its side
             String outputString = tempArray[0][1] + "," + tempArray[1][1] + "," + tempArray[2][1] + "," + tempArray[3][1] + "," + tempArray[4][1] + ",";
-            
+
+            // Sending the string to the Arduino
             outputStream.write(outputString.getBytes());
+
+
+            // Determining the length of the string to send
+            int outputLength = outputString.toCharArray().length;
+
+            
+
+
+
+
 
         } catch (IOException e) {
             e.printStackTrace();
