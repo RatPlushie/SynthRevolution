@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
     // Send to synthVisor button behaviour
     public void SendToSynthVisor(View view){
 
-        // TODO - on first showing of the dialog box, sometimes the button is unresponsive
+        // TODO - on first showing of the dialog box, sometimes the button is unresponsive "InputEventReceiver: Attempted to finish an input event but the input event receiver has already been disposed."
 
         // Attaching to views
         btnSendToVisor = view.findViewById(R.id.uploadToVisorButton);

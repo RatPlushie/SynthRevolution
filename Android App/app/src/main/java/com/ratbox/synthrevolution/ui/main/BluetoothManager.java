@@ -212,27 +212,28 @@ public class BluetoothManager {
                 }
             }
 
-            // Building an array to store each string to be sent via the outputStream
-            String rgbOutput[] = new String[]{"R" + fillArray[0][1],
-                                              "G" + fillArray[1][1],
-                                              "B" + fillArray[2][1],
-                                              "I" + fillArray[3][1],
-                                              "L" + fillArray[4][1]};
+            // Sending the config mode "C" to the arduino
+            outputStream.write('C');
 
-            // Sending each string consecutively
-            for (String byteString : rgbOutput){
-                // Sending byte String
-                outputStream.write(byteString.getBytes());
-                Log.d("ByteStringWrite", byteString);
-
-                // Arduino handshake
-                byte b = (byte) inputStream.read();
-                if (b == '1'){
-                    Log.d("ArduinoHandshake", "Return prompt received");
-
-                    // TODO - handshake comparison for parity check
-                }
+            // Arduino Mode handshake
+            byte modeByte = (byte) inputStream.read();
+            if (modeByte == 'C'){
+                Log.d("Arduino Mode", "Config mode enabled");
             }
+
+            // Building the string to send
+            String outputString = fillArray[0][1] + fillArray[1][1] + fillArray[2][1] + fillArray[3][1] + fillArray[4][1];
+
+            // Sending out the string
+            outputStream.write(outputString.getBytes());
+
+            // Arduino handshake
+            // TODO - create a handshake comparison for parity
+            byte handshakeByte = (byte) inputStream.read();
+            if (handshakeByte == '1'){
+                Log.d("ArduinoHandshake", "Handshake received");
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
