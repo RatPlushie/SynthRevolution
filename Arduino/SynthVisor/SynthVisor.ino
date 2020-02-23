@@ -6,11 +6,13 @@ const int rgb_green = 10;
 const int rgb_blue = 11;
 const int indicatorLED = 12;                                  // LED to display when bluetooth data is being received
 
-int red = 0;                                                  // Global Values for the visor
-int green = 0;
-int blue = 0;
-int brightness = 0;
-int blinkRate = 0;
+int visorConfig[] = {0, 0, 0, 0, 0};
+/*  [0] Red
+ *  [1] Green
+ *  [2] Blue
+ *  [3] Brightness
+ *  [4] BlinkRate
+ */
 
 void setup() {                                                // Put your setup code here, to run once:
   Serial.begin(9600);                                         // Baudrate for the PC serial monitor
@@ -30,86 +32,91 @@ void setup() {                                                // Put your setup 
 
 void loop() {                                                 // Put your main code here, to run repeatedly
   
-  if (Bluetooth.available() > 0){                             // Retreiveing the bluetooth serial input and parsing it into the global variables
+  if (Bluetooth.available() > 0){                             // Waiting for a bluetooth input
 
-    char receivedArray[20];
-    int  blueCounter = 0;
-    
-    while(Bluetooth.available() > 0){                         // While-loop until there is no more to read
-      receivedArray[blueCounter] = char(Bluetooth.read());    // Storing received byte into array               
-      blueCounter++;                                          // Iterating the counter for the next loop
+    if (Bluetooth.read() == 'C'){                             // If Config mode is received, parse the RGB, Brightness, and BlinkRate
 
-      digitalWrite(indicatorLED, HIGH);                       // Blink LED to show something being receieved
-      delay(2);
-      digitalWrite(indicatorLED, LOW);
+      Bluetooth.write('C');                                   // Bluetooth handshake into Config mode
+
+      delay(200);
+
+      int count = 0;
+      char charBuffer[] = {0, 0, 0, '\0'};
+
+      for (int i = 0; i <= 2; i++){                           // Fill the charBuffer with the red value bytes
+        charBuffer[i] = char(Bluetooth.read());
+        delay(250);
+
+        digitalWrite(indicatorLED, HIGH);                     // LED feedback blink
+        delay(5);
+        digitalWrite(indicatorLED, LOW);
+      }
+      visorConfig[0] = atoi(charBuffer);                      // Storing the red value in the array
+
+
+      for (int i = 0; i <= 2; i++){                           // Fill the charBuffer with the green value
+        charBuffer[i] = char(Bluetooth.read());
+        delay(250);
+
+        digitalWrite(indicatorLED, HIGH);                     // LED feedback blink
+        delay(5);
+        digitalWrite(indicatorLED, LOW);
+      }
+      visorConfig[1] = atoi(charBuffer);                      // Storing the green value in the array
+
       
-      delay(250);                                             // Delay to allow the bluetooth to catch up
-    }
+      for (int i = 0; i <= 2; i++){                           // Fill the charBuffer with the blue value
+        charBuffer[i] = char(Bluetooth.read());
+        delay(250);
 
-    int colourCount = 0;
-    int valCount    = 0;
-    char valArray[4];
-    
-    for (int i = 0; i <= sizeof(receivedArray); i++){        // Parsing the array into usable values
+        digitalWrite(indicatorLED, HIGH);                     // LED feedback blink
+        delay(5);
+        digitalWrite(indicatorLED, LOW);
+      }
+      visorConfig[2] = atoi(charBuffer);                      // Storing the blue value in the array
+
+
+      for (int i = 0; i <= 2; i++){                           // Fill the charBuffer with the brightness value
+        charBuffer[i] = char(Bluetooth.read());
+        delay(250);
+
+        digitalWrite(indicatorLED, HIGH);                     // LED feedback blink
+        delay(5);
+        digitalWrite(indicatorLED, LOW);
+      }
+      visorConfig[3] = atoi(charBuffer);                      // Storing the brightness value in the array
+
+
+      for (int i = 0; i <= 2; i++){                           // Fill the charBuffer with the blinkRate value
+        charBuffer[i] = char(Bluetooth.read());
+        delay(250);
+
+        digitalWrite(indicatorLED, HIGH);                     // LED feedback blink
+        delay(5);
+        digitalWrite(indicatorLED, LOW);
+      }
+      visorConfig[4] = atoi(charBuffer);                      // Storing the blinkRate value in the array
+
+      Bluetooth.write('1');                                   // Android handshake
+
+      Serial.println("Visor Config");                         // Debug printout of all values
+      Serial.print("Red: ");
+      Serial.println(visorConfig[0]);
+      Serial.print("Green: ");
+      Serial.println(visorConfig[1]);
+      Serial.print("Blue: ");
+      Serial.println(visorConfig[2]);
+      Serial.print("Brightness: ");
+      Serial.println(visorConfig[3]);
+      Serial.print("Blink Rate: ");
+      Serial.println(visorConfig[4]);
+
+      analogWrite(rgb_red, visorConfig[0]);                   // Lighting the LED to the RGB value
+      analogWrite(rgb_green, visorConfig[1]);
+      analogWrite(rgb_blue, visorConfig[2]);
       
-      if (receivedArray[i] != ','){                           // Testing for a break
-        
-        valArray[valCount] = receivedArray[i];                // Moving value into its own array
-        valCount++;
-        
-      } else {                                                // Once reached a break it is to input the value into the correct integer
-
-        valArray[4] = '\0';                                   // Adding null terminator to each valArray
-
-        switch(colourCount){                                  // Inputing the final value into its correct visor config
-          case 0:
-            red = atoi(valArray);
-            //Serial.println(red);
-            break;
-
-          case 1:
-            green = atoi(valArray);
-            //Serial.println(green);
-            break;
-
-          case 2:
-            blue = atoi(valArray);
-            //Serial.println(blue);
-            break;
-
-          case 3:
-            brightness = atoi(valArray);
-            //Serial.println(brightness);
-            break;
-
-          case 4:                                   
-            blinkRate = atoi(valArray);
-            //Serial.println(blinkRate);
-            break;
-        }
-
-        colourCount++;                                        // Incrementing to the next visor config value in the switch series
-        valCount = 0;                                         // Restting the counter for the valArray builder
-      }  
+    } else if (Bluetooth.read() == 'P'){                      // Placeholder mode for recieving eye patterns and other LED configurations
+      // WIP
     }
-    
-    Serial.println("VisorConfig:");                           // Serial Debug of parsed config
-    Serial.print("Red: ");
-    Serial.println(red);
-    Serial.print("Green: ");
-    Serial.println(green);
-    Serial.print("Blue: ");
-    Serial.println(blue);
-    Serial.print("Brightness: "); 
-    Serial.println(brightness);
-    Serial.print("Blink Rate: ");
-    Serial.println(blinkRate); 
-    Serial.println("");
-    
- }
-
-  analogWrite(rgb_red, red);                                  // Displaying the loaded colour to the LED
-  analogWrite(rgb_green, green);
-  analogWrite(rgb_blue, blue);
- 
+  } 
 }

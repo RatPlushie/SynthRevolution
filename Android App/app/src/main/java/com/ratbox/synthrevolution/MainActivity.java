@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -32,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
     private Dialog              bluetoothDialog;
     private Dialog              uploadDialog;
 
+    private ProgressBar         progressBarUpload;
+
     private ImageButton         btnBluetoothDialog;
 
-    private Button              btnSendtoVisor;
-
-    private TextView            uploadStatus;
+    private Button              btnSendToVisor;
 
     private boolean             connectionEstablished;
 
@@ -129,29 +129,19 @@ public class MainActivity extends AppCompatActivity {
     // Send to synthVisor button behaviour
     public void SendToSynthVisor(View view){
 
-        // TODO - add upload status text view for user feedback
+        // TODO - on first showing of the dialog box, sometimes the button is unresponsive "InputEventReceiver: Attempted to finish an input event but the input event receiver has already been disposed."
 
         // Attaching to views
-        btnSendtoVisor  = view.findViewById(R.id.uploadToVisorButton);
-        //uploadStatus    = view.findViewById(R.id.uploadStatusTextView);
+        btnSendToVisor = view.findViewById(R.id.uploadToVisorButton);
+        progressBarUpload = view.findViewById(R.id.uploadProgressBar);
 
-        // Hiding textView till required
-        //uploadStatus.setVisibility(View.INVISIBLE);
-
-        btnSendtoVisor.setOnClickListener(new View.OnClickListener() {
+        btnSendToVisor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 try {
-
-                    // Text View upload status
-                    //uploadStatus.setVisibility(View.VISIBLE);
-                    //uploadStatus.setText(getText(R.string.sending));
-
                     // Sending the updated values to the synthVisor
-                    bluetoothManager.sendSynthVisor(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue, synthVisor.LED_Brightness, synthVisor.blinkRate);
-
-                    //uploadStatus.setText(getText(R.string.sent));
+                    bluetoothManager.sendSynthVisor(progressBarUpload, synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue, synthVisor.LED_Brightness, synthVisor.blinkRate);
 
                 } catch (Exception noVisorPresent){
                     Log.e("Bluetooth Connected", "False");

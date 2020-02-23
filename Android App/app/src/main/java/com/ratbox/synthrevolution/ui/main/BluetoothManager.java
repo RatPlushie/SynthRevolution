@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.os.ParcelUuid;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -176,20 +178,24 @@ public class BluetoothManager {
         }
     }
 
-    public void sendSynthVisor(int red, int green, int blue, int brightness, int blink){
+    public void sendSynthVisor(ProgressBar progressBar, int red, int green, int blue, int brightness, int blink){
 
         try {
+            // Initialising the inputStream & OutputStream
             OutputStream outputStream;
             outputStream = bluetoothSocket.getOutputStream();
+            InputStream inputStream;
+            inputStream = bluetoothSocket.getInputStream();
 
-            String[][] tempArray = new String[][]{{Integer.toString(red), ""},
+            // Creating an array of arrays to more modify and temporarily store the values to send to the Arduino
+            String[][] fillArray = new String[][]{{Integer.toString(red), ""},
                                                   {Integer.toString(green), ""},
                                                   {Integer.toString(blue), ""},
                                                   {Integer.toString(brightness), ""},
                                                   {Integer.toString(blink), ""}};
 
-
-            for (String[] idvArray : tempArray){
+            // Filling the string values to be a 3 digit number
+            for (String[] idvArray : fillArray){
 
                 if (idvArray[0].toCharArray().length == 3){
 
@@ -206,9 +212,27 @@ public class BluetoothManager {
                 }
             }
 
-            String outputString = tempArray[0][1] + "," + tempArray[1][1] + "," + tempArray[2][1] + "," + tempArray[3][1] + "," + tempArray[4][1] + ",";
-            
+            // Sending the config mode "C" to the arduino
+            outputStream.write('C');
+
+            // Arduino Mode handshake
+            byte modeByte = (byte) inputStream.read();
+            if (modeByte == 'C'){
+                Log.d("Arduino Mode", "Config mode enabled");
+            }
+
+            // Building the string to send
+            String outputString = fillArray[0][1] + fillArray[1][1] + fillArray[2][1] + fillArray[3][1] + fillArray[4][1];
+
+            // Sending out the string
             outputStream.write(outputString.getBytes());
+
+            // Arduino handshake
+            // TODO - create a handshake comparison for parity
+            byte handshakeByte = (byte) inputStream.read();
+            if (handshakeByte == '1'){
+                Log.d("ArduinoHandshake", "Handshake received");
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
