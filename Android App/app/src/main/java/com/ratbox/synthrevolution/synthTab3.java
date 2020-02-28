@@ -15,7 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.ratbox.synthrevolution.ui.main.SynthPattern;
+
+import static com.ratbox.synthrevolution.MainActivity.synthPattern;
 
 public class synthTab3 extends Fragment {
 
@@ -23,71 +24,16 @@ public class synthTab3 extends Fragment {
     private ImageButton             btnAddNewPattern;
     private FloatingActionButton    btnSave;
 
-    private CheckBox                chkbtn1;
-    private CheckBox                chkbtn2;
-    private CheckBox                chkbtn3;
-    private CheckBox                chkbtn4;
-    private CheckBox                chkbtn5;
-    private CheckBox                chkbtn6;
-    private CheckBox                chkbtn7;
-    private CheckBox                chkbtn8;
-    private CheckBox                chkbtn9;
-    private CheckBox                chkbtn10;
-    private CheckBox                chkbtn11;
-    private CheckBox                chkbtn12;
-    private CheckBox                chkbtn13;
-    private CheckBox                chkbtn14;
-    private CheckBox                chkbtn15;
-    private CheckBox                chkbtn16;
-    private CheckBox                chkbtn17;
-    private CheckBox                chkbtn18;
-    private CheckBox                chkbtn19;
-    private CheckBox                chkbtn20;
-    private CheckBox                chkbtn21;
-    private CheckBox                chkbtn22;
-    private CheckBox                chkbtn23;
-    private CheckBox                chkbtn24;
-    private CheckBox                chkbtn25;
-    private CheckBox                chkbtn26;
-    private CheckBox                chkbtn27;
-    private CheckBox                chkbtn28;
-    private CheckBox                chkbtn29;
-    private CheckBox                chkbtn30;
-    private CheckBox                chkbtn31;
-    private CheckBox                chkbtn32;
-    private CheckBox                chkbtn33;
-    private CheckBox                chkbtn34;
-    private CheckBox                chkbtn35;
-    private CheckBox                chkbtn36;
-    private CheckBox                chkbtn37;
-    private CheckBox                chkbtn38;
-    private CheckBox                chkbtn39;
-    private CheckBox                chkbtn40;
-    private CheckBox                chkbtn41;
-    private CheckBox                chkbtn42;
-    private CheckBox                chkbtn43;
-    private CheckBox                chkbtn44;
-    private CheckBox                chkbtn45;
-    private CheckBox                chkbtn46;
-    private CheckBox                chkbtn47;
-    private CheckBox                chkbtn48;
-    private CheckBox                chkbtn49;
-    private CheckBox                chkbtn50;
-    private CheckBox                chkbtn51;
-    private CheckBox                chkbtn52;
-    private CheckBox                chkbtn53;
-    private CheckBox                chkbtn54;
-    private CheckBox                chkbtn55;
-    private CheckBox                chkbtn56;
-    private CheckBox                chkbtn57;
-    private CheckBox                chkbtn58;
-    private CheckBox                chkbtn59;
-    private CheckBox                chkbtn60;
-    private CheckBox                chkbtn61;
-    private CheckBox                chkbtn62;
-    private CheckBox                chkbtn63;
-    private CheckBox                chkbtn64;
+    private CheckBox                chkbtn1,  chkbtn2,  chkbtn3,  chkbtn4,  chkbtn5,  chkbtn6,  chkbtn7,  chkbtn8,
+                                    chkbtn9,  chkbtn10, chkbtn11, chkbtn12, chkbtn13, chkbtn14, chkbtn15, chkbtn16,
+                                    chkbtn17, chkbtn18, chkbtn19, chkbtn20, chkbtn21, chkbtn22, chkbtn23, chkbtn24,
+                                    chkbtn25, chkbtn26, chkbtn27, chkbtn28, chkbtn29, chkbtn30, chkbtn31, chkbtn32,
+                                    chkbtn33, chkbtn34, chkbtn35, chkbtn36, chkbtn37, chkbtn38, chkbtn39, chkbtn40,
+                                    chkbtn41, chkbtn42, chkbtn43, chkbtn44, chkbtn45, chkbtn46, chkbtn47, chkbtn48,
+                                    chkbtn49, chkbtn50, chkbtn51, chkbtn52, chkbtn53, chkbtn54, chkbtn55, chkbtn56,
+                                    chkbtn57, chkbtn58, chkbtn59, chkbtn60, chkbtn61, chkbtn62, chkbtn63, chkbtn64;
 
+    
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -171,8 +117,8 @@ public class synthTab3 extends Fragment {
         chkbtn64    = view.findViewById(R.id.r8b64);
 
         // Creating an array of all the checkboxes
-        CheckBox[] checkBoxArr = {chkbtn1, chkbtn2, chkbtn3, chkbtn4, chkbtn5, chkbtn6, chkbtn7, chkbtn8,
-                                  chkbtn9, chkbtn10, chkbtn11, chkbtn12, chkbtn13, chkbtn14, chkbtn15, chkbtn16,
+        CheckBox[] checkBoxArr = {chkbtn1,  chkbtn2,  chkbtn3,  chkbtn4,  chkbtn5,  chkbtn6,  chkbtn7,  chkbtn8,
+                                  chkbtn9,  chkbtn10, chkbtn11, chkbtn12, chkbtn13, chkbtn14, chkbtn15, chkbtn16,
                                   chkbtn17, chkbtn18, chkbtn19, chkbtn20, chkbtn21, chkbtn22, chkbtn23, chkbtn24,
                                   chkbtn25, chkbtn26, chkbtn27, chkbtn28, chkbtn29, chkbtn30, chkbtn31, chkbtn32,
                                   chkbtn33, chkbtn34, chkbtn35, chkbtn36, chkbtn37, chkbtn38, chkbtn39, chkbtn40,
@@ -181,8 +127,8 @@ public class synthTab3 extends Fragment {
                                   chkbtn57, chkbtn58, chkbtn59, chkbtn60, chkbtn61, chkbtn62, chkbtn63, chkbtn64};
 
 
-        // Initialising synthPattern Object
-        SynthPattern synthPattern = new SynthPattern(getContext(), checkBoxArr);
+        // Loading the values into the synthPattern object
+        synthPattern.loadPattern(getContext());
 
 
         // Creating the array adapter, attaching it and setting the onClickListener
@@ -204,7 +150,7 @@ public class synthTab3 extends Fragment {
         });
 
         // Loading the default eye pattern onCreate()
-        synthPattern.setPattern(0);
+        synthPattern.setPattern(0, checkBoxArr);
 
 
         // Setting the onclick listener for the "add new pattern" button

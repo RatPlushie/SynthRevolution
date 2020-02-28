@@ -21,13 +21,11 @@ public class SynthPattern {
 
     public List<String>         patternNameList;
     public ArrayList<char[]>    patternConfList;
-    public CheckBox[]           checkBoxes;
 
-    // Constructor method for SynthPattern
-    public SynthPattern(Context context, CheckBox[] checkBoxArr){
+    // Method to load from file, the patterns
+    public void loadPattern(Context context){
         patternNameList = new ArrayList<>();
         patternConfList = new ArrayList<>();
-        checkBoxes      = checkBoxArr;
 
         // Attempting to read the save file and parse its contents
         BufferedReader reader = null;
@@ -118,7 +116,7 @@ public class SynthPattern {
     }
 
     // Method for loading the saved pattern onto the checkboxes
-    public void setPattern(int patternIndex){
+    public void setPattern(int patternIndex, CheckBox[] checkBoxes){
         char[] tempChar = patternConfList.get(patternIndex);
         for (int i = 0; i <= checkBoxes.length - 1; i++){
 
