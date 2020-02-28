@@ -18,23 +18,25 @@ import com.google.android.material.tabs.TabLayout;
 import com.ratbox.synthrevolution.ui.main.BluetoothManager;
 import com.ratbox.synthrevolution.ui.main.BluetoothRecyclerViewAdapter;
 import com.ratbox.synthrevolution.ui.main.SectionsPagerAdapter;
+import com.ratbox.synthrevolution.ui.main.SynthPattern;
 import com.ratbox.synthrevolution.ui.main.SynthVisor;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static BluetoothManager  bluetoothManager = new BluetoothManager();
-    public static SynthVisor        synthVisor = new SynthVisor();
+    public static BluetoothManager  bluetoothManager    = new BluetoothManager();
+    public static SynthVisor        synthVisor          = new SynthVisor();
+    public static SynthPattern      synthPattern        = new SynthPattern();
 
-    private RecyclerView        bluetoothRecyclerView;
+    private RecyclerView            bluetoothRecyclerView;
 
-    private Dialog              bluetoothDialog;
-    private Dialog              uploadDialog;
+    private Dialog                  bluetoothDialog;
+    private Dialog                  uploadDialog;
 
-    private ImageButton         btnBluetoothDialog;
+    private ImageButton             btnBluetoothDialog;
 
-    private Button              btnSendToVisor;
+    private Button                  btnSendToVisor;
 
-    private boolean             connectionEstablished;
+    private boolean                 connectionEstablished;
 
 
     @Override
