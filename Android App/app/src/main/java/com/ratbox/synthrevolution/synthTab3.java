@@ -34,7 +34,7 @@ public class synthTab3 extends Fragment {
     private static final String FILENAME = "VisorPatternConfig.txt";
 
     private List<String>        patternNameList = new ArrayList<>();
-    private ArrayList<String[]> patternConfList = new ArrayList<>();
+    private ArrayList<char[]>   patternConfList = new ArrayList<>();
 
     private Spinner                 configSpinner;
     private ImageButton             btnAddNewPattern;
@@ -208,12 +208,11 @@ public class synthTab3 extends Fragment {
                 // Splitting the line into name and pattern
                 String[] splitString = readString.split("=");
 
-                // Separating each bit into the array
-                String[] pattern = splitString[splitString.length - 1].split("");
+                char[] patternArray = splitString[1].toCharArray();
 
                 // Storing the name and pattern in the lists
                 patternNameList.add(splitString[0]);
-                patternConfList.add(pattern);
+                patternConfList.add(patternArray);
             }
 
             Log.d("File Read", "Successful");
@@ -229,14 +228,14 @@ public class synthTab3 extends Fragment {
                 writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
 
                 // Creating the default pattern for the eye
-                String[] defaultPattern = {"0","0","0","0","0","0","0","0",
-                                           "0","0","1","1","1","1","1","0",
-                                           "0","1","1","1","1","1","1","1",
-                                           "1","1","0","1","1","1","1","1",
-                                           "1","1","0","1","1","1","1","0",
-                                           "1","1","0","1","1","1","0","0",
-                                           "0","1","0","1","1","0","0","0",
-                                           "0","0","0","0","0","0","0","0"};
+                char[] defaultPattern = {'0','0','0','0','0','0','0','0',
+                                         '0','0','1','1','1','1','1','0',
+                                         '0','1','1','1','1','1','1','1',
+                                         '1','1','0','1','1','1','1','1',
+                                         '1','1','0','1','1','1','1','0',
+                                         '1','1','0','1','1','1','0','0',
+                                         '0','1','0','1','1','0','0','0',
+                                         '0','0','0','0','0','0','0','0'};
 
                 // adding the default pattern array to the list of arrays
                 patternNameList.add("Default");
@@ -247,8 +246,8 @@ public class synthTab3 extends Fragment {
 
                 // Building string to write
                 stringBuilder.append("Default=");
-                for (String s : defaultPattern){
-                    stringBuilder.append(s);
+                for (char c : defaultPattern){
+                    stringBuilder.append(c);
                 }
 
                 // Writing string to file
@@ -334,12 +333,12 @@ public class synthTab3 extends Fragment {
     }
 
     // Method for loading the saved pattern onto the checkboxes
-    private void setPattern(CheckBox[] checkBoxes, String[] pattern){
+    private void setPattern(CheckBox[] checkBoxes, char[] pattern){
         for (int i = 0; i < checkBoxes.length - 1; i++){
 
             // Parsing the bit to a bool
             Boolean bool;
-            if (pattern[i].equals("1")){
+            if (pattern[i] == '1'){
                 bool = true;
             } else {
                 bool = false;
