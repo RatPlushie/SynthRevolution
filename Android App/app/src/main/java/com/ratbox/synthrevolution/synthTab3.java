@@ -33,7 +33,7 @@ public class synthTab3 extends Fragment {
                                     chkbtn49, chkbtn50, chkbtn51, chkbtn52, chkbtn53, chkbtn54, chkbtn55, chkbtn56,
                                     chkbtn57, chkbtn58, chkbtn59, chkbtn60, chkbtn61, chkbtn62, chkbtn63, chkbtn64;
 
-    
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -177,6 +177,4 @@ public class synthTab3 extends Fragment {
         // Returning the inflater view
         return view;
     }
-
-
 }
