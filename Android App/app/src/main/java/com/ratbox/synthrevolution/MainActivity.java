@@ -7,16 +7,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.material.tabs.TabLayout;
-
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.tabs.TabLayout;
 import com.ratbox.synthrevolution.ui.main.BluetoothManager;
 import com.ratbox.synthrevolution.ui.main.BluetoothRecyclerViewAdapter;
 import com.ratbox.synthrevolution.ui.main.SectionsPagerAdapter;
@@ -31,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Dialog              bluetoothDialog;
     private Dialog              uploadDialog;
-
-    private ProgressBar         progressBarUpload;
 
     private ImageButton         btnBluetoothDialog;
 
@@ -133,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Attaching to views
         btnSendToVisor = view.findViewById(R.id.uploadToVisorButton);
-        progressBarUpload = view.findViewById(R.id.uploadProgressBar);
 
         btnSendToVisor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     // Sending the updated values to the synthVisor
-                    bluetoothManager.sendSynthVisor(progressBarUpload, synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue, synthVisor.LED_Brightness, synthVisor.blinkRate);
+                    bluetoothManager.sendSynthVisor(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue, synthVisor.LED_Brightness, synthVisor.blinkRate);
 
                 } catch (Exception noVisorPresent){
                     Log.e("Bluetooth Connected", "False");

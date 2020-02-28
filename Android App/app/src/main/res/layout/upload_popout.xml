@@ -22,13 +22,6 @@
         android:layout_height="8dp"
         android:background="@color/colorPrimary" />
 
-    <ProgressBar
-        android:id="@+id/uploadProgressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="100dp"
-        android:layout_height="20dp"
-        android:max="100" />
-
     <Button
         android:id="@+id/uploadToVisorButton"
         android:layout_width="match_parent"
