@@ -6,7 +6,6 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.os.ParcelUuid;
 import android.util.Log;
-import android.widget.ProgressBar;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -38,16 +37,20 @@ public class BluetoothManager {
     public BluetoothSocket  bluetoothSocket;
 
     public BluetoothManager(){
+        try{
+            pairedDevices       = bluetoothAdapter.getBondedDevices();
 
-        pairedDevices       = bluetoothAdapter.getBondedDevices();
+            listBluetoothNames  = new ArrayList<>();
+            listBluetoothMACs   = new ArrayList<>();
 
-        listBluetoothNames  = new ArrayList<>();
-        listBluetoothMACs   = new ArrayList<>();
-
-        for (BluetoothDevice bluetoothDevice : pairedDevices){
-            listBluetoothNames.add(bluetoothDevice.getName());
-            listBluetoothMACs.add(bluetoothDevice.getAddress());
+            for (BluetoothDevice bluetoothDevice : pairedDevices){
+                listBluetoothNames.add(bluetoothDevice.getName());
+                listBluetoothMACs.add(bluetoothDevice.getAddress());
+            }
+        } catch (Exception noBluetoothHardware){
+            Log.d("BluetoothHardware", "False");
         }
+
     }
 
     public void getUUID(){
@@ -178,7 +181,7 @@ public class BluetoothManager {
         }
     }
 
-    public void sendSynthVisor(ProgressBar progressBar, int red, int green, int blue, int brightness, int blink){
+    public void sendSynthVisor(int red, int green, int blue, int brightness, int blink){
 
         try {
             // Initialising the inputStream & OutputStream

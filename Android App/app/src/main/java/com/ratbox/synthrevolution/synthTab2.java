@@ -14,7 +14,7 @@ public class synthTab2 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate((R.layout.synth_tab2), container, false);
+        View view = inflater.inflate(R.layout.synth_tab2, container, false);
 
 
         // TODO - Add recycler view to show a grid of all available/saved eye patterns/animations
@@ -23,6 +23,6 @@ public class synthTab2 extends Fragment {
 
         // TODO - Store the default synth eye pattern
 
-
+        return view;
     }
 }
