@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -220,6 +222,7 @@ public class synthTab3 extends Fragment {
             e.printStackTrace();
             Log.d("PatternFile", "No file found, Creating default");
 
+            // No pattern save file was found on the device, creating a new save file and filling it with the default synth eye pattern
             BufferedWriter writer = null;
             try {
                 FileOutputStream fileOutputStream = getContext().openFileOutput(FILENAME, Context.MODE_PRIVATE);
@@ -283,8 +286,47 @@ public class synthTab3 extends Fragment {
         }
 
 
+        // Creating the array adapter, attaching it and setting the onClickListener
+        ArrayAdapter<String> patternAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, patternNameList);
+        patternAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        configSpinner.setAdapter(patternAdapter);
+        configSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                // TODO - update check box grid with selected pattern on click
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         // Loading the default eye pattern onCreate()
         setPattern(checkBoxArr, patternConfList.get(0));
+
+
+        // Setting the onclick listener for the "add new pattern" button
+        btnAddNewPattern.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // TODO - behaviour for add new pattern button
+
+            }
+        });
+
+        // Setting the onclick listener for the save pattern floating action button
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // TODO - behaviour for save pattern button
+
+            }
+        });
 
 
         // Returning the inflater view

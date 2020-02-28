@@ -11,10 +11,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/ledConfigAddNewButton"
         app:layout_constraintEnd_toStartOf="@+id/ledConfigAddNewButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ledConfigAddNewButton" />
+        app:layout_constraintStart_toStartOf="@+id/ledConfigVisorTable"
+        app:layout_constraintTop_toTopOf="@+id/ledConfigAddNewButton"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
         android:id="@+id/ledConfigAddNewButton"
@@ -24,20 +26,9 @@
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/ledConfigVisorTable"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_add" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </LinearLayout>
 
     <TableLayout
         android:id="@+id/ledConfigVisorTable"
@@ -45,7 +36,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/saveConfigButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout3"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ledConfigSelectSpinner">
 
         <TableRow
