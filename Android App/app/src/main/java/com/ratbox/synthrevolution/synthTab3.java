@@ -209,7 +209,18 @@ public class synthTab3 extends Fragment {
                 String[] splitString = readString.split("=");
 
                 // Separating each bit into the array
-                String[] pattern = splitString[splitString.length - 1].split("");
+                String[] tempPattern = splitString[splitString.length - 1].split("");
+
+                String[] pattern = new String[64];
+
+                for (int i = 1; i <= 64; i++){
+                    pattern[i - 1] = tempPattern[i];
+                }
+
+
+
+
+
 
                 // Storing the name and pattern in the lists
                 patternNameList.add(splitString[0]);
