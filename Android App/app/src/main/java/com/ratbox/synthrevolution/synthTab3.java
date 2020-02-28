@@ -1,6 +1,8 @@
 package com.ratbox.synthrevolution;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +16,21 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+
 public class synthTab3 extends Fragment {
+
+    private static final String FILENAME = "VisorPatternConfig.txt";
+
+    private ArrayList patternList = new ArrayList();
 
     private Spinner                 configSpinner;
     private ImageButton             btnAddNewPattern;
@@ -166,6 +182,98 @@ public class synthTab3 extends Fragment {
         chkbtn62    = view.findViewById(R.id.r8b62);
         chkbtn63    = view.findViewById(R.id.r8b63);
         chkbtn64    = view.findViewById(R.id.r8b64);
+
+
+        // TODO - Set onCreate display of the default pattern
+
+        // Attempting to read the save file and parse its contents
+        BufferedReader reader = null;
+        try {
+            FileInputStream fileInputStream = getContext().openFileInput(FILENAME);
+            reader = new BufferedReader(new InputStreamReader(fileInputStream));
+            
+            String readString;
+            while ((readString = reader.readLine()) != null){ // EoF Check
+                // Splitting the line into name and pattern
+                String[] splitString = readString.split("=");
+
+                // Separating each bit into the array
+                String[] tempArr = splitString[splitString.length - 1].split("");
+
+                // Storing the Name, and the pattern array within an object array
+                Object[] pattern = {splitString[0], tempArr};
+
+                // Adding the Object array into the pattern List
+                patternList.add(pattern);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.d("PatternFile", "No file found, Creating default");
+
+            BufferedWriter writer = null;
+            try {
+                FileOutputStream fileOutputStream = getContext().openFileOutput(FILENAME, Context.MODE_PRIVATE);
+                writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+
+                // Creating the default pattern for the eye
+                int[] defaultPattern = {0,0,0,0,0,0,0,0,
+                                        0,0,1,1,1,1,1,0,
+                                        0,1,1,1,1,1,1,1,
+                                        1,1,0,1,1,1,1,1,
+                                        1,1,0,1,1,1,1,0,
+                                        1,1,0,1,1,1,0,0,
+                                        0,0,0,1,1,0,0,0};
+
+                // adding the default pattern array to the list of arrays
+                patternList.add(defaultPattern);
+
+                // StringBuilder init
+                StringBuilder stringBuilder = new StringBuilder();
+
+                // Building string to write
+                stringBuilder.append("Default=");
+                for (int i : defaultPattern){
+                    stringBuilder.append(Integer.toString(i));
+                }
+
+                // Writing string to file
+                writer.write(stringBuilder.toString());
+
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+
+            } finally { // Closing the writer
+                if (writer != null){
+                    try {
+                        writer.close();
+
+                    } catch (IOException eIO) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } finally { // closing the reader
+            if (reader != null){
+                try {
+                    reader.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        // Loading the default eye pattern onCreate()
+
 
 
         return view;
