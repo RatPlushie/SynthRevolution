@@ -25,12 +25,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class synthTab3 extends Fragment {
 
     private static final String FILENAME = "VisorPatternConfig.txt";
 
-    private ArrayList patternList = new ArrayList();
+    private List<String>        patternNameList = new ArrayList<>();
+    private ArrayList<String[]> patternConfList = new ArrayList<>();
 
     private Spinner                 configSpinner;
     private ImageButton             btnAddNewPattern;
@@ -183,29 +185,36 @@ public class synthTab3 extends Fragment {
         chkbtn63    = view.findViewById(R.id.r8b63);
         chkbtn64    = view.findViewById(R.id.r8b64);
 
-
-        // TODO - Set onCreate display of the default pattern
+        // Creating an array of all the checkboxes
+        CheckBox[] checkBoxArr = {chkbtn1, chkbtn2, chkbtn3, chkbtn4, chkbtn5, chkbtn6, chkbtn7, chkbtn8,
+                                  chkbtn9, chkbtn10, chkbtn11, chkbtn12, chkbtn13, chkbtn14, chkbtn15, chkbtn16,
+                                  chkbtn17, chkbtn18, chkbtn19, chkbtn20, chkbtn21, chkbtn22, chkbtn23, chkbtn24,
+                                  chkbtn25, chkbtn26, chkbtn27, chkbtn28, chkbtn29, chkbtn30, chkbtn31, chkbtn32,
+                                  chkbtn33, chkbtn34, chkbtn35, chkbtn36, chkbtn37, chkbtn38, chkbtn39, chkbtn40,
+                                  chkbtn41, chkbtn42, chkbtn43, chkbtn44, chkbtn45, chkbtn46, chkbtn47, chkbtn48,
+                                  chkbtn49, chkbtn50, chkbtn51, chkbtn52, chkbtn53, chkbtn54, chkbtn55, chkbtn56,
+                                  chkbtn57, chkbtn58, chkbtn59, chkbtn60, chkbtn61, chkbtn62, chkbtn63, chkbtn64};
 
         // Attempting to read the save file and parse its contents
         BufferedReader reader = null;
         try {
             FileInputStream fileInputStream = getContext().openFileInput(FILENAME);
             reader = new BufferedReader(new InputStreamReader(fileInputStream));
-            
+
             String readString;
             while ((readString = reader.readLine()) != null){ // EoF Check
                 // Splitting the line into name and pattern
                 String[] splitString = readString.split("=");
 
                 // Separating each bit into the array
-                String[] tempArr = splitString[splitString.length - 1].split("");
+                String[] pattern = splitString[splitString.length - 1].split("");
 
-                // Storing the Name, and the pattern array within an object array
-                Object[] pattern = {splitString[0], tempArr};
-
-                // Adding the Object array into the pattern List
-                patternList.add(pattern);
+                // Storing the name and pattern in the lists
+                patternNameList.add(splitString[0]);
+                patternConfList.add(pattern);
             }
+
+            Log.d("File Read", "Successful");
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -217,24 +226,26 @@ public class synthTab3 extends Fragment {
                 writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
 
                 // Creating the default pattern for the eye
-                int[] defaultPattern = {0,0,0,0,0,0,0,0,
-                                        0,0,1,1,1,1,1,0,
-                                        0,1,1,1,1,1,1,1,
-                                        1,1,0,1,1,1,1,1,
-                                        1,1,0,1,1,1,1,0,
-                                        1,1,0,1,1,1,0,0,
-                                        0,0,0,1,1,0,0,0};
+                String[] defaultPattern = {"0","0","0","0","0","0","0","0",
+                                           "0","0","1","1","1","1","1","0",
+                                           "0","1","1","1","1","1","1","1",
+                                           "1","1","0","1","1","1","1","1",
+                                           "1","1","0","1","1","1","1","0",
+                                           "1","1","0","1","1","1","0","0",
+                                           "0","1","0","1","1","0","0","0",
+                                           "0","0","0","0","0","0","0","0"};
 
                 // adding the default pattern array to the list of arrays
-                patternList.add(defaultPattern);
+                patternNameList.add("Default");
+                patternConfList.add(defaultPattern);
 
                 // StringBuilder init
                 StringBuilder stringBuilder = new StringBuilder();
 
                 // Building string to write
                 stringBuilder.append("Default=");
-                for (int i : defaultPattern){
-                    stringBuilder.append(Integer.toString(i));
+                for (String s : defaultPattern){
+                    stringBuilder.append(s);
                 }
 
                 // Writing string to file
@@ -273,9 +284,29 @@ public class synthTab3 extends Fragment {
 
 
         // Loading the default eye pattern onCreate()
+        setPattern(checkBoxArr, patternConfList.get(0));
 
 
-
+        // Returning the inflater view
         return view;
+    }
+
+    // Method for loading the saved pattern onto the checkboxes
+    private void setPattern(CheckBox[] checkBoxes, String[] pattern){
+        for (int i = 0; i < checkBoxes.length - 1; i++){
+
+            // Parsing the bit to a bool
+            Boolean bool;
+            if (pattern[i].equals("1")){
+                bool = true;
+            } else {
+                bool = false;
+            }
+
+            // Setting the checkbox to either checked or unchecked
+            checkBoxes[i].setChecked(bool);
+        }
+
+        Log.d("CheckBoxes", "Set");
     }
 }
