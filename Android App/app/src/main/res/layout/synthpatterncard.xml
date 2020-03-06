@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/synthPatternMasterLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/synthPatternCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="15dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/synthPatternCardLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/synthPatternNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Pattern Name"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TableLayout
+                android:id="@+id/synthPatternGridTableLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/synthPatternNameTextView">
+
+                <TableRow
+                    android:id="@+id/patternRow1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <View
+                        android:id="@+id/v1"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v2"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v3"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v4"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v5"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v6"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v7"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v8"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/patternRow2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <View
+                        android:id="@+id/v9"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v10"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v11"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v12"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v13"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v14"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v15"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v16"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/patternRow3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <View
+                        android:id="@+id/v17"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v18"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v19"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v20"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v21"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v22"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v23"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v24"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/patternRow4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <View
+                        android:id="@+id/v25"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v26"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v27"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v28"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v29"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v30"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v31"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v32"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/patternRow5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <View
+                        android:id="@+id/v33"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v34"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v35"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v36"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v37"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v38"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v39"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v40"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/patternRow6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <View
+                        android:id="@+id/v41"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v42"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v43"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v44"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v45"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v46"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v47"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v48"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/patternRow7"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <View
+                        android:id="@+id/v49"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v50"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v51"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v52"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v53"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v54"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v55"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v56"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/patternRow8"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <View
+                        android:id="@+id/v57"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v58"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v59"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v60"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v61"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v62"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v63"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+
+                    <View
+                        android:id="@+id/v64"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="#ffffff" />
+                </TableRow>
+            </TableLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
