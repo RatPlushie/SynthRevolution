@@ -22,8 +22,8 @@ public class SynthPattern {
     public List<String>         patternNameList;
     public ArrayList<char[]>    patternConfList;
 
-    // Method to load from file, the patterns
-    public void loadPattern(Context context){
+    // Constructor method to load from file, the patterns
+    public SynthPattern(Context context){
         patternNameList = new ArrayList<>();
         patternConfList = new ArrayList<>();
 
@@ -59,13 +59,13 @@ public class SynthPattern {
 
                 // Creating the default pattern for the eye
                 char[] defaultPattern = {'0','0','0','0','0','0','0','0',
-                                         '0','0','1','1','1','1','1','0',
-                                         '0','1','1','1','1','1','1','1',
-                                         '1','1','0','1','1','1','1','1',
-                                         '1','1','0','1','1','1','1','0',
-                                         '1','1','0','1','1','1','0','0',
-                                         '0','1','0','1','1','0','0','0',
-                                         '0','0','0','0','0','0','0','0'};
+                        '0','0','1','1','1','1','1','0',
+                        '0','1','1','1','1','1','1','1',
+                        '1','1','0','1','1','1','1','1',
+                        '1','1','0','1','1','1','1','0',
+                        '1','1','0','1','1','1','0','0',
+                        '0','1','0','1','1','0','0','0',
+                        '0','0','0','0','0','0','0','0'};
 
                 // adding the default pattern array to the list of arrays
                 patternNameList.add("Default");

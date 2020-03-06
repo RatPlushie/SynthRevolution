@@ -6,4 +6,7 @@
 
     <color name="textColourPrimary">#ffffff</color>
 
+    <color name="patternGridTrue">#000000</color>
+    <color name="patternGridFalse">#ffffff</color>
+
 </resources>

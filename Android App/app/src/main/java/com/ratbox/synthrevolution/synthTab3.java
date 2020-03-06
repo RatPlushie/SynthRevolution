@@ -15,8 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import static com.ratbox.synthrevolution.MainActivity.synthPattern;
+import com.ratbox.synthrevolution.ui.main.SynthPattern;
 
 public class synthTab3 extends Fragment {
 
@@ -127,9 +126,8 @@ public class synthTab3 extends Fragment {
                                   chkbtn57, chkbtn58, chkbtn59, chkbtn60, chkbtn61, chkbtn62, chkbtn63, chkbtn64};
 
 
-        // Loading the values into the synthPattern object
-        synthPattern.loadPattern(getContext());
-
+        // Creating the synthPattern object
+        SynthPattern synthPattern = new SynthPattern(getContext());
 
         // Creating the array adapter, attaching it and setting the onClickListener
         ArrayAdapter<String> patternAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, synthPattern.patternNameList);
