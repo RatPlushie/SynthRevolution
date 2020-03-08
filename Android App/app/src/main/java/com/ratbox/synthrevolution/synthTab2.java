@@ -40,6 +40,15 @@ public class synthTab2 extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO - add new recyclerView item
+
+                /* add new entry into the nameList
+                add new entry into the pattern config list (with Blank pattern)
+                update the recycler view with the new arrays
+                 */
+
+
+
+
             }
         });
 

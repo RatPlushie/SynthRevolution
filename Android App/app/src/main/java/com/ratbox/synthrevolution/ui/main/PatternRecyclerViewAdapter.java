@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,8 @@ import com.ratbox.synthrevolution.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ratbox.synthrevolution.MainActivity.synthPattern;
 
 public class PatternRecyclerViewAdapter extends RecyclerView.Adapter<PatternRecyclerViewAdapter.PatternView> {
 
@@ -36,7 +40,7 @@ public class PatternRecyclerViewAdapter extends RecyclerView.Adapter<PatternRecy
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PatternView holder, int position) {
+    public void onBindViewHolder(@NonNull final PatternView holder, final int position) {
 
         holder.patternNameTextView.setText(nameList.get(position));
 
@@ -59,6 +63,44 @@ public class PatternRecyclerViewAdapter extends RecyclerView.Adapter<PatternRecy
 
             }
         }
+
+        // Do not include the edit function on the default pattern, so it cannot be modified by the user
+        if (position == 0){
+            holder.patternNameEditBtn.setVisibility(View.GONE);
+
+        } else {
+            holder.patternNameEditBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    // Changing the display to show the editable views
+                    holder.patternNameTextView.setVisibility(View.GONE);
+                    holder.patternNameEditText.setVisibility(View.VISIBLE);
+                    holder.patternNameEditBtn.setVisibility(View.GONE);
+                    holder.patternNameDoneBtn.setVisibility(View.VISIBLE);
+
+                    // OnClickListener for the finalise button
+                    holder.patternNameDoneBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            // Updating the values with the new name
+                            nameList.set(position, holder.patternNameEditText.getText().toString());
+                            synthPattern.patternNameList.set(position, holder.patternNameEditText.getText().toString());
+
+                            // Hiding the edit views
+                            holder.patternNameTextView.setVisibility(View.VISIBLE);
+                            holder.patternNameEditText.setVisibility(View.GONE);
+                            holder.patternNameEditBtn.setVisibility(View.VISIBLE);
+                            holder.patternNameDoneBtn.setVisibility(View.GONE);
+
+                            // Displaying the updated name on the card's title
+                            holder.patternNameTextView.setText(nameList.get(position));
+                        }
+                    });
+                }
+            });
+        }
     }
 
     @Override
@@ -69,6 +111,9 @@ public class PatternRecyclerViewAdapter extends RecyclerView.Adapter<PatternRecy
     public class PatternView extends RecyclerView.ViewHolder{
 
         TextView    patternNameTextView;
+        EditText    patternNameEditText;
+        ImageButton patternNameEditBtn;
+        ImageButton patternNameDoneBtn;
         View        v1,   v2,  v3,  v4,  v5,  v6,  v7,  v8,  v9, v10,
                     v11, v12, v13, v14, v15, v16, v17, v18, v19, v20,
                     v21, v22, v23, v24, v25, v26, v27, v28, v29, v30,
@@ -81,6 +126,9 @@ public class PatternRecyclerViewAdapter extends RecyclerView.Adapter<PatternRecy
             super(itemView);
 
             patternNameTextView = itemView.findViewById(R.id.synthPatternNameTextView);
+            patternNameEditText = itemView.findViewById(R.id.synthPatternNameEditText);
+            patternNameEditBtn  = itemView.findViewById(R.id.synthPatternNameEdit);
+            patternNameDoneBtn  = itemView.findViewById(R.id.synthPatterNameDone);
 
             v1      = itemView.findViewById(R.id.v1);
             v2      = itemView.findViewById(R.id.v2);
