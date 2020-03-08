@@ -40,12 +40,6 @@ public class synthTab2 extends Fragment {
         addActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO - add new recyclerView item
-
-                /* add new entry into the nameList
-                add new entry into the pattern config list (with Blank pattern)
-                update the recycler view with the new arrays
-                 */
 
                 // Array of a blank, all off, 8x8 LEDs
                 char[] blankPattern = {'0', '0', '0', '0', '0', '0', '0', '0',
