@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ratbox.synthrevolution.ui.main.PatternRecyclerViewAdapter;
 
-public class synthTab2 extends Fragment {
+public class SynthTab2 extends Fragment {
 
     private RecyclerView patternRecyclerView;
 

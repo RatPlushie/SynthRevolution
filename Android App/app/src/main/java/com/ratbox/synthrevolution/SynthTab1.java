@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-public class synthTab1 extends Fragment {
+public class SynthTab1 extends Fragment {
 
     private static final String FILENAME = "SynthVisorConfig.txt";
 

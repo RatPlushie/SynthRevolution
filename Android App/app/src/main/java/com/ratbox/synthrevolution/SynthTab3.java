@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class synthTab3 extends Fragment {
+public class SynthTab3 extends Fragment {
 
     private Spinner                 configSpinner;
     private FloatingActionButton    btnSave;
