@@ -15,7 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.ratbox.synthrevolution.ui.main.SynthPattern;
+
+import static com.ratbox.synthrevolution.MainActivity.synthPattern;
 
 public class synthTab3 extends Fragment {
 
@@ -126,9 +127,6 @@ public class synthTab3 extends Fragment {
                                   chkbtn57, chkbtn58, chkbtn59, chkbtn60, chkbtn61, chkbtn62, chkbtn63, chkbtn64};
 
 
-        // Creating the synthPattern object
-        SynthPattern synthPattern = new SynthPattern(getContext());
-
         // Creating the array adapter, attaching it and setting the onClickListener
         ArrayAdapter<String> patternAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, synthPattern.patternNameList);
         patternAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -148,7 +146,7 @@ public class synthTab3 extends Fragment {
         });
 
         // Loading the default eye pattern onCreate()
-        synthPattern.setPattern(0, checkBoxArr);
+        synthPattern.getPattern(0, checkBoxArr);
 
 
         // Setting the onclick listener for the "add new pattern" button

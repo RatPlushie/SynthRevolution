@@ -116,7 +116,7 @@ public class SynthPattern {
     }
 
     // Method for loading the saved pattern onto the checkboxes
-    public void setPattern(int patternIndex, CheckBox[] checkBoxes){
+    public void getPattern(int patternIndex, CheckBox[] checkBoxes){
         char[] tempChar = patternConfList.get(patternIndex);
         for (int i = 0; i <= checkBoxes.length - 1; i++){
 
