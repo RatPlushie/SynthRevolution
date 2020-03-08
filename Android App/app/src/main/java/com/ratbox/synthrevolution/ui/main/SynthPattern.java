@@ -59,13 +59,13 @@ public class SynthPattern {
 
                 // Creating the default pattern for the eye
                 char[] defaultPattern = {'0','0','0','0','0','0','0','0',
-                        '0','0','1','1','1','1','1','0',
-                        '0','1','1','1','1','1','1','1',
-                        '1','1','0','1','1','1','1','1',
-                        '1','1','0','1','1','1','1','0',
-                        '1','1','0','1','1','1','0','0',
-                        '0','1','0','1','1','0','0','0',
-                        '0','0','0','0','0','0','0','0'};
+                                         '0','0','1','1','1','1','1','0',
+                                         '0','1','1','1','1','1','1','1',
+                                         '1','1','0','1','1','1','1','1',
+                                         '1','1','0','1','1','1','1','0',
+                                         '1','1','0','1','1','1','0','0',
+                                         '0','1','0','1','1','0','0','0',
+                                         '0','0','0','0','0','0','0','0'};
 
                 // adding the default pattern array to the list of arrays
                 patternNameList.add("Default");
@@ -116,7 +116,7 @@ public class SynthPattern {
     }
 
     // Method for loading the saved pattern onto the checkboxes
-    public void setPattern(int patternIndex, CheckBox[] checkBoxes){
+    public void getPattern(int patternIndex, CheckBox[] checkBoxes){
         char[] tempChar = patternConfList.get(patternIndex);
         for (int i = 0; i <= checkBoxes.length - 1; i++){
 

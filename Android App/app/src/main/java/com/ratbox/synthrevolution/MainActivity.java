@@ -18,12 +18,14 @@ import com.google.android.material.tabs.TabLayout;
 import com.ratbox.synthrevolution.ui.main.BluetoothManager;
 import com.ratbox.synthrevolution.ui.main.BluetoothRecyclerViewAdapter;
 import com.ratbox.synthrevolution.ui.main.SectionsPagerAdapter;
+import com.ratbox.synthrevolution.ui.main.SynthPattern;
 import com.ratbox.synthrevolution.ui.main.SynthVisor;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static BluetoothManager  bluetoothManager    = new BluetoothManager(); // Probably just gonna leave this static because only one BluetoothSocket is a must
-    public static SynthVisor        synthVisor          = new SynthVisor(); // TODO - change this from a static variable here and make it just create a new object which reads from the config file to send data
+    public static BluetoothManager  bluetoothManager;
+    public static SynthPattern      synthPattern;
+    public static SynthVisor        synthVisor;
 
     private RecyclerView            bluetoothRecyclerView;
 
@@ -36,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean                 connectionEstablished;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +49,15 @@ public class MainActivity extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
 
         // Initialising dialogues
-        bluetoothDialog = new Dialog(this);
-        uploadDialog    = new Dialog(this);
+        bluetoothDialog     = new Dialog(this);
+        uploadDialog        = new Dialog(this);
+
+        // Initialising the synth instance objects
+        synthVisor          = new SynthVisor();
+        synthPattern        = new SynthPattern(this);
+
+        // Initialising the bluetooth manager instance
+        bluetoothManager    = new BluetoothManager();
     }
 
 

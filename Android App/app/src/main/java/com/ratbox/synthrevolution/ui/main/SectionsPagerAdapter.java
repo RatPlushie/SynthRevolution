@@ -9,9 +9,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.ratbox.synthrevolution.R;
-import com.ratbox.synthrevolution.synthTab1;
-import com.ratbox.synthrevolution.synthTab2;
-import com.ratbox.synthrevolution.synthTab3;
+import com.ratbox.synthrevolution.SynthTab1;
+import com.ratbox.synthrevolution.SynthTab2;
+import com.ratbox.synthrevolution.SynthTab3;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -38,17 +38,17 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
             case 0:
 
-                fragment = new synthTab1();
+                fragment = new SynthTab1();
                 break;
 
             case 1:
 
-                fragment = new synthTab2();
+                fragment = new SynthTab2();
                 break;
 
             case 2:
 
-                fragment = new synthTab3();
+                fragment = new SynthTab3();
                 break;
         }
         return fragment;

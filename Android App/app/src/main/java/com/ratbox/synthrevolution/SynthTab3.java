@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -15,12 +14,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.ratbox.synthrevolution.ui.main.SynthPattern;
 
-public class synthTab3 extends Fragment {
+public class SynthTab3 extends Fragment {
 
     private Spinner                 configSpinner;
-    private ImageButton             btnAddNewPattern;
     private FloatingActionButton    btnSave;
 
     private CheckBox                chkbtn1,  chkbtn2,  chkbtn3,  chkbtn4,  chkbtn5,  chkbtn6,  chkbtn7,  chkbtn8,
@@ -40,7 +37,6 @@ public class synthTab3 extends Fragment {
 
         // attaching to views
         configSpinner       = view.findViewById(R.id.ledConfigSelectSpinner);
-        btnAddNewPattern    = view.findViewById(R.id.ledConfigAddNewButton);
         btnSave             = view.findViewById(R.id.saveConfigButton);
 
         chkbtn1     = view.findViewById(R.id.r1b1);
@@ -126,11 +122,8 @@ public class synthTab3 extends Fragment {
                                   chkbtn57, chkbtn58, chkbtn59, chkbtn60, chkbtn61, chkbtn62, chkbtn63, chkbtn64};
 
 
-        // Creating the synthPattern object
-        SynthPattern synthPattern = new SynthPattern(getContext());
-
         // Creating the array adapter, attaching it and setting the onClickListener
-        ArrayAdapter<String> patternAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, synthPattern.patternNameList);
+        ArrayAdapter<String> patternAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, MainActivity.synthPattern.patternNameList);
         patternAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         configSpinner.setAdapter(patternAdapter);
         configSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -148,18 +141,7 @@ public class synthTab3 extends Fragment {
         });
 
         // Loading the default eye pattern onCreate()
-        synthPattern.setPattern(0, checkBoxArr);
-
-
-        // Setting the onclick listener for the "add new pattern" button
-        btnAddNewPattern.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // TODO - behaviour for add new pattern button
-
-            }
-        });
+        MainActivity.synthPattern.getPattern(0, checkBoxArr);
 
         // Setting the onclick listener for the save pattern floating action button
         btnSave.setOnClickListener(new View.OnClickListener() {

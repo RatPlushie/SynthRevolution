@@ -10,10 +10,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.ratbox.synthrevolution.MainActivity;
 import com.ratbox.synthrevolution.R;
 import java.util.ArrayList;
-
-import static com.ratbox.synthrevolution.MainActivity.bluetoothManager;
 
 public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<BluetoothRecyclerViewAdapter.ViewHolder> {
 
@@ -29,8 +29,8 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
         this.mContext = mContext;
 
         // Passing the ArrayLists into the bluetoothManager class
-        bluetoothManager.listBluetoothNames = bluetoothNames;
-        bluetoothManager.listBluetoothMACs = bluetoothMACs;
+        MainActivity.bluetoothManager.listBluetoothNames = bluetoothNames;
+        MainActivity.bluetoothManager.listBluetoothMACs = bluetoothMACs;
     }
 
 
@@ -50,8 +50,8 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
         holder.bluetoothDeviceMAC.setText(bluetoothMACs.get(position));
 
         // Populating bluetoothManager with the selected Name & MAC address
-        bluetoothManager.deviceName = bluetoothNames.get(position);
-        bluetoothManager.deviceMAC = bluetoothMACs.get(position);
+        MainActivity.bluetoothManager.deviceName = bluetoothNames.get(position);
+        MainActivity.bluetoothManager.deviceMAC = bluetoothMACs.get(position);
 
         // Creating onClick listener to each bluetooth device
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
@@ -62,17 +62,17 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
                 Toast.makeText(mContext, "Connecting...", Toast.LENGTH_SHORT);
 
                 // Discovering UUID of the bluetooth device
-                bluetoothManager.getUUID();
+                MainActivity.bluetoothManager.getUUID();
 
                 // Saving the selected device to android local memory
                 //bluetoothManager.saveConfig(mContext);
 
                 // Initial connection of bluetooth
-                bluetoothManager.connect();
+                MainActivity.bluetoothManager.connect();
 
                 // Testing to see if the connection is established
-                if (bluetoothManager.bluetoothSocket.isConnected()){
-                    Toast.makeText(mContext,"Connected to " + bluetoothManager.deviceName,Toast.LENGTH_LONG).show();
+                if (MainActivity.bluetoothManager.bluetoothSocket.isConnected()){
+                    Toast.makeText(mContext,"Connected to " + MainActivity.bluetoothManager.deviceName,Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(mContext,"Device unreachable, please try again...",Toast.LENGTH_LONG).show();
                 }

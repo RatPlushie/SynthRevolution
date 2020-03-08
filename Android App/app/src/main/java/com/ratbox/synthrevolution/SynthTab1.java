@@ -29,9 +29,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-import static com.ratbox.synthrevolution.MainActivity.synthVisor;
-
-public class synthTab1 extends Fragment {
+public class SynthTab1 extends Fragment {
 
     private static final String FILENAME = "SynthVisorConfig.txt";
 
@@ -74,19 +72,19 @@ public class synthTab1 extends Fragment {
 
 
         // Set initial display of required views
-        colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
-        colourPickerResults.setText(synthVisor.getResults());
-        LEDBrightnessTotal.setText(Integer.toString(synthVisor.LED_Brightness));
-        seekBarLEDBrightness.setProgress(synthVisor.LED_Brightness);
-        seekBarBlinkRate.setProgress(synthVisor.blinkRate);
-        blinkRateTotal.setText(Integer.toString(synthVisor.blinkRate));
+        colourPickerSelected.setBackgroundColor(Color.rgb(MainActivity.synthVisor.RGB_Red, MainActivity.synthVisor.RGB_Green, MainActivity.synthVisor.RGB_Blue));
+        colourPickerResults.setText(MainActivity.synthVisor.getResults());
+        LEDBrightnessTotal.setText(Integer.toString(MainActivity.synthVisor.LED_Brightness));
+        seekBarLEDBrightness.setProgress(MainActivity.synthVisor.LED_Brightness);
+        seekBarBlinkRate.setProgress(MainActivity.synthVisor.blinkRate);
+        blinkRateTotal.setText(Integer.toString(MainActivity.synthVisor.blinkRate));
 
 
         // Setting the saved colours of the user saved swatches
-        colourSwatchButton1.setColorFilter(Color.rgb(synthVisor.swatch1[0], synthVisor.swatch1[1], synthVisor.swatch1[2]));
-        colourSwatchButton2.setColorFilter(Color.rgb(synthVisor.swatch2[0], synthVisor.swatch2[1], synthVisor.swatch2[2]));
-        colourSwatchButton3.setColorFilter(Color.rgb(synthVisor.swatch3[0], synthVisor.swatch3[1], synthVisor.swatch3[2]));
-        colourSwatchButton4.setColorFilter(Color.rgb(synthVisor.swatch4[0], synthVisor.swatch4[1], synthVisor.swatch4[2]));
+        colourSwatchButton1.setColorFilter(Color.rgb(MainActivity.synthVisor.swatch1[0], MainActivity.synthVisor.swatch1[1], MainActivity.synthVisor.swatch1[2]));
+        colourSwatchButton2.setColorFilter(Color.rgb(MainActivity.synthVisor.swatch2[0], MainActivity.synthVisor.swatch2[1], MainActivity.synthVisor.swatch2[2]));
+        colourSwatchButton3.setColorFilter(Color.rgb(MainActivity.synthVisor.swatch3[0], MainActivity.synthVisor.swatch3[1], MainActivity.synthVisor.swatch3[2]));
+        colourSwatchButton4.setColorFilter(Color.rgb(MainActivity.synthVisor.swatch4[0], MainActivity.synthVisor.swatch4[1], MainActivity.synthVisor.swatch4[2]));
 
         // Caches required for using the colour picker
         colourPickerWheel.setDrawingCacheEnabled(true);
@@ -108,12 +106,12 @@ public class synthTab1 extends Fragment {
                         if (!Integer.toHexString(pixel).equals("0")){
 
                             // Getting the RGB values
-                            synthVisor.setRGB_Red(Color.red(pixel));
-                            synthVisor.setRGB_Green(Color.green(pixel));
-                            synthVisor.setRGB_Blue(Color.blue(pixel));
+                            MainActivity.synthVisor.setRGB_Red(Color.red(pixel));
+                            MainActivity.synthVisor.setRGB_Green(Color.green(pixel));
+                            MainActivity.synthVisor.setRGB_Blue(Color.blue(pixel));
 
                             // Building the hex string
-                            String[] RGBArray = new String[]{Integer.toHexString(synthVisor.RGB_Red), Integer.toHexString(synthVisor.RGB_Green), Integer.toHexString(synthVisor.RGB_Blue)};
+                            String[] RGBArray = new String[]{Integer.toHexString(MainActivity.synthVisor.RGB_Red), Integer.toHexString(MainActivity.synthVisor.RGB_Green), Integer.toHexString(MainActivity.synthVisor.RGB_Blue)};
                             StringBuilder stringBuilder = new StringBuilder();
                             stringBuilder.append("#");
                             for (String i : RGBArray){
@@ -124,13 +122,13 @@ public class synthTab1 extends Fragment {
                                 }
                             }
 
-                            synthVisor.setHex(stringBuilder.toString());
+                            MainActivity.synthVisor.setHex(stringBuilder.toString());
 
                             // Setting background colour of the selected colour view window according to picked colour
-                            colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
+                            colourPickerSelected.setBackgroundColor(Color.rgb(MainActivity.synthVisor.RGB_Red, MainActivity.synthVisor.RGB_Green, MainActivity.synthVisor.RGB_Blue));
 
                             // Setting the textView with the RGB and HEX values
-                            colourPickerResults.setText(synthVisor.getResults());
+                            colourPickerResults.setText(MainActivity.synthVisor.getResults());
                         }
 
                     } catch (Exception colourPickerOutOfBounds){
@@ -149,7 +147,7 @@ public class synthTab1 extends Fragment {
 
                 LEDBrightnessTotal.setText(Integer.toString(progress));
 
-                synthVisor.setLED_Brightness(progress);
+                MainActivity.synthVisor.setLED_Brightness(progress);
             }
 
             @Override
@@ -171,7 +169,7 @@ public class synthTab1 extends Fragment {
 
                 blinkRateTotal.setText(Integer.toString(progress));
 
-                synthVisor.setBlinkRate(progress);
+                MainActivity.synthVisor.setBlinkRate(progress);
             }
 
             @Override
@@ -192,13 +190,13 @@ public class synthTab1 extends Fragment {
             public void onClick(View v) {
 
                 // Updating the synthVisor's RGB/Hex values to this specific swatch
-                synthVisor.clickSwatch(0);
+                MainActivity.synthVisor.clickSwatch(0);
 
                 // Setting the textView with the RGB and HEX values
-                colourPickerResults.setText(synthVisor.getResults());
+                colourPickerResults.setText(MainActivity.synthVisor.getResults());
 
                 // Setting the displayed colour in the selected colour view
-                colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
+                colourPickerSelected.setBackgroundColor(Color.rgb(MainActivity.synthVisor.RGB_Red, MainActivity.synthVisor.RGB_Green, MainActivity.synthVisor.RGB_Blue));
             }
         });
 
@@ -209,10 +207,10 @@ public class synthTab1 extends Fragment {
             public boolean onLongClick(View v) {
 
                 // Updating the new values of the swatch
-                synthVisor.setSwatch(1);
+                MainActivity.synthVisor.setSwatch(1);
 
                 // Setting the new colour of the swatch button
-                colourSwatchButton1.setColorFilter(Color.rgb(synthVisor.swatch1[0], synthVisor.swatch1[1], synthVisor.swatch1[2]));
+                colourSwatchButton1.setColorFilter(Color.rgb(MainActivity.synthVisor.swatch1[0], MainActivity.synthVisor.swatch1[1], MainActivity.synthVisor.swatch1[2]));
 
                 // Making a saveConfig toast message
                 Toast.makeText(getActivity(), "Colour saved", Toast.LENGTH_SHORT).show();
@@ -228,13 +226,13 @@ public class synthTab1 extends Fragment {
             public void onClick(View v) {
 
                 // Updating the synthVisor's RGB/Hex values to this specific swatch
-                synthVisor.clickSwatch(1);
+                MainActivity.synthVisor.clickSwatch(1);
 
                 // Setting the textView with the RGB and HEX values
-                colourPickerResults.setText(synthVisor.getResults());
+                colourPickerResults.setText(MainActivity.synthVisor.getResults());
 
                 // Setting the displayed colour in the selected colour view
-                colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
+                colourPickerSelected.setBackgroundColor(Color.rgb(MainActivity.synthVisor.RGB_Red, MainActivity.synthVisor.RGB_Green, MainActivity.synthVisor.RGB_Blue));
             }
         });
 
@@ -245,10 +243,10 @@ public class synthTab1 extends Fragment {
             public boolean onLongClick(View v) {
 
                 // Updating the new values of the swatch
-                synthVisor.setSwatch(2);
+                MainActivity.synthVisor.setSwatch(2);
 
                 // Setting the new colour of the swatch button
-                colourSwatchButton2.setColorFilter(Color.rgb(synthVisor.swatch2[0], synthVisor.swatch2[1], synthVisor.swatch2[2]));
+                colourSwatchButton2.setColorFilter(Color.rgb(MainActivity.synthVisor.swatch2[0], MainActivity.synthVisor.swatch2[1], MainActivity.synthVisor.swatch2[2]));
 
                 // Making a saveConfig toast message
                 Toast.makeText(getActivity(), "Colour saved", Toast.LENGTH_SHORT).show();
@@ -264,13 +262,13 @@ public class synthTab1 extends Fragment {
             public void onClick(View v) {
 
                 // Updating the synthVisor's RGB/Hex values to this specific swatch
-                synthVisor.clickSwatch(2);
+                MainActivity.synthVisor.clickSwatch(2);
 
                 // Setting the textView with the RGB and HEX values
-                colourPickerResults.setText(synthVisor.getResults());
+                colourPickerResults.setText(MainActivity.synthVisor.getResults());
 
                 // Setting the displayed colour in the selected colour view
-                colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
+                colourPickerSelected.setBackgroundColor(Color.rgb(MainActivity.synthVisor.RGB_Red, MainActivity.synthVisor.RGB_Green, MainActivity.synthVisor.RGB_Blue));
             }
         });
 
@@ -281,10 +279,10 @@ public class synthTab1 extends Fragment {
             public boolean onLongClick(View v) {
 
                 // Updating the new values of the swatch
-                synthVisor.setSwatch(3);
+                MainActivity.synthVisor.setSwatch(3);
 
                 // Setting the new colour of the swatch button
-                colourSwatchButton3.setColorFilter(Color.rgb(synthVisor.swatch3[0], synthVisor.swatch3[1], synthVisor.swatch3[2]));
+                colourSwatchButton3.setColorFilter(Color.rgb(MainActivity.synthVisor.swatch3[0], MainActivity.synthVisor.swatch3[1], MainActivity.synthVisor.swatch3[2]));
 
                 // Making a saveConfig toast message
                 Toast.makeText(getActivity(), "Colour saved", Toast.LENGTH_SHORT).show();
@@ -300,13 +298,13 @@ public class synthTab1 extends Fragment {
             public void onClick(View v) {
 
                 // Updating the synthVisor's RGB/Hex values to this specific swatch
-                synthVisor.clickSwatch(3);
+                MainActivity.synthVisor.clickSwatch(3);
 
                 // Setting the textView with the RGB and HEX values
-                colourPickerResults.setText(synthVisor.getResults());
+                colourPickerResults.setText(MainActivity.synthVisor.getResults());
 
                 // Setting the displayed colour in the selected colour view
-                colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
+                colourPickerSelected.setBackgroundColor(Color.rgb(MainActivity.synthVisor.RGB_Red, MainActivity.synthVisor.RGB_Green, MainActivity.synthVisor.RGB_Blue));
             }
         });
 
@@ -317,10 +315,10 @@ public class synthTab1 extends Fragment {
             public boolean onLongClick(View v) {
 
                 // Updating the new values of the swatch
-                synthVisor.setSwatch(4);
+                MainActivity.synthVisor.setSwatch(4);
 
                 // Setting the new colour of the swatch button
-                colourSwatchButton4.setColorFilter(Color.rgb(synthVisor.swatch4[0], synthVisor.swatch4[1], synthVisor.swatch4[2]));
+                colourSwatchButton4.setColorFilter(Color.rgb(MainActivity.synthVisor.swatch4[0], MainActivity.synthVisor.swatch4[1], MainActivity.synthVisor.swatch4[2]));
 
                 // Making a saveConfig toast message
                 Toast.makeText(getActivity(), "Colour saved", Toast.LENGTH_SHORT).show();
@@ -356,7 +354,7 @@ public class synthTab1 extends Fragment {
                            String[] splitRed = tempString.split("=");
                            tempString = splitRed[splitRed.length - 1];
 
-                           synthVisor.setRGB_Red(Integer.parseInt(tempString));
+                           MainActivity.synthVisor.setRGB_Red(Integer.parseInt(tempString));
 
                            i++;
 
@@ -367,7 +365,7 @@ public class synthTab1 extends Fragment {
                            String[] splitGreen = tempString.split("=");
                            tempString = splitGreen[splitGreen.length - 1];
 
-                           synthVisor.setRGB_Green(Integer.parseInt(tempString));
+                           MainActivity.synthVisor.setRGB_Green(Integer.parseInt(tempString));
 
                            i++;
 
@@ -378,7 +376,7 @@ public class synthTab1 extends Fragment {
                            String[] splitBlue = tempString.split("=");
                            tempString = splitBlue[splitBlue.length - 1];
 
-                           synthVisor.setRGB_Blue(Integer.parseInt(tempString));
+                           MainActivity.synthVisor.setRGB_Blue(Integer.parseInt(tempString));
 
                            i++;
 
@@ -389,7 +387,7 @@ public class synthTab1 extends Fragment {
                            String[] splitBrightness = tempString.split("=");
                            tempString = splitBrightness[splitBrightness.length - 1];
 
-                           synthVisor.setLED_Brightness(Integer.parseInt(tempString));
+                           MainActivity.synthVisor.setLED_Brightness(Integer.parseInt(tempString));
 
                            i++;
 
@@ -400,7 +398,7 @@ public class synthTab1 extends Fragment {
                            String[] splitBlinkRate = tempString.split("=");
                            tempString = splitBlinkRate[splitBlinkRate.length - 1];
 
-                           synthVisor.setBlinkRate(Integer.parseInt(tempString));
+                           MainActivity.synthVisor.setBlinkRate(Integer.parseInt(tempString));
 
                            i++;
 
@@ -411,7 +409,7 @@ public class synthTab1 extends Fragment {
                            String[] splitHEX = tempString.split("=");
                            tempString = splitHEX[splitHEX.length - 1];
 
-                           synthVisor.setHex(tempString);
+                           MainActivity.synthVisor.setHex(tempString);
 
                            i++;
 
@@ -424,7 +422,7 @@ public class synthTab1 extends Fragment {
 
                            String swatch1RGB[] = tempString.split(",");
 
-                           synthVisor.swatch1 = new int[]{Integer.parseInt(swatch1RGB[0]), Integer.parseInt(swatch1RGB[1]), Integer.parseInt(swatch1RGB[2])};
+                           MainActivity.synthVisor.swatch1 = new int[]{Integer.parseInt(swatch1RGB[0]), Integer.parseInt(swatch1RGB[1]), Integer.parseInt(swatch1RGB[2])};
 
                            i++;
 
@@ -437,7 +435,7 @@ public class synthTab1 extends Fragment {
 
                            String swatch2RGB[] = tempString.split(",");
 
-                           synthVisor.swatch2 = new int[]{Integer.parseInt(swatch2RGB[0]), Integer.parseInt(swatch2RGB[1]), Integer.parseInt(swatch2RGB[2])};
+                           MainActivity.synthVisor.swatch2 = new int[]{Integer.parseInt(swatch2RGB[0]), Integer.parseInt(swatch2RGB[1]), Integer.parseInt(swatch2RGB[2])};
 
                            i++;
 
@@ -450,7 +448,7 @@ public class synthTab1 extends Fragment {
 
                            String swatch3RGB[] = tempString.split(",");
 
-                           synthVisor.swatch3 = new int[]{Integer.parseInt(swatch3RGB[0]), Integer.parseInt(swatch3RGB[1]), Integer.parseInt(swatch3RGB[2])};
+                           MainActivity.synthVisor.swatch3 = new int[]{Integer.parseInt(swatch3RGB[0]), Integer.parseInt(swatch3RGB[1]), Integer.parseInt(swatch3RGB[2])};
 
                            i++;
 
@@ -463,7 +461,7 @@ public class synthTab1 extends Fragment {
 
                            String swatch4RGB[] = tempString.split(",");
 
-                           synthVisor.swatch4 = new int[]{Integer.parseInt(swatch4RGB[0]), Integer.parseInt(swatch4RGB[1]), Integer.parseInt(swatch4RGB[2])};
+                           MainActivity.synthVisor.swatch4 = new int[]{Integer.parseInt(swatch4RGB[0]), Integer.parseInt(swatch4RGB[1]), Integer.parseInt(swatch4RGB[2])};
 
                            i++;
 
@@ -472,18 +470,18 @@ public class synthTab1 extends Fragment {
             }
 
             // Displaying the synthVisors config
-            colourPickerSelected.setBackgroundColor(Color.rgb(synthVisor.RGB_Red, synthVisor.RGB_Green, synthVisor.RGB_Blue));
-            colourPickerResults.setText(synthVisor.getResults());
-            LEDBrightnessTotal.setText(Integer.toString(synthVisor.LED_Brightness));
-            seekBarLEDBrightness.setProgress(synthVisor.LED_Brightness);
-            seekBarBlinkRate.setProgress(synthVisor.blinkRate);
-            blinkRateTotal.setText(Integer.toString(synthVisor.blinkRate));
+            colourPickerSelected.setBackgroundColor(Color.rgb(MainActivity.synthVisor.RGB_Red, MainActivity.synthVisor.RGB_Green, MainActivity.synthVisor.RGB_Blue));
+            colourPickerResults.setText(MainActivity.synthVisor.getResults());
+            LEDBrightnessTotal.setText(Integer.toString(MainActivity.synthVisor.LED_Brightness));
+            seekBarLEDBrightness.setProgress(MainActivity.synthVisor.LED_Brightness);
+            seekBarBlinkRate.setProgress(MainActivity.synthVisor.blinkRate);
+            blinkRateTotal.setText(Integer.toString(MainActivity.synthVisor.blinkRate));
 
             // Setting the saved colours of the user saved swatches
-            colourSwatchButton1.setColorFilter(Color.rgb(synthVisor.swatch1[0], synthVisor.swatch1[1], synthVisor.swatch1[2]));
-            colourSwatchButton2.setColorFilter(Color.rgb(synthVisor.swatch2[0], synthVisor.swatch2[1], synthVisor.swatch2[2]));
-            colourSwatchButton3.setColorFilter(Color.rgb(synthVisor.swatch3[0], synthVisor.swatch3[1], synthVisor.swatch3[2]));
-            colourSwatchButton4.setColorFilter(Color.rgb(synthVisor.swatch4[0], synthVisor.swatch4[1], synthVisor.swatch4[2]));
+            colourSwatchButton1.setColorFilter(Color.rgb(MainActivity.synthVisor.swatch1[0], MainActivity.synthVisor.swatch1[1], MainActivity.synthVisor.swatch1[2]));
+            colourSwatchButton2.setColorFilter(Color.rgb(MainActivity.synthVisor.swatch2[0], MainActivity.synthVisor.swatch2[1], MainActivity.synthVisor.swatch2[2]));
+            colourSwatchButton3.setColorFilter(Color.rgb(MainActivity.synthVisor.swatch3[0], MainActivity.synthVisor.swatch3[1], MainActivity.synthVisor.swatch3[2]));
+            colourSwatchButton4.setColorFilter(Color.rgb(MainActivity.synthVisor.swatch4[0], MainActivity.synthVisor.swatch4[1], MainActivity.synthVisor.swatch4[2]));
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -516,34 +514,34 @@ public class synthTab1 extends Fragment {
 
             writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
 
-            writer.write("RGB_Red =" + synthVisor.RGB_Red);
+            writer.write("RGB_Red =" + MainActivity.synthVisor.RGB_Red);
             writer.newLine();
 
-            writer.write("RGB_Green =" + synthVisor.RGB_Green);
+            writer.write("RGB_Green =" + MainActivity.synthVisor.RGB_Green);
             writer.newLine();
 
-            writer.write("RGB_Blue =" + synthVisor.RGB_Blue);
+            writer.write("RGB_Blue =" + MainActivity.synthVisor.RGB_Blue);
             writer.newLine();
 
-            writer.write("LED_Brightness =" + synthVisor.LED_Brightness);
+            writer.write("LED_Brightness =" + MainActivity.synthVisor.LED_Brightness);
             writer.newLine();
 
-            writer.write("Blink Rate =" + synthVisor.blinkRate);
+            writer.write("Blink Rate =" + MainActivity.synthVisor.blinkRate);
             writer.newLine();
 
-            writer.write("HEX =" + synthVisor.hex);
+            writer.write("HEX =" + MainActivity.synthVisor.hex);
             writer.newLine();
 
-            writer.write("Swatch1 =" + synthVisor.swatch1[0] + "," + synthVisor.swatch1[1] + "," + synthVisor.swatch1[2]);
+            writer.write("Swatch1 =" + MainActivity.synthVisor.swatch1[0] + "," + MainActivity.synthVisor.swatch1[1] + "," + MainActivity.synthVisor.swatch1[2]);
             writer.newLine();
 
-            writer.write("Swatch2 =" + synthVisor.swatch2[0] + "," + synthVisor.swatch2[1] + "," + synthVisor.swatch2[2]);
+            writer.write("Swatch2 =" + MainActivity.synthVisor.swatch2[0] + "," + MainActivity.synthVisor.swatch2[1] + "," + MainActivity.synthVisor.swatch2[2]);
             writer.newLine();
 
-            writer.write("Swatch3 =" + synthVisor.swatch3[0] + "," + synthVisor.swatch3[1] + "," + synthVisor.swatch3[2]);
+            writer.write("Swatch3 =" + MainActivity.synthVisor.swatch3[0] + "," + MainActivity.synthVisor.swatch3[1] + "," + MainActivity.synthVisor.swatch3[2]);
             writer.newLine();
 
-            writer.write("Swatch4 =" + synthVisor.swatch4[0] + "," + synthVisor.swatch4[1] + "," + synthVisor.swatch4[2]);
+            writer.write("Swatch4 =" + MainActivity.synthVisor.swatch4[0] + "," + MainActivity.synthVisor.swatch4[1] + "," + MainActivity.synthVisor.swatch4[2]);
             writer.newLine();
 
         } catch (FileNotFoundException e) {
