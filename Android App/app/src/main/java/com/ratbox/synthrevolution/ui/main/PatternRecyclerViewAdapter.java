@@ -11,12 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ratbox.synthrevolution.MainActivity;
 import com.ratbox.synthrevolution.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.ratbox.synthrevolution.MainActivity.synthPattern;
 
 public class PatternRecyclerViewAdapter extends RecyclerView.Adapter<PatternRecyclerViewAdapter.PatternView> {
 
@@ -86,7 +85,7 @@ public class PatternRecyclerViewAdapter extends RecyclerView.Adapter<PatternRecy
 
                             // Updating the values with the new name
                             nameList.set(position, holder.patternNameEditText.getText().toString());
-                            synthPattern.patternNameList.set(position, holder.patternNameEditText.getText().toString());
+                            MainActivity.synthPattern.patternNameList.set(position, holder.patternNameEditText.getText().toString());
 
                             // Hiding the edit views
                             holder.patternNameTextView.setVisibility(View.VISIBLE);

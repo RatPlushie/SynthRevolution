@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ratbox.synthrevolution.ui.main.PatternRecyclerViewAdapter;
 
-import static com.ratbox.synthrevolution.MainActivity.synthPattern;
-
 public class synthTab2 extends Fragment {
 
     private RecyclerView patternRecyclerView;
@@ -34,7 +32,7 @@ public class synthTab2 extends Fragment {
         // Initialising the gridLayout for the pattern recyclerView
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         patternRecyclerView.setLayoutManager(gridLayoutManager);
-        final PatternRecyclerViewAdapter patternRecyclerViewAdapter = new PatternRecyclerViewAdapter(getContext(), synthPattern.patternNameList, synthPattern.patternConfList);
+        final PatternRecyclerViewAdapter patternRecyclerViewAdapter = new PatternRecyclerViewAdapter(getContext(), MainActivity.synthPattern.patternNameList, MainActivity.synthPattern.patternConfList);
         patternRecyclerView.setAdapter(patternRecyclerViewAdapter);
 
         addActionButton.setOnClickListener(new View.OnClickListener() {
@@ -52,11 +50,11 @@ public class synthTab2 extends Fragment {
                                        '0', '0', '0', '0', '0', '0', '0', '0'};
 
                 // Adding the new values to the list
-                synthPattern.patternNameList.add("New Pattern");
-                synthPattern.patternConfList.add(blankPattern);
+                MainActivity.synthPattern.patternNameList.add("New Pattern");
+                MainActivity.synthPattern.patternConfList.add(blankPattern);
 
                 // Notifying the adapter that a new entry has been inserted
-                patternRecyclerViewAdapter.notifyItemInserted(synthPattern.patternNameList.size() - 1);
+                patternRecyclerViewAdapter.notifyItemInserted(MainActivity.synthPattern.patternNameList.size() - 1);
             }
         });
 

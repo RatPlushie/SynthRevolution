@@ -15,8 +15,6 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import static com.ratbox.synthrevolution.MainActivity.synthPattern;
-
 public class synthTab3 extends Fragment {
 
     private Spinner                 configSpinner;
@@ -125,7 +123,7 @@ public class synthTab3 extends Fragment {
 
 
         // Creating the array adapter, attaching it and setting the onClickListener
-        ArrayAdapter<String> patternAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, synthPattern.patternNameList);
+        ArrayAdapter<String> patternAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, MainActivity.synthPattern.patternNameList);
         patternAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         configSpinner.setAdapter(patternAdapter);
         configSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -143,7 +141,7 @@ public class synthTab3 extends Fragment {
         });
 
         // Loading the default eye pattern onCreate()
-        synthPattern.getPattern(0, checkBoxArr);
+        MainActivity.synthPattern.getPattern(0, checkBoxArr);
 
         // Setting the onclick listener for the save pattern floating action button
         btnSave.setOnClickListener(new View.OnClickListener() {
