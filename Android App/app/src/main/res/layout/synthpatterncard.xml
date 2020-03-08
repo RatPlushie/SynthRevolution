@@ -38,7 +38,7 @@
 
                 <EditText
                     android:id="@+id/synthPatternNameEditText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:textColor="@android:color/white"
@@ -68,6 +68,7 @@
                     android:id="@+id/synthPatterNameDone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
                     android:visibility="gone"
                     app:srcCompat="@drawable/ic_done" />
             </LinearLayout>

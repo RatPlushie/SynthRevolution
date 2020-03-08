@@ -34,7 +34,8 @@ public class synthTab2 extends Fragment {
         // Initialising the gridLayout for the pattern recyclerView
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         patternRecyclerView.setLayoutManager(gridLayoutManager);
-        patternRecyclerView.setAdapter(new PatternRecyclerViewAdapter(getContext(), synthPattern.patternNameList, synthPattern.patternConfList));
+        final PatternRecyclerViewAdapter patternRecyclerViewAdapter = new PatternRecyclerViewAdapter(getContext(), synthPattern.patternNameList, synthPattern.patternConfList);
+        patternRecyclerView.setAdapter(patternRecyclerViewAdapter);
 
         addActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,9 +47,22 @@ public class synthTab2 extends Fragment {
                 update the recycler view with the new arrays
                  */
 
+                // Array of a blank, all off, 8x8 LEDs
+                char[] blankPattern = {'0', '0', '0', '0', '0', '0', '0', '0',
+                                       '0', '0', '0', '0', '0', '0', '0', '0',
+                                       '0', '0', '0', '0', '0', '0', '0', '0',
+                                       '0', '0', '0', '0', '0', '0', '0', '0',
+                                       '0', '0', '0', '0', '0', '0', '0', '0',
+                                       '0', '0', '0', '0', '0', '0', '0', '0',
+                                       '0', '0', '0', '0', '0', '0', '0', '0',
+                                       '0', '0', '0', '0', '0', '0', '0', '0'};
 
+                // Adding the new values to the list
+                synthPattern.patternNameList.add("New Pattern");
+                synthPattern.patternConfList.add(blankPattern);
 
-
+                // Notifying the adapter that a new entry has been inserted
+                patternRecyclerViewAdapter.notifyItemInserted(synthPattern.patternNameList.size() - 1);
             }
         });
 
