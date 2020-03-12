@@ -17,8 +17,9 @@ import com.ratbox.synthrevolution.ui.main.PatternRecyclerViewAdapter;
 public class SynthTab2 extends Fragment {
 
     private RecyclerView patternRecyclerView;
-
     private FloatingActionButton addActionButton;
+    private PatternRecyclerViewAdapter patternRecyclerViewAdapter;
+
 
     @Nullable
     @Override
@@ -32,7 +33,7 @@ public class SynthTab2 extends Fragment {
         // Initialising the gridLayout for the pattern recyclerView
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         patternRecyclerView.setLayoutManager(gridLayoutManager);
-        final PatternRecyclerViewAdapter patternRecyclerViewAdapter = new PatternRecyclerViewAdapter(getContext(), MainActivity.synthPattern.patternNameList, MainActivity.synthPattern.patternConfList);
+        patternRecyclerViewAdapter = new PatternRecyclerViewAdapter(getContext(), MainActivity.synthPattern.patternNameList, MainActivity.synthPattern.patternConfList);
         patternRecyclerView.setAdapter(patternRecyclerViewAdapter);
 
         addActionButton.setOnClickListener(new View.OnClickListener() {
@@ -61,5 +62,12 @@ public class SynthTab2 extends Fragment {
         // TODO - add hold to delete functionality
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        patternRecyclerViewAdapter.notifyDataSetChanged();
     }
 }

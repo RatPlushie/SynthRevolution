@@ -1,7 +1,6 @@
 package com.ratbox.synthrevolution;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,18 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-
 public class SynthTab1 extends Fragment {
-
-    private static final String FILENAME = "SynthVisorConfig.txt";
 
     private ImageView           colourPickerWheel;
 
@@ -331,143 +319,10 @@ public class SynthTab1 extends Fragment {
         return view;
     }
 
-
-    // Loading synthVisorConfig
+    // Loading all the values from the synthVisor object onResume
     @Override
     public void onResume() {
         super.onResume();
-
-        BufferedReader reader = null;
-
-        try {
-            FileInputStream fileInputStream = getContext().openFileInput(FILENAME);
-            reader = new BufferedReader(new InputStreamReader(fileInputStream));
-
-            int i = 0; // Counter to know which line of the txt file the program is on
-            String tempString;
-            while ((tempString = reader.readLine()) != null){ // EoF check
-
-                   switch (i){
-
-                       case 0: // RGB Red
-
-                           String[] splitRed = tempString.split("=");
-                           tempString = splitRed[splitRed.length - 1];
-
-                           MainActivity.synthVisor.setRGB_Red(Integer.parseInt(tempString));
-
-                           i++;
-
-                           break;
-
-                       case 1: // RGB Green
-
-                           String[] splitGreen = tempString.split("=");
-                           tempString = splitGreen[splitGreen.length - 1];
-
-                           MainActivity.synthVisor.setRGB_Green(Integer.parseInt(tempString));
-
-                           i++;
-
-                           break;
-
-                       case 2: // RGB Blue
-
-                           String[] splitBlue = tempString.split("=");
-                           tempString = splitBlue[splitBlue.length - 1];
-
-                           MainActivity.synthVisor.setRGB_Blue(Integer.parseInt(tempString));
-
-                           i++;
-
-                           break;
-
-                       case 3: // LED Brightness
-
-                           String[] splitBrightness = tempString.split("=");
-                           tempString = splitBrightness[splitBrightness.length - 1];
-
-                           MainActivity.synthVisor.setLED_Brightness(Integer.parseInt(tempString));
-
-                           i++;
-
-                           break;
-
-                       case 4: // Blink Rate
-
-                           String[] splitBlinkRate = tempString.split("=");
-                           tempString = splitBlinkRate[splitBlinkRate.length - 1];
-
-                           MainActivity.synthVisor.setBlinkRate(Integer.parseInt(tempString));
-
-                           i++;
-
-                           break;
-
-                       case 5: // HEX
-
-                           String[] splitHEX = tempString.split("=");
-                           tempString = splitHEX[splitHEX.length - 1];
-
-                           MainActivity.synthVisor.setHex(tempString);
-
-                           i++;
-
-                           break;
-
-                       case 6: // Swatch1
-
-                           String[] splitSwatch1 = tempString.split("=");
-                           tempString = splitSwatch1[splitSwatch1.length - 1];
-
-                           String swatch1RGB[] = tempString.split(",");
-
-                           MainActivity.synthVisor.swatch1 = new int[]{Integer.parseInt(swatch1RGB[0]), Integer.parseInt(swatch1RGB[1]), Integer.parseInt(swatch1RGB[2])};
-
-                           i++;
-
-                           break;
-
-                       case 7: // Swatch2
-
-                           String[] splitSwatch2 = tempString.split("=");
-                           tempString = splitSwatch2[splitSwatch2.length - 1];
-
-                           String swatch2RGB[] = tempString.split(",");
-
-                           MainActivity.synthVisor.swatch2 = new int[]{Integer.parseInt(swatch2RGB[0]), Integer.parseInt(swatch2RGB[1]), Integer.parseInt(swatch2RGB[2])};
-
-                           i++;
-
-                           break;
-
-                       case 8:
-
-                           String[] splitSwatch3 = tempString.split("=");
-                           tempString = splitSwatch3[splitSwatch3.length - 1];
-
-                           String swatch3RGB[] = tempString.split(",");
-
-                           MainActivity.synthVisor.swatch3 = new int[]{Integer.parseInt(swatch3RGB[0]), Integer.parseInt(swatch3RGB[1]), Integer.parseInt(swatch3RGB[2])};
-
-                           i++;
-
-                           break;
-
-                       case 9:
-
-                           String[] splitSwatch4 = tempString.split("=");
-                           tempString = splitSwatch4[splitSwatch4.length - 1];
-
-                           String swatch4RGB[] = tempString.split(",");
-
-                           MainActivity.synthVisor.swatch4 = new int[]{Integer.parseInt(swatch4RGB[0]), Integer.parseInt(swatch4RGB[1]), Integer.parseInt(swatch4RGB[2])};
-
-                           i++;
-
-                           break;
-                   }
-            }
 
             // Displaying the synthVisors config
             colourPickerSelected.setBackgroundColor(Color.rgb(MainActivity.synthVisor.RGB_Red, MainActivity.synthVisor.RGB_Green, MainActivity.synthVisor.RGB_Blue));
@@ -482,84 +337,6 @@ public class SynthTab1 extends Fragment {
             colourSwatchButton2.setColorFilter(Color.rgb(MainActivity.synthVisor.swatch2[0], MainActivity.synthVisor.swatch2[1], MainActivity.synthVisor.swatch2[2]));
             colourSwatchButton3.setColorFilter(Color.rgb(MainActivity.synthVisor.swatch3[0], MainActivity.synthVisor.swatch3[1], MainActivity.synthVisor.swatch3[2]));
             colourSwatchButton4.setColorFilter(Color.rgb(MainActivity.synthVisor.swatch4[0], MainActivity.synthVisor.swatch4[1], MainActivity.synthVisor.swatch4[2]));
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        } finally {
-            if (reader != null){
-                try {
-                    reader.close();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-
-    // Saving synthVisorConfig
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        BufferedWriter writer = null;
-
-        try {
-            FileOutputStream fileOutputStream = getContext().openFileOutput(FILENAME, Context.MODE_PRIVATE);
-
-            writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
-
-            writer.write("RGB_Red =" + MainActivity.synthVisor.RGB_Red);
-            writer.newLine();
-
-            writer.write("RGB_Green =" + MainActivity.synthVisor.RGB_Green);
-            writer.newLine();
-
-            writer.write("RGB_Blue =" + MainActivity.synthVisor.RGB_Blue);
-            writer.newLine();
-
-            writer.write("LED_Brightness =" + MainActivity.synthVisor.LED_Brightness);
-            writer.newLine();
-
-            writer.write("Blink Rate =" + MainActivity.synthVisor.blinkRate);
-            writer.newLine();
-
-            writer.write("HEX =" + MainActivity.synthVisor.hex);
-            writer.newLine();
-
-            writer.write("Swatch1 =" + MainActivity.synthVisor.swatch1[0] + "," + MainActivity.synthVisor.swatch1[1] + "," + MainActivity.synthVisor.swatch1[2]);
-            writer.newLine();
-
-            writer.write("Swatch2 =" + MainActivity.synthVisor.swatch2[0] + "," + MainActivity.synthVisor.swatch2[1] + "," + MainActivity.synthVisor.swatch2[2]);
-            writer.newLine();
-
-            writer.write("Swatch3 =" + MainActivity.synthVisor.swatch3[0] + "," + MainActivity.synthVisor.swatch3[1] + "," + MainActivity.synthVisor.swatch3[2]);
-            writer.newLine();
-
-            writer.write("Swatch4 =" + MainActivity.synthVisor.swatch4[0] + "," + MainActivity.synthVisor.swatch4[1] + "," + MainActivity.synthVisor.swatch4[2]);
-            writer.newLine();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        } finally {
-            if (writer != null){
-                try {
-                    writer.close();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 }
 

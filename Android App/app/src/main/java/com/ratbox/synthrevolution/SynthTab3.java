@@ -141,7 +141,7 @@ public class SynthTab3 extends Fragment {
         });
 
         // Loading the default eye pattern onCreate()
-        MainActivity.synthPattern.getPattern(0, checkBoxArr);
+        MainActivity.synthPattern.displayPattern(0, checkBoxArr);
 
         // Setting the onclick listener for the save pattern floating action button
         btnSave.setOnClickListener(new View.OnClickListener() {
