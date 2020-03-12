@@ -1,6 +1,7 @@
 package com.ratbox.synthrevolution;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +22,19 @@ import com.ratbox.synthrevolution.ui.main.SectionsPagerAdapter;
 import com.ratbox.synthrevolution.ui.main.SynthPattern;
 import com.ratbox.synthrevolution.ui.main.SynthVisor;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
 public class MainActivity extends AppCompatActivity {
+
+    private static final String SYNTHVISORFILENAME      = "SynthVisorConfig.txt";
+    private static final String SYNTHPATTERNFILENAME    = "VisorPatternConfig.txt";
 
     public static BluetoothManager  bluetoothManager;
     public static SynthPattern      synthPattern;
@@ -54,12 +67,306 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialising the synth instance objects
         synthVisor          = new SynthVisor();
-        synthPattern        = new SynthPattern(this);
+        synthPattern        = new SynthPattern();
 
         // Initialising the bluetooth manager instance
         bluetoothManager    = new BluetoothManager();
     }
 
+    // Loading the synthVisor and synthPattern configs onResume from respective .txt files
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        BufferedReader reader = null;
+
+        // Attempting to load the synthVisor config file to its respective object
+        try {
+            FileInputStream fileInputStream = MainActivity.this.openFileInput(SYNTHVISORFILENAME);
+            reader = new BufferedReader(new InputStreamReader(fileInputStream));
+
+            int counter = 0;        // Line read counter
+            String lineReadString;  // Temporary read line
+            while ((lineReadString = reader.readLine()) != null){   // EoF check
+
+                switch (counter){
+                    case 0: // Red
+                        String[] splitRed = lineReadString.split("=");
+                        lineReadString = splitRed[splitRed.length - 1];
+                        MainActivity.synthVisor.setRGB_Red(Integer.parseInt(lineReadString));
+                        counter++;
+                        break;
+
+                    case 1: // Green
+                        String[] splitGreen = lineReadString.split("=");
+                        lineReadString = splitGreen[splitGreen.length - 1];
+                        MainActivity.synthVisor.setRGB_Green(Integer.parseInt(lineReadString));
+                        counter++;
+                        break;
+
+                    case 2: // Blue
+                        String[] splitBlue = lineReadString.split("=");
+                        lineReadString = splitBlue[splitBlue.length - 1];
+                        MainActivity.synthVisor.setRGB_Blue(Integer.parseInt(lineReadString));
+                        counter++;
+                        break;
+
+                    case 3: // LED Brightness
+                        String[] splitBrightness = lineReadString.split("=");
+                        lineReadString = splitBrightness[splitBrightness.length - 1];
+                        MainActivity.synthVisor.setLED_Brightness(Integer.parseInt(lineReadString));
+                        counter++;
+                        break;
+
+                    case 4: // Blink Rate
+                        String[] splitBlinkRate = lineReadString.split("=");
+                        lineReadString = splitBlinkRate[splitBlinkRate.length - 1];
+                        MainActivity.synthVisor.setBlinkRate(Integer.parseInt(lineReadString));
+                        counter++;
+                        break;
+
+                    case 5: // HEX Value
+                        String[] splitHEX = lineReadString.split("=");
+                        lineReadString = splitHEX[splitHEX.length - 1];
+                        MainActivity.synthVisor.setHex(lineReadString);
+                        counter++;
+                        break;
+
+                    case 6: // Swatch 1
+                        String [] splitSwatch1 = lineReadString.split("=");
+                        lineReadString = splitSwatch1[splitSwatch1.length - 1];
+                        String swatch1RGB[] = lineReadString.split(",");
+                        MainActivity.synthVisor.swatch1 = new int[]{Integer.parseInt(swatch1RGB[0]), Integer.parseInt(swatch1RGB[1]), Integer.parseInt(swatch1RGB[2])};
+                        counter++;
+                        break;
+
+                    case 7: // Swatch 2
+                        String [] splitSwatch2 = lineReadString.split("=");
+                        lineReadString = splitSwatch2[splitSwatch2.length - 1];
+                        String swatch2RGB[] = lineReadString.split(",");
+                        MainActivity.synthVisor.swatch2 = new int[]{Integer.parseInt(swatch2RGB[0]), Integer.parseInt(swatch2RGB[1]), Integer.parseInt(swatch2RGB[2])};
+                        counter++;
+                        break;
+
+                    case 8: // Swatch 3
+                        String [] splitSwatch3 = lineReadString.split("=");
+                        lineReadString = splitSwatch3[splitSwatch3.length - 1];
+                        String swatch3RGB[] = lineReadString.split(",");
+                        MainActivity.synthVisor.swatch3 = new int[]{Integer.parseInt(swatch3RGB[0]), Integer.parseInt(swatch3RGB[1]), Integer.parseInt(swatch3RGB[2])};
+                        counter++;
+                        break;
+
+                    case 9: // Swatch 4
+                        String [] splitSwatch4 = lineReadString.split("=");
+                        lineReadString = splitSwatch4[splitSwatch4.length - 1];
+                        String swatch4RGB[] = lineReadString.split(",");
+                        MainActivity.synthVisor.swatch4 = new int[]{Integer.parseInt(swatch4RGB[0]), Integer.parseInt(swatch4RGB[1]), Integer.parseInt(swatch4RGB[2])};
+                        counter++;
+                        break;
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } finally {
+            if (reader != null){
+                try {
+                    reader.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        // Attempting to load the synthPattern config to its respective object
+        try {
+            FileInputStream fileInputStream = MainActivity.this.openFileInput(SYNTHPATTERNFILENAME);
+            reader = new BufferedReader(new InputStreamReader(fileInputStream));
+
+            String readString;
+            while ((readString = reader.readLine()) != null){ // EoF Check
+                // Splitting the line into name and pattern
+                String[] splitString = readString.split("=");
+
+                char[] patternArray = splitString[1].toCharArray();
+
+                // Storing the name and pattern in the lists
+                MainActivity.synthPattern.patternNameList.add(splitString[0]);
+                MainActivity.synthPattern.patternConfList.add(patternArray);
+            }
+
+            Log.d("File Read", "Successful");
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.d("PatternFile", "No file found, Creating default");
+
+            // No pattern save file was found on the device, creating a new save file and filling it with the default synth eye pattern
+            BufferedWriter writer = null;
+            try {
+                FileOutputStream fileOutputStream = MainActivity.this.openFileOutput(SYNTHPATTERNFILENAME, Context.MODE_PRIVATE);
+                writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+
+                // Creating the default pattern for the eye
+                char[] defaultPattern = {'0','0','0','0','0','0','0','0',
+                                         '0','0','1','1','1','1','1','0',
+                                         '0','1','1','1','1','1','1','1',
+                                         '1','1','0','1','1','1','1','1',
+                                         '1','1','0','1','1','1','1','0',
+                                         '1','1','0','1','1','1','0','0',
+                                         '0','1','0','1','1','0','0','0',
+                                         '0','0','0','0','0','0','0','0'};
+
+                // adding the default pattern array to the list of arrays
+                MainActivity.synthPattern.patternNameList.add("Default");
+                MainActivity.synthPattern.patternConfList.add(defaultPattern);
+
+                // StringBuilder init
+                StringBuilder stringBuilder = new StringBuilder();
+
+                // Building string to write
+                stringBuilder.append("Default=");
+                for (char c : defaultPattern){
+                    stringBuilder.append(c);
+                }
+
+                // Writing string to file
+                writer.write(stringBuilder.toString());
+
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+
+            } finally { // Closing the writer
+                if (writer != null){
+                    try {
+                        writer.close();
+
+                    } catch (IOException eIO) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } finally { // closing the reader
+            if (reader != null){
+                try {
+                    reader.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        BufferedWriter writer = null;
+
+        // Writing the synthVisor config to the respective text file
+        try {
+            FileOutputStream fileOutputStream = MainActivity.this.openFileOutput(SYNTHVISORFILENAME, Context.MODE_PRIVATE);
+            writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+
+            writer.write("RGB_Red =" + MainActivity.synthVisor.RGB_Red);
+            writer.newLine();
+
+            writer.write("RGB_Green =" + MainActivity.synthVisor.RGB_Green);
+            writer.newLine();
+
+            writer.write("RGB_Blue =" + MainActivity.synthVisor.RGB_Blue);
+            writer.newLine();
+
+            writer.write("LED_Brightness =" + MainActivity.synthVisor.LED_Brightness);
+            writer.newLine();
+
+            writer.write("Blink Rate =" + MainActivity.synthVisor.blinkRate);
+            writer.newLine();
+
+            writer.write("HEX =" + MainActivity.synthVisor.hex);
+            writer.newLine();
+
+            writer.write("Swatch1 =" + MainActivity.synthVisor.swatch1[0] + "," + MainActivity.synthVisor.swatch1[1] + "," + MainActivity.synthVisor.swatch1[2]);
+            writer.newLine();
+
+            writer.write("Swatch2 =" + MainActivity.synthVisor.swatch2[0] + "," + MainActivity.synthVisor.swatch2[1] + "," + MainActivity.synthVisor.swatch2[2]);
+            writer.newLine();
+
+            writer.write("Swatch3 =" + MainActivity.synthVisor.swatch3[0] + "," + MainActivity.synthVisor.swatch3[1] + "," + MainActivity.synthVisor.swatch3[2]);
+            writer.newLine();
+
+            writer.write("Swatch4 =" + MainActivity.synthVisor.swatch4[0] + "," + MainActivity.synthVisor.swatch4[1] + "," + MainActivity.synthVisor.swatch4[2]);
+            writer.newLine();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } finally {
+            if (writer != null){
+                try {
+                    writer.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        // Writing the synthPattern config to its respective text file
+        try {
+            FileOutputStream fileOutputStream = MainActivity.this.openFileOutput(SYNTHPATTERNFILENAME, Context.MODE_PRIVATE);
+            writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+
+            // For every entry of the name list, add a line in the format name=pattern
+            for (int i = 0; i <= MainActivity.synthPattern.patternNameList.size() - 1; i++){
+                StringBuilder stringBuilder = new StringBuilder();
+
+                stringBuilder.append(MainActivity.synthPattern.patternNameList.get(i));
+                stringBuilder.append("=");
+
+                for (char c : MainActivity.synthPattern.patternConfList.get(i)){
+                    stringBuilder.append(c);
+                }
+
+                writer.write(stringBuilder.toString());
+                writer.newLine();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } finally {
+            if (writer != null){
+                try {
+                    writer.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     // Bluetooth device selector dialog box
     public void ShowBluetoothPopup(View v){
