@@ -18,8 +18,7 @@ public class SynthTab2 extends Fragment {
 
     private RecyclerView patternRecyclerView;
     private FloatingActionButton addActionButton;
-    private PatternRecyclerViewAdapter patternRecyclerViewAdapter;
-
+    static  PatternRecyclerViewAdapter patternRecyclerViewAdapter;
 
     @Nullable
     @Override
