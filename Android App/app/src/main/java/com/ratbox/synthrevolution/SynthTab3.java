@@ -187,8 +187,23 @@ public class SynthTab3 extends Fragment {
             @Override
             public void onClick(View v) {
 
-                // TODO - behaviour for save pattern button
+                // Creating and populating the array to be overwritten to the SynthPattern object
+                char[] currentPattern = new char[64];
+                for (int i = 0; i <= currentPattern.length - 1; i++){
 
+                    if (checkBoxArr[i].isChecked()){
+                        currentPattern[i] = '1';
+
+                    } else {
+                        currentPattern[i] = '0';
+
+                    }
+                }
+
+                // Updating the SynthPattern object with the new pattern
+                MainActivity.synthPattern.setPattern(configSpinner.getSelectedItemPosition(), currentPattern);
+
+                // TODO - Update recycler view with the new pattern
             }
         });
 

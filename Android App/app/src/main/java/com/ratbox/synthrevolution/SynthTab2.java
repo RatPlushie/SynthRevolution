@@ -59,10 +59,14 @@ public class SynthTab2 extends Fragment {
             }
         });
 
+
+
         // TODO - add hold to delete functionality
 
         return view;
     }
+
+
 
     @Override
     public void onResume() {
