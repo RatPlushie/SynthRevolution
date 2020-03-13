@@ -189,6 +189,10 @@ public class MainActivity extends AppCompatActivity {
             FileInputStream fileInputStream = MainActivity.this.openFileInput(SYNTHPATTERNFILENAME);
             reader = new BufferedReader(new InputStreamReader(fileInputStream));
 
+            // Clearing the current lists so the list.add() method later doesn't append to an existing list
+            MainActivity.synthPattern.patternNameList.clear();
+            MainActivity.synthPattern.patternConfList.clear();
+
             String readString;
             while ((readString = reader.readLine()) != null){ // EoF Check
                 // Splitting the line into name and pattern
@@ -329,8 +333,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        // Console printout of when the device saves the config
+        Log.d("SynthVisor", "Saved");
 
         // Writing the synthPattern config to its respective text file
+        // TODO - writer seems to be duplicating all entries onPause
         try {
             FileOutputStream fileOutputStream = MainActivity.this.openFileOutput(SYNTHPATTERNFILENAME, Context.MODE_PRIVATE);
             writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
@@ -366,6 +373,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
+        // Console printout of when the device saves the patterns
+        Log.d("SynthPatterns", "Saved");
     }
 
     // Bluetooth device selector dialog box
