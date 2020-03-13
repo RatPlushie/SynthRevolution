@@ -205,8 +205,7 @@ public class SynthTab3 extends Fragment {
                 MainActivity.synthPattern.setPattern(configSpinner.getSelectedItemPosition(), currentPattern);
 
                 // Updates the recyclerView to adjust for the pattern being changed
-                // TODO - this is causing a memory leak, try and fix it
-                SynthTab2.patternRecyclerViewAdapter.notifyItemChanged(configSpinner.getSelectedItemPosition());
+                SynthTab2.patternRecyclerViewAdapter.notifyItemChanged(configSpinner.getSelectedItemPosition());    // TODO - this is causing a memory leak
 
                 // Toasting the user the pattern has been saved
                 Toast.makeText(getContext(), MainActivity.synthPattern.patternNameList.get(configSpinner.getSelectedItemPosition()) + " has been saved", Toast.LENGTH_SHORT).show();
