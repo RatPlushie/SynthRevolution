@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,7 +33,7 @@ public class SynthTab3 extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.synth_tab3, container, false);
 
         // attaching to views
@@ -112,14 +113,14 @@ public class SynthTab3 extends Fragment {
         chkbtn64    = view.findViewById(R.id.r8b64);
 
         // Creating an array of all the checkboxes
-        CheckBox[] checkBoxArr = {chkbtn1,  chkbtn2,  chkbtn3,  chkbtn4,  chkbtn5,  chkbtn6,  chkbtn7,  chkbtn8,
-                                  chkbtn9,  chkbtn10, chkbtn11, chkbtn12, chkbtn13, chkbtn14, chkbtn15, chkbtn16,
-                                  chkbtn17, chkbtn18, chkbtn19, chkbtn20, chkbtn21, chkbtn22, chkbtn23, chkbtn24,
-                                  chkbtn25, chkbtn26, chkbtn27, chkbtn28, chkbtn29, chkbtn30, chkbtn31, chkbtn32,
-                                  chkbtn33, chkbtn34, chkbtn35, chkbtn36, chkbtn37, chkbtn38, chkbtn39, chkbtn40,
-                                  chkbtn41, chkbtn42, chkbtn43, chkbtn44, chkbtn45, chkbtn46, chkbtn47, chkbtn48,
-                                  chkbtn49, chkbtn50, chkbtn51, chkbtn52, chkbtn53, chkbtn54, chkbtn55, chkbtn56,
-                                  chkbtn57, chkbtn58, chkbtn59, chkbtn60, chkbtn61, chkbtn62, chkbtn63, chkbtn64};
+        final CheckBox[] checkBoxArr = {chkbtn1,  chkbtn2,  chkbtn3,  chkbtn4,  chkbtn5,  chkbtn6,  chkbtn7,  chkbtn8,
+                                        chkbtn9,  chkbtn10, chkbtn11, chkbtn12, chkbtn13, chkbtn14, chkbtn15, chkbtn16,
+                                        chkbtn17, chkbtn18, chkbtn19, chkbtn20, chkbtn21, chkbtn22, chkbtn23, chkbtn24,
+                                        chkbtn25, chkbtn26, chkbtn27, chkbtn28, chkbtn29, chkbtn30, chkbtn31, chkbtn32,
+                                        chkbtn33, chkbtn34, chkbtn35, chkbtn36, chkbtn37, chkbtn38, chkbtn39, chkbtn40,
+                                        chkbtn41, chkbtn42, chkbtn43, chkbtn44, chkbtn45, chkbtn46, chkbtn47, chkbtn48,
+                                        chkbtn49, chkbtn50, chkbtn51, chkbtn52, chkbtn53, chkbtn54, chkbtn55, chkbtn56,
+                                        chkbtn57, chkbtn58, chkbtn59, chkbtn60, chkbtn61, chkbtn62, chkbtn63, chkbtn64};
 
 
         // Creating the array adapter, attaching it and setting the onClickListener
@@ -130,8 +131,47 @@ public class SynthTab3 extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                // TODO - update check box grid with selected pattern on click
+                // Retrieving the currently selected array as its own array
+                char[] selectedArray = MainActivity.synthPattern.patternConfList.get(position);
 
+                if (position == 0){ // Disabling the save button for the default pattern
+
+                    // Disable FAB
+                    btnSave.setVisibility(View.GONE);
+
+                    // Disable checkboxes
+                    for (CheckBox c : checkBoxArr){
+                        c.setEnabled(false);
+                    }
+
+                    // Setting the checkbox 8x8 pattern to the default pattern selected
+                    for (int i = 0; i <= checkBoxArr.length - 1; i++){
+                        if (selectedArray[i] == '1'){
+                            checkBoxArr[i].setChecked(true);
+                        } else {
+                            checkBoxArr[i].setChecked(false);
+                        }
+                    }
+
+                } else { // Enabling the buttons and normal behaviour for the FAB
+
+                    // Enable FAB
+                    btnSave.setVisibility(View.VISIBLE);
+
+                    // Enable checkboxes
+                    for (CheckBox c : checkBoxArr){
+                        c.setEnabled(true);
+                    }
+
+                    // Setting the checkbox 8x8 pattern to the default pattern selected
+                    for (int i = 0; i <= checkBoxArr.length - 1; i++){
+                        if (selectedArray[i] == '1'){
+                            checkBoxArr[i].setChecked(true);
+                        } else {
+                            checkBoxArr[i].setChecked(false);
+                        }
+                    }
+                }
             }
 
             @Override
@@ -148,8 +188,27 @@ public class SynthTab3 extends Fragment {
             @Override
             public void onClick(View v) {
 
-                // TODO - behaviour for save pattern button
+                // Creating and populating the array to be overwritten to the SynthPattern object
+                char[] currentPattern = new char[64];
+                for (int i = 0; i <= currentPattern.length - 1; i++){
 
+                    if (checkBoxArr[i].isChecked()){
+                        currentPattern[i] = '1';
+
+                    } else {
+                        currentPattern[i] = '0';
+
+                    }
+                }
+
+                // Updating the SynthPattern object with the new pattern
+                MainActivity.synthPattern.setPattern(configSpinner.getSelectedItemPosition(), currentPattern);
+
+                // Updates the recyclerView to adjust for the pattern being changed
+                SynthTab2.patternRecyclerViewAdapter.notifyItemChanged(configSpinner.getSelectedItemPosition());    // TODO - this is causing a memory leak
+
+                // Toasting the user the pattern has been saved
+                Toast.makeText(getContext(), MainActivity.synthPattern.patternNameList.get(configSpinner.getSelectedItemPosition()) + " has been saved", Toast.LENGTH_SHORT).show();
             }
         });
 

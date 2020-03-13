@@ -17,12 +17,9 @@ public class SynthPattern {
         patternConfList = new ArrayList<>();
     }
 
-    public void setPatternNameList(List<String> patternNames){
-        patternNameList = patternNames;
-    }
-
-    public void setPatternConfList(ArrayList<char[]> patternArray){
-        patternConfList = patternArray;
+    // Method for updating the pattern at a specific point in the list
+    public void setPattern(int position, char[] pattern){
+        patternConfList.set(position, pattern);
     }
 
     // Method for loading the saved pattern onto the checkboxes
